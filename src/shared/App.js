@@ -4,8 +4,9 @@ import { Route } from "react-router-dom";
 import { BrowserRouter } from "react-router-dom";
 import { Grid } from "../elements";
 
-import PostList from "../pages/PostList";
 import Post from "../components/Post";
+import Login from "../pages/Login";
+import Signup from "../pages/Signup";
 
 function App() {
 
@@ -15,6 +16,8 @@ function App() {
       <Grid isRoot>
         <BrowserRouter>
           <Route exact path="/" component={Post} />
+          <Route exact path="/login" component={Login} />
+          <Route exact path="/signup" component={Signup} />
         </BrowserRouter>
       </Grid>
     </React.Fragment>
