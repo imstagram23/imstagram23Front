@@ -10,6 +10,7 @@ import PostEdit from "../pages/PostEdit";
 import Login from "../pages/Login";
 import Signup from "../pages/Signup";
 import Mypost from "../pages/Mypost";
+import Comments from "../pages/Comments";
 
 
 
@@ -25,7 +26,9 @@ function App() {
           <Route exact path="/login" component={Login} />
           <Route exact path="/signup" component={Signup} />
           <Route exact path="/profile" component={Mypost} />
+          <Route exact path="/comment" component={Comments} />
           <Route render={(props) => (<NotFound history={props.history}/>)} />
+
           </Switch>
           </ConnectedRouter>
     </React.Fragment>

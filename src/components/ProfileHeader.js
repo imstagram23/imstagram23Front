@@ -106,6 +106,7 @@ const ProfileHeader = (props) => {
     margin: auto;
     width: 100%;
     border: 1px solid orange;
+    
   `;
 
   const ImageBox = styled.div`
@@ -153,13 +154,13 @@ const ProfileHeader = (props) => {
   `;
 
   const ProfileName = styled.div`
-  margin: 20px;
-  font-size: 20px;
+  margin: 10px 10px;
+  font-size: 15px;
   `;
 
   const Status = styled.div`
-  margin: 20px;
-  font-size: 20px;
+  margin: 10px 10px;
+  font-size: 15px;
   `;
 
   ProfileHeader.defaultProps = {

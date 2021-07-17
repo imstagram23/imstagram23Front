@@ -5,6 +5,7 @@ import Post from "../components/Post";
 
 import { useSelector, useDispatch } from "react-redux";
 import { actionCreators as postActions } from "../redux/modules/post";
+import CommentWrite from "../components/CommentWrite";
 
 
 const PostList = (props) => {
@@ -31,6 +32,7 @@ const PostList = (props) => {
                     return <Post key={p.id} {...p}/>
                 })}
             </Grid> */}
+
         </React.Fragment>
     )
 }
