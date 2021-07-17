@@ -20,11 +20,11 @@ const PostWrite = (props) => {
                 </Grid>
 
                 <Grid flex_row padding="4px 14px">
-                    <Input multiLine margin="0px" _onChange={() => {console.log("작성인풋")}}>{props.contents}</Input>
+                    <Input multiLine margin="0px" _onChange={() => {console.log("수정인풋")}}>{props.contents}</Input>
                 </Grid>
 
                 <Grid padding="4px 14px">
-                    <Button _onClick={() => {console.log("업로드완료")}}>업로드</Button>
+                    <Button _onClick={() => {console.log("수정완료")}}>수정완료</Button>
                 </Grid>
 
             </Grid>

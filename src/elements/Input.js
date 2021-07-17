@@ -66,7 +66,6 @@ Input.defaultProps = {
 };
 
 const ElTextArea = styled.textarea`
-  
   border: 1px solid #212121;
   border-radius: 5px;
   width: 100%;
@@ -77,7 +76,7 @@ const ElTextArea = styled.textarea`
 
 const ElInput = styled.input`
 ${(props) => props.margin? `margin:${props.margin}` : ''};
-border: 1px solid #212121;
+  border: 1px solid #212121;
   border-radius: 5px;
   width: 100%;
   padding: 12px 4px;

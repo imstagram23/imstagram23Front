@@ -1,5 +1,6 @@
 import React from "react";
 
+
 import {Text, Input, Grid, Button} from "../elements/index";
 import styled from 'styled-components';
 
@@ -158,4 +159,5 @@ box-sizing: border-box;
 margin: 3px auto;
 weight: 36px;
 `;
+
 export default Signup;

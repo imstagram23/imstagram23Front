@@ -6,8 +6,7 @@ import styled from 'styled-components';
 const Login = () => {
 
     return (
-        <React.Fragment>
-            
+        <React.Fragment>           
           <Grid bg_color='white' flex_column padding="0 10%" max_height="380px">
             
           <LoginBox>
@@ -90,12 +89,12 @@ const Login = () => {
 `;
 
 const SignupInput = styled.input`
-border: 1px solid #DCDBDC;
-width: 260px;
-padding: 12px 4px;
-box-sizing: border-box;
-margin: 5px auto;
-weight: 36px;
+  border: 1px solid #DCDBDC;
+  width: 260px;
+  padding: 12px 4px;
+  box-sizing: border-box;
+  margin: 5px auto;
+  weight: 36px;
 `;
-    
+
 export default Login;

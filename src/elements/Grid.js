@@ -19,8 +19,6 @@ const Grid = (props) => {
         center,
         flex_detail,
         border
-
-
     }
 
     return(
@@ -31,6 +29,7 @@ const Grid = (props) => {
 }
 
 Grid.defaultProps = {
+    is_flex: false,
     width:'100%',
     height:'100%',
     max_width:false,
@@ -64,6 +63,10 @@ const GridBox = styled.div`
     ${(props) => props.flex_row? `display:flex; flex-direction:row; ${props.flex_detail}`: ''};
     ${(props) => props.flex_column? `display:flex; flex-direction:column; ${props.flex_detail}`: ''};
     ${(props) => props.center? `text-align: center;`: ''};
+    ${(props) =>
+    props.is_flex
+      ? `display: flex; align-items: center; justify-content: space-between; `
+      : ""}
 `;
 
 export default Grid;
