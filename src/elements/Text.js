@@ -6,6 +6,7 @@ const Text = (props) => {
 
   const styles = { bold: bold, color: color, size: size, margin: margin, cursor:cursor, NotP:NotP, padding};
 
+
   return (
     <React.Fragment>
       {props.NotP ? (

@@ -4,7 +4,6 @@ import { history } from "../redux/configureStore";
 import {Grid, Image, Text, Button} from "../elements";
 import HeartButton from "./HeartButton";
 
-
 const Post = (props) => {
     return (
       <React.Fragment>
@@ -51,6 +50,7 @@ Post.defaultProps = {
   deleteButton: "delete",
   editButton: "edit",
   comment_cnt: 10,
+
 };
 
 export default Post;

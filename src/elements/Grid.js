@@ -2,27 +2,9 @@ import React from 'react';
 import styled from 'styled-components';
 
 const Grid = (props) => {
-    const {
-      is_flex,
-      flex_row, 
-      flex_column, 
-      width, 
-      height,
-      min_height
-      ,max_height,
-      min_width,
-      max_width, 
-      margin, 
-      padding, 
-      bg_color, 
-      children, 
-      center, 
-      flex_detail, 
-      border, 
-      _onClick} = props;
+    const {flex_row, flex_column, width, height,min_height,max_height,min_width,max_width, margin, padding, bg_color, children, center, flex_detail, border, _onClick} = props;
 
     const styles = {
-        is_flex,
         flex_row,
         flex_column,
         width,
@@ -37,8 +19,6 @@ const Grid = (props) => {
         center,
         flex_detail,
         border
-
-
     }
 
     return(
