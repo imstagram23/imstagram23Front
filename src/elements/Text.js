@@ -2,8 +2,29 @@ import React from "react";
 import styled from "styled-components";
 
 const Text = (props) => {
-  const { bold, color, size, children, margin, _onClick,NotP, cursor, padding,textAlign  } = props;
-  const styles = { bold: bold, color: color, size: size, margin: margin, cursor:cursor, NotP:NotP, padding:padding, textAlign:textAlign,};
+  const { 
+    bold, 
+    color, 
+    size, 
+    children, 
+    margin, 
+    _onClick,
+    NotP, 
+    cursor, 
+    padding,
+    textAlign  
+  } = props;
+
+  const styles = { 
+    bold: bold, 
+    color: color, 
+    size: size, 
+    margin: margin, 
+    cursor:cursor, 
+    NotP:NotP, 
+    padding:padding, 
+    textAlign:textAlign,
+  };
 
 
   return (

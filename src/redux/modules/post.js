@@ -1,5 +1,9 @@
 import { createAction, handleActions } from "redux-actions";
 import { produce } from "immer";
+import axios from "axios";
+import moment from "moment";
+
+import { actionCreators as imageActions } from "./image";
 
 // actions
 const SET_POST = "SET_POST";
@@ -13,38 +17,113 @@ const initialState = {
     list: [],
 }
 
-// 게시글 하나의 정보
+// 게시글 하나의 정보(Post의 defaultProps)
 const initialPost = {
-    user_info: {
-        user_name: "user_name",
-        user_profile: "https://image5jvqbd.fmkorea.com/files/attach/new/20200816/486616/657118072/3039288745/99b983892094b5c6d2fc3736e15da7d1.jpeg",
-      },
-      image_url: "https://img1.daumcdn.net/thumb/R720x0.q80/?scode=mtistory2&fname=http%3A%2F%2Fcfile5.uf.tistory.com%2Fimage%2F1115E239507C23380B4840",
-      contents: "어쩌고 저쩌고",
-      deleteButton: "delete",
-      editButton: "edit",
-      comment_cnt: 10,
+    // id는 자동으로 생성되도록 해놨음(???어디서???)
+    // id: 0,
+    // 아래 두개는 user 리덕스에서 가져올 것임
+    // writer: "user_name",
+    // user_profile: "https://img.insight.co.kr/static/2018/06/08/700/oaytfz0m123a56r373eh.jpg",
+    image_url: "https://cdn.vox-cdn.com/thumbor/M2rjDALxvNDv3yqeYuIdL3spabo=/0x0:2000x1333/1200x675/filters:focal(840x507:1160x827)/cdn.vox-cdn.com/uploads/chorus_image/image/65939918/171109_08_11_37_5DS_0545__1_.0.jpg",
+    contents: "NewYork NewYork",
+    comment_cnt: 10,
+    insert_dt: moment().format("YYYY년 MM월 DD일 hh:mm:ss"),
 };
+
+// 다 가지고 올거니까 조건 걸게 없으니 일단 공란(심화3-3 12:~)
+// 데이터 형식 맞추기는 Object.keys()사용(심화3-3 15:~)
+// 왜? 키 값만 뽑아서 배열로 만들어 주려고. 왜 배열로? reduce쓰려고 
+const getPostDB = () => {
+    return function (dispatch, getState, {history}){
+        axios({
+            method: 'get',
+            url: 'http://3.36.50.96/api/post',
+            // data: {},
+            headers: { 
+                "Content-Type": "multipart/form-data",
+                // "Access-Control-Allow-Origin": "*",
+            },
+        }).then((response) => {
+            console.log(response);
+            console.log(response.data);
+            dispatch(setPost(response.data.result));
+
+        }).catch(err => {
+            console.log("에러? 아니져~ 연봉 올라가는 소리~");
+        })
+    };
+}
+
+// 서버에 새 포스트 저장하는 함수
+// 추가할 데이터 모양새를 먼저 파악. 모양새대로 추가 할것임
+// 유저정보는 이미 리덕스에 있음 
+// 카드를 하나 추가할 때, 들어가야할(필요한) 데이터를 파라미터로 넣어주기
+// 이 값들은 카드를 추가하는 곳인 PostWrite에도 동일하게 들어가야함
+const addPostDB = (contents, image_url) => {
+    return function (dispatch, getState, {history}){
+
+        const formdata = new FormData();
+        formdata.apppend('contents', contents);
+        formdata.apppend('image_url', image_url);
+        // formadata 내용 확인(그냥 콘솔로그론 안보임)
+        for (let key of formdata.keys()) { console.log(key); }
+        for (var value of formdata.values()) { console.log(value); }
+
+        axios({
+            method: 'post',
+            url: 'http://3.36.50.96/api/post',  //??똑같음?? 메소드가 달라서!
+            data: formdata,
+            headers: { "Content-Type": "multipart/form-data" },
+        }).then((res) => {
+            console.log(res);
+            console.log(res.data);
+            // 서버에서 데이터 전체 내려주면 res.data.~하면 되지만
+            // 전체 데이터를 내려주지 않으면 파라미터값을 그대로 가져온다.
+            // 이미지를 http://도메인주소+res.data.~로 넣어줘야 한다.
+            console.log(res.data.result.image);
+
+            const new_post = {
+                id: res.data.result.postId,
+                contents,
+                // 이미지 주소 넣는 방법
+                image_url: res.data.result.image,
+                // 이미지 'http://wanos.shop/' + 
+                // 전체 데이터 내려받을때에 한가지(e.g.이미지)만 빼내기 위해선 위의내용 제하기
+                createdAt: moment().format("YYYY년 MM월 DD일 hh:mm"),
+              }
+
+            //서버에 데이터 잘 들어갔는지 확인 후 리덕스에 추가
+            dispatch(addPost(new_post));
+            dispatch(imageActions.setPreview(""));
+            history.replace("/");
+
+        }).catch(err => {
+            window.alert("포스트 작성에 실패했어요!")
+            console.log("에러? 아니져~ 연봉 올라가는 소리~");
+        })  
+    }
+} 
 
 // reducer
 export default handleActions(
     {
         [SET_POST]: (state, action) => produce(state, (draft) => {
             draft.list.push(...action.payload.post_list);
-
         }),
   
         [ADD_POST]: (state, action) => produce(state, (draft) => {
-            
+            // 배열 제일 앞으로 붙이기
+            draft.list.unshift(...action.payload.post)
         })
-    },
-    initialState
+    }, initialState
   );
 
-// action creator export
+// action creator export 묶어서 내보내자
 const actionCreators = {
     setPost,
     addPost,
+    getPostDB,
+    addPostDB,
   };
   
   export { actionCreators };

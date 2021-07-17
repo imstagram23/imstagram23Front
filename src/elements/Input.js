@@ -6,13 +6,30 @@ import { history } from "../redux/configureStore";
 
 
 const Input = (props) => {
-  const { label, placeholder, _onChange, type, multiLine, value, is_Submit, onSubmit , margin, is_comment, width} = props;
+
+  const { 
+    label, 
+    placeholder, 
+    _onChange, 
+    type, 
+    multiLine, 
+    value, 
+    is_Submit, 
+    onSubmit , 
+    margin, 
+    is_comment
+  } = props;
 
   if (is_comment) {
     return (
-        <CommentInput margin={margin} type={type} placeholder={placeholder} onChange={_onChange} value={value} width={width}/>
-    )
-  }
+        <CommentInput 
+        margin={margin} 
+        type={type} 
+        placeholder={placeholder} 
+        onChange={_onChange} 
+        value={value}/>
+    );
+  };
 
   if (multiLine) {
     return (
@@ -26,7 +43,7 @@ const Input = (props) => {
         ></ElTextArea>
       </Grid>
     );
-  }
+  };
 
   return (
     <React.Fragment>
