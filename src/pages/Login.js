@@ -4,6 +4,8 @@ import {Text, Input, Grid, Button} from "../elements/index";
 import styled from 'styled-components';
 import Signup from "./Signup"
 
+import { history } from "../redux/configureStore";
+
 const Login = () => {
 
     return (
@@ -37,7 +39,7 @@ const Login = () => {
               </ImageBox> */}
            
             <Grid>
-              <SignUpBox>계정이 없으신가요? <SignSpan onClick={Signup}>가입하기</SignSpan></SignUpBox>
+              <SignUpBox>계정이 없으신가요? <SignSpan onClick={()=>{history.push('/signup')}}>가입하기</SignSpan></SignUpBox>
             </Grid>
           </Grid>
         </React.Fragment>

@@ -17,9 +17,11 @@ const Mypost = () => {
             {/* <Container> */}
             <ProfileHeader />
             {/* <PostContainer> */}
+            <PostBox>
             <Post/>
             {/* </PostContainer> */}
             {/* </Container> */}
+            </PostBox>
           </Grid>
         </React.Fragment>
       );
@@ -51,5 +53,10 @@ const Mypost = () => {
 //   border: 2px solid black;
 //   padding: 120px 100px 120px 250px;
 // `;
+
+const PostBox = styled.div`
+  const
+
+`;
 
 export default Mypost;
