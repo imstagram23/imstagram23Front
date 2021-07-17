@@ -6,9 +6,9 @@ import { Grid, Text, Image, Button } from "../elements/index";
 import { history } from "../redux/configureStore";
 import { actionCreators as userActions } from "../redux/modules/user";
 import { useDispatch, useSelector } from "react-redux";
-// import ExitToAppIcon from '@material-ui/icons/ExitToApp';
-// import HomeIcon from "@material-ui/icons/Home";
-// import ExploreIcon from "@material-ui/icons/Explore";
+
+import { TiPlus } from "react-icons/ti";
+
 
 const Header = (props) => {
     // const dispatch = useDispatch()
@@ -35,14 +35,30 @@ const Header = (props) => {
                 <HeaderContents>
                   <Logo onClick={()=>{history.push('/')}}></Logo>
                   <IconContainer>
-                      <Text cursor='pointer' _onClick={()=>{history.push('/write')}} >작성</Text>
-                      <Text cursor='pointer'_onClick={()=> {history.push('/profile')}} src="프로필" shape='circle' size='24'>프로필</Text>
+                      <TiPlus 
+                      size="30px"
+                      cursor='pointer' 
+                      onClick={()=>{history.push('/write')}} />
+
+                      <Image 
+                      size="30"
+                      shape="circle" 
+                      margin="0px"
+                      src={props.user_info.user_profile}
+                      _onClick={()=>{history.push('/profile')}}/>
                   </IconContainer>
                 </HeaderContents>
             </Wrapper>
         </React.Fragment>
     )
 }
+
+Header.defaultProps = {
+  user_info: {
+    // user_name: "user_name",
+    user_profile: "https://img.insight.co.kr/static/2018/06/08/700/oaytfz0m123a56r373eh.jpg",
+  },
+};
 
 const Wrapper = styled.div`
   border: 1px solid #dbdbdb;
@@ -55,6 +71,7 @@ const Wrapper = styled.div`
   display: flex;
   flex-direction: row;
   justify-content: center;
+  box-shadow: rgba(0, 0, 0, 0.05) 0px 1px 2px 0px;
 `;
 
 const HeaderContents = styled.div`
@@ -78,7 +95,7 @@ const Logo = styled.div`
 `;
 
 const IconContainer = styled.div`
-  width: 90px;
+  width: 65px;
   margin-right: 14px;
   display: flex;
   flex-direction: row;

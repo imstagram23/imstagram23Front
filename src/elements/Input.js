@@ -65,9 +65,9 @@ Input.defaultProps = {
   is_comment: false,
 };
 
+//작성페이지 멀티라인 수정
 const ElTextArea = styled.textarea`
-  border: 1px solid #212121;
-  border-radius: 5px;
+  border: none;
   width: 100%;
   padding: 12px 4px;
   box-sizing: border-box;
@@ -86,7 +86,6 @@ ${(props) => props.margin? `margin:${props.margin}` : ''};
 const CommentInput = styled.input`
 ${(props) => props.margin? `margin:${props.margin}` : ''};
   border-style:none;
-  
   width: 100%;
   padding: 12px 4px;
   box-sizing: border-box;

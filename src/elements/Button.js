@@ -2,7 +2,20 @@ import React from "react";
 import styled from "styled-components";
 
 const Button = (props) => {
-  const { text, _onClick, is_float, children, margin, width, padding, is_alert, _disabled,height} = props;
+  const { 
+    text,
+     _onClick, 
+     is_float, 
+     children,
+     margin, 
+     width, 
+     padding, 
+     is_alert, 
+     _disabled,
+     height,
+     is_upload
+    } = props;
+  
   const styles = {
     margin: margin,
     width: width,
@@ -20,6 +33,13 @@ const Button = (props) => {
     return (
       <React.Fragment>
         <NotiButton style={styles}onClick={_onClick}>{text? text : children}</NotiButton>
+      </React.Fragment>
+    )
+  }
+  else if (is_upload){
+    return (
+      <React.Fragment>
+        <UploadBT style={styles}onClick={_onClick}>{text? text : children}</UploadBT>
       </React.Fragment>
     )
   }
@@ -41,7 +61,8 @@ Button.defaultProps = {
   width: '100%',
   padding: '12px 0px',
   _disabled:false,
-  height: '100%'
+  height: '100%',
+  is_upload: false,
 };
 
 const ElButton = styled.button`
@@ -55,6 +76,20 @@ const ElButton = styled.button`
   border: none;
   cursor:pointer;
   ${(props) => (props.margin? `margin: ${props.margin};` : ``)};
+`;
+//작성페이지 업로드 버튼 추가
+const UploadBT = styled.button`
+  width: ${(props) => props.width};
+  color: #212121;
+  background-color: #ffffff;
+  font-weight: 800;
+  padding: ${(props) => props.padding};
+  border-radius: 5px;
+  box-sizing: border-box;
+  border: 1px solid #ffffff;
+  cursor:pointer;
+  ${(props) => (props.margin? `margin: ${props.margin};` : ``)};
+  box-shadow: rgba(0, 0, 0, 0.16) 0px 1px 4px;
 `;
 
 const NotiButton = styled.button`
