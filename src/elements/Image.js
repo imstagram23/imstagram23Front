@@ -68,9 +68,10 @@ const ImageCircle = styled.div`
   background-image: url("${(props) => props.src}");
   background-size: cover;
   ${(props) => (props.margin ? `margin: ${props.margin}` : "")};
-  flex: 1;
+  /* 헤더이미지 위해 주석처리 */
+  /* flex: 1;
   border: 1px solid blue;
-  box-sizing:border-box;
+  box-sizing:border-box; */
 `;
 
 const ImageSquare = styled.div`

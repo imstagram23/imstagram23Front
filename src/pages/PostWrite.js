@@ -1,11 +1,44 @@
 import React from "react";
-import styled from "styled-components";
 import { Grid, Text, Image, Button, Input } from "../elements";
 
 import Header from "../components/Header";
 import Upload from "../shared/Upload";
 
+import { useSelector, useDispatch } from "react-redux";
+import { actionCreators as postActions } from "../redux/modules/post";
+
 const PostWrite = (props) => {
+    // 작성완료 버튼에 온클릭 넣어주기 위해서 임포트
+    // postActions라는 별칭 만들어서 actionCreators로 온클릭에 넣어주기
+    // 넣을때 길어지면 함수로 만들어서 함수명만 {}안에 넣기
+    const dispatch = useDispatch();
+    // const is_login = useSelector((state) => state.user.is_login);
+    const {history} = props;
+
+    // useState사용해서 인풋의 텍스트 내용 저장
+    const [contents, setContents] = React.useState();
+
+    const changeContents = (e) => {
+        setContents(e.target.value);
+        // 인풋의 onChange에 넣어주고 콘솔 찍어보기
+        // 바뀌는 내용이 바로 바로 오게 만든것!
+    }
+    // console.log(contents)
+
+    const addPost = () => {
+        dispatch(postActions.addPostDB(contents));
+    }
+
+    // 로그인 했을때만 작성할 수 있도록
+    // if(!is_login){
+    //     return (
+    //         <Grid>
+    //             <Text margin="100px 0" padding="14px">로그인 후 이용해 주세요!</Text>
+    //             {/* 뒤로가기 했을 때 다시 이 페이지로 들어오는것 방지하기 위해 push대신 replace */}
+    //             <Button _onClick={() => {history.replace('/login')}}로그인 하러가기></Button>
+    //         </Grid>
+    //     )
+    // }
 
     return (
         <React.Fragment>
@@ -25,16 +58,21 @@ const PostWrite = (props) => {
 
                 <Grid flex_row padding="4px 14px">
                     <Input 
-                    multiLine margin="0px" 
-                    _onChange={() => {console.log("작성인풋")}}>
-                        {props.contents}</Input>
+                    multiLine 
+                    value={contents}
+                    placeholder="내용을 입력해 주세요:)"
+                    margin="0px" 
+                    // _onChange={() => {console.log("작성인풋")}}
+                    _onChange={changeContents}
+                    >{props.contents}</Input>
                 </Grid>
 
                 <Grid padding="4px 14px">
                     <Button 
                     is_upload 
-                    _onClick={() => {console.log("업로드완료")}}>
-                        작성완료</Button>
+                    // _onClick={() => {console.log("업로드완료")}}
+                    _onClick={addPost}
+                    >작성완료</Button>
                 </Grid>
 
             </Grid>
