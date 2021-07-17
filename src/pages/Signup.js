@@ -11,38 +11,38 @@ const Signup = (props) => {
 
     return (
         <React.Fragment>
-            <Grid center > 
+            <Grid center padding="10px"> 
         <InnerBox>
           <LoginBox>
             {/* <div style={{ fontSize: "50px", margin: "20px 0px 10px 0px " }}>
             LOGO
           </div> */}
             <Logo></Logo>
-            <TopText style={{ fontSize: "12px" }}>
+            <TopText>
               친구들의 사진과 동영상을 보려면 가입하세요.
             </TopText>
             <Grid padding="16px 0px">
               <SignupInput
-                placeholder="이메일을 입력해주세요."
+                placeholder="이메일 주소"
                 _onChange={(e) => {
                  
                 }}
               />
               <SignupInput
-                placeholder="닉네임 입력해주세요."
+                placeholder="사용자 이름"
                 _onChange={(e) => {
                  
                 }}
               />
               <SignupInput
-                placeholder="패스워드 입력해주세요."
+                placeholder="비밀번호"
                 type="password"
                 _onChange={(e) => {
                   
                 }}
               />
               <SignupInput
-                placeholder="패스워드를 확인해 주세요"
+                placeholder="비밀번호 확인"
                 type="password"
                 _onChange={(e) => {
                  
@@ -50,7 +50,7 @@ const Signup = (props) => {
               />
               <Button
                 text="가입"
-                width="240px"
+                width="260px"
                 height="40px"
                 margin="10px auto"
               />
@@ -103,12 +103,23 @@ const Logo = styled.div`
   background-size: cover;
 `;
 
+
 const LoginBox = styled.div`
   width: 300px;
   align-items: center;
   margin: auto;
   border: none;
   margin-top: 40px;
+`;
+
+const TopText = styled.div`
+color: #8e8e8e;
+color: rgba(var(--f52,142,142,142),1);
+font-size: 17px;
+font-weight: 600;
+line-height: 20px;
+margin: 0 20px 10px;
+text-align: center;
 `;
 
 const LoginBtn = styled.button`
@@ -137,15 +148,7 @@ const Bg = styled.div`
   background-color: #fafafa;
 `;
 
-const TopText = styled.div`
-color: #8e8e8e;
-color: rgba(var(--f52,142,142,142),1);
-font-size: 17px;
-font-weight: 600;
-line-height: 20px;
-margin: 0 40px 10px;
-text-align: center;
-`;
+
 
 const SignupInput = styled.input`
 border: 1px solid #DCDBDC;

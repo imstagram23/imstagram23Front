@@ -45,7 +45,7 @@ const Input = (props) => {
             }}
           />
         ) : (
-          <ElInput argin={margin} type={type} placeholder={placeholder} onChange={_onChange} />
+          <ElInput margin={margin} type={type} placeholder={placeholder} onChange={_onChange} />
         )}
       </Grid>
     </React.Fragment>
@@ -72,6 +72,7 @@ const ElTextArea = styled.textarea`
   width: 100%;
   padding: 12px 4px;
   box-sizing: border-box;
+  resize: none;
 `;
 
 const ElInput = styled.input`

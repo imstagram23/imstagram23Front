@@ -34,6 +34,9 @@ const Login = () => {
               <Image onClick={()=>{window.alert('아직 준비중입니다.')}}/>
               </ImageBox>
             </Grid>
+            <Grid>
+              
+            </Grid>
           </Grid>
         </React.Fragment>
       );
