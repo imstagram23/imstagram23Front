@@ -24,9 +24,9 @@ const ProfileHeader = (props) => {
 
               />
               <Ui>
-                <Li><span>게시물</span><span>77</span></Li>
-                <Li><span>팔로워</span><span>99</span></Li>
-                <Li><span>팔로우</span><span>88</span></Li>
+                <Li><List>게시물</List><List>77</List></Li>
+                <Li><List>팔로워</List><List>99</List></Li>
+                <Li><List>팔로우</List><List>88</List></Li>
               </Ui>
               
             </Profile>
@@ -123,5 +123,9 @@ const ProfileHeader = (props) => {
   list-style: none;
   width: 100%;
   margin: 0px;
+  `;
+
+  const List = styled.span`
+  font-size: 15px;
   `;
 export default ProfileHeader;
