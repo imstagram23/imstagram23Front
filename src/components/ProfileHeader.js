@@ -11,33 +11,35 @@ const ProfileHeader = (props) => {
     // if (post_data.user) {
     return (
         <React.Fragment>
-          <Container>
+          <Grid is_flex align-items="center">
+            <Container>
             <Profile>
+              <ImageBox>
               <Image
                 shape="circle"
                 size="77"
-                margin="0px 5%"
+                margin="10px 5%"
                 box-sizing="border-box"
                 width="30%"
                 border="1px solid blue"
                 flex="1"
+                src={props.user_info.user_profile}
 
               />
+              </ImageBox>
               <Ui>
-                <Li><List>게시물</List><List>77</List></Li>
-                <Li><List>팔로워</List><List>99</List></Li>
-                <Li><List>팔로우</List><List>88</List></Li>
+                <Li1><List>게시물</List><List>77</List></Li1>
+                <Li2><List>팔로워</List><List>99</List></Li2>
+                <Li3><List>팔로우</List><List>88</List></Li3>
               </Ui>
               
             </Profile>
             <TextContainer>
-              <div>
-                <h1>유저이름</h1>
-                <h5>상태메세지</h5>
-                <button>프로필 편집</button>
-              </div>
+                <ProfileName>{props.user_info.user_name}</ProfileName>
+                <Status>상태메세지</Status>
             </TextContainer>
-          </Container>
+            </Container>
+          </Grid>
           
         </React.Fragment>
       );
@@ -82,16 +84,18 @@ const ProfileHeader = (props) => {
     // console.log(user_info);
 };
   const Container = styled.div`
-    width: 550px;
-    height: 300px;
+    width: 300px;
     flex-direction: row;
     border: 1px solid black;
-    padding: 30px;
+    padding: 5px;
+    align-items: center;
+    margin: 20px auto;
   `;
 
   const Profile = styled.div`
-    width: 90%;
-    margin: auto;
+    width: 100%;
+    height: 40%;
+    margin: 20px auto;
     display: flex;
     border: 1px solid purple;
   `;
@@ -99,27 +103,71 @@ const ProfileHeader = (props) => {
   const TextContainer = styled.div`
     display: flex;
     flex-direction: column;
+    margin: auto;
     width: 100%;
-    height: 150px;
     border: 1px solid orange;
   `;
 
-  const Ui = styled.ul`
+  const ImageBox = styled.div`
+  border:1px solid black;
+  display:flex;
+  margin: 10px;
+  width: 30%;
+  `;
+
+  const Ui = styled.div`
   border: 1px solid red;
-  flex:1;
+  width: 70%;
+  box-sizing: border-box;
+  hegiht: 50px;
+  margin: 20px auto;
+  `;
+
+  const Li1 = styled.div`
+  border: 1px solid red;
+  float: left;
+  width: 30%;
+  hegiht: 10px;
+  box-sizing: border-box;
+  `;
+  
+  const Li2 = styled.div`
+  border: 1px solid green;
+  float: left;
+  margin-left: 5%;
   width:30%;
   box-sizing: border-box;
-  hegiht: 70px;
+  `;
+  
+  const Li3 = styled.div`
+  border: 1px solid blue;
+    float: right;
+    width:30%;
+    box-sizing: border-box;
   `;
 
-  const Li = styled.li`
-  border: 1px solid green;
-  list-style: none;
-  width: 100%;
-  margin: 0px;
-  `;
-
-  const List = styled.span`
+  const List = styled.div`
   font-size: 15px;
+  text-align: center;
+  margin-top: 10px;
   `;
+
+  const ProfileName = styled.div`
+  margin: 20px;
+  font-size: 20px;
+  `;
+
+  const Status = styled.div`
+  margin: 20px;
+  font-size: 20px;
+  `;
+
+  ProfileHeader.defaultProps = {
+    user_info: {
+      user_name: "user_name",
+      user_profile: "https://image5jvqbd.fmkorea.com/files/attach/new/20200816/486616/657118072/3039288745/99b983892094b5c6d2fc3736e15da7d1.jpeg",
+    },
+  
+  };
+
 export default ProfileHeader;

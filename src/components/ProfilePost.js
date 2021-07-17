@@ -28,6 +28,7 @@ const ProfilePost = () => {
       flex-shrink: 0;
       display: flex;
       flex-direction: row;
+      border:1px solid red;
     `;
 
 export default ProfilePost;

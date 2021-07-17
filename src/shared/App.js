@@ -1,5 +1,7 @@
 import React, { useEffect } from "react";
 import { BrowserRouter, Route, Switch, withRouter } from "react-router-dom";
+import { history } from "../redux/configureStore";
+import { ConnectedRouter } from "connected-react-router";
 
 import NotFound from "./NotFound";
 import PostList from "../pages/PostList";
@@ -10,11 +12,13 @@ import Signup from "../pages/Signup";
 import Mypost from "../pages/Mypost";
 
 
+
 function App() {
 
   return (
-    <React.Fragment>      
-        <Switch>
+    <React.Fragment>        
+          <ConnectedRouter history={history}>
+          <Switch>
           <Route exact path="/" component={PostList} />
           <Route exact path="/write" component={PostWrite} />
           <Route exact path="/edit" component={PostEdit} />
@@ -22,7 +26,8 @@ function App() {
           <Route exact path="/signup" component={Signup} />
           <Route exact path="/profile" component={Mypost} />
           <Route render={(props) => (<NotFound history={props.history}/>)} />
-        </Switch>
+          </Switch>
+          </ConnectedRouter>
     </React.Fragment>
   );
 }

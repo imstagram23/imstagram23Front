@@ -3,7 +3,7 @@ import styled from "styled-components";
 
 const Image = (props) => {
 
-  const { shape, src, size, _onClick, cursor, margin } = props;
+  const { shape, src, size, _onClick, cursor, margin, padding } = props;
 
 
   const styles = {
@@ -11,6 +11,7 @@ const Image = (props) => {
     size: size,
     cursor: cursor,
     margin: margin,
+    padding: padding,
 
   };
 
@@ -45,6 +46,7 @@ Image.defaultProps = {
   _onClick: () => {},
   cursor: "",
   margin: false,
+  padding: false,
 
 };
 
@@ -66,10 +68,10 @@ const ImageCircle = styled.div`
   background-image: url("${(props) => props.src}");
   background-size: cover;
   margin: 4px;
-
   flex: 1;
   border: 1px solid blue;
   box-sizing:border-box;
+  padding: ${(props) => props.padding};
 
 `;
 
