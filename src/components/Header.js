@@ -1,4 +1,4 @@
-//프랙연습 끝
+//프랙연습 끝이 아닌가?
 import React from "react";
 import styled from "styled-components";
 import { Grid, Text, Image, Button } from "../elements/index";
