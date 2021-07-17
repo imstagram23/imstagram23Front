@@ -103,12 +103,6 @@ const ProfileHeader = (props) => {
     height: 150px;
     border: 1px solid orange;
   `;
-  
-  const IdButton = styled.div`
-    display: flex;
-    flex-direction: row;
-    margin-right: 20px;
-  `;
 
   const Ui = styled.ul`
   border: 1px solid red;
