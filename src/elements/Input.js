@@ -1,44 +1,27 @@
 import React from "react";
 import styled from "styled-components";
-
 import { Text, Grid } from "./index";
 
-// 인풋 컴포넌트
-/**
- * 
- * @param {*} props 
- * - label 인풋 박스 위에 넣어줄 텍스트 
- * - placeholder 인풋 박스에 미리 넣어줄 텍스트
- * - _onChange 인풋에 들어갈 값(text, file 등)이 변경되면 실행할 함수
- * - type 인풋 박스의 타입 (file, text 등)
- * - multiline 여러 줄(엔터 포함)을 보여줄 지 말지 여부 (input과 textarea로 분기할거예요.)
- * - value 인풋 박스의 값
- * - is_submit 엔터키 이벤트를 줄지 말지 여부 boolean
- * - onSubmit 엔터키 이벤트에서 실행할 함수(onKeyPress 이벤트를 사용해요!)
- * @returns 
- */
+
 const Input = (props) => {
-  const {
-    label,
-    placeholder,
-    _onChange,
-    type,
-    multiLine,
-    value,
-    is_submit,
-    onSubmit,
-  } = props;
+  const { label, placeholder, _onChange, type, multiLine, value, is_Submit, onSubmit , margin, is_comment} = props;
+
+  if (is_comment) {
+    return (
+        <CommentInput margin={margin} type={type} placeholder={placeholder} onChange={_onChange} value={value}/>
+    )
+  }
 
   if (multiLine) {
     return (
       <Grid>
-        {label && <Text margin="0px">{label}</Text>}
-        <ElTextarea
+        <Text margin="0px">{label ? label : ""}</Text>
+        <ElTextArea
           rows={10}
           value={value}
           placeholder={placeholder}
           onChange={_onChange}
-        ></ElTextarea>
+        ></ElTextArea>
       </Grid>
     );
   }
@@ -46,22 +29,23 @@ const Input = (props) => {
   return (
     <React.Fragment>
       <Grid>
-        {label && <Text margin="0px">{label}</Text>}
-        
-        {is_submit ? (
+        <Text margin="0px">{label ? label : ""}</Text>
+        {/* 다른 인풋에 value값이 없기때문에 코멘트 작성 인풋에 isSubmit을 줘서 코멘트 작성 인풋만 value라는 props를 넣어주기 위함 */}
+        {is_Submit ? (
           <ElInput
+            margin={margin}
+            value={value}
             type={type}
             placeholder={placeholder}
             onChange={_onChange}
-            value={value}
             onKeyPress={(e) => {
-              if (e.key === "Enter") {
+              if(e.key === 'Enter'){
                 onSubmit(e);
               }
             }}
           />
         ) : (
-          <ElInput type={type} placeholder={placeholder} onChange={_onChange} />
+          <ElInput argin={margin} type={type} placeholder={placeholder} onChange={_onChange} />
         )}
       </Grid>
     </React.Fragment>
@@ -72,29 +56,40 @@ Input.defaultProps = {
   multiLine: false,
   label: false,
   placeholder: "텍스트를 입력해주세요.",
+  is_Submit: false,
+  _onChange: () => {},
   type: "text",
   value: "",
-  is_submit: false,
   onSubmit: () => {},
-  _onChange: () => {},
+  margin:false,
+  is_comment: false,
 };
 
-const ElTextarea = styled.textarea`
+const ElTextArea = styled.textarea`
+  
   border: 1px solid #212121;
+  border-radius: 5px;
   width: 100%;
   padding: 12px 4px;
   box-sizing: border-box;
 `;
 
 const ElInput = styled.input`
-  border: 1px solid #DCDBDC;
-  width: 260px;
+${(props) => props.margin? `margin:${props.margin}` : ''};
+border: 1px solid #212121;
+  border-radius: 5px;
+  width: 100%;
   padding: 12px 4px;
   box-sizing: border-box;
-  margin: 3px auto;
-  weight: 36px;
+`;
+
+const CommentInput = styled.input`
+${(props) => props.margin? `margin:${props.margin}` : ''};
+  border-style:none;
   
-  
+  width: 100%;
+  padding: 12px 4px;
+  box-sizing: border-box;
 `;
 
 export default Input;
