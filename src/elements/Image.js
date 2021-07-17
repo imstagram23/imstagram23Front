@@ -65,11 +65,11 @@ const ImageCircle = styled.div`
   cursor: ${(props) => props.cursor};
   background-image: url("${(props) => props.src}");
   background-size: cover;
-  margin: 4px;
-
+  ${(props) => (props.margin ? `margin: ${props.margin}` : "")};
+/* 
   flex: 1;
   border: 1px solid blue;
-  box-sizing:border-box;
+  box-sizing:border-box; */
 
 `;
 
@@ -83,6 +83,7 @@ const ImageSquare = styled.div`
   margin: 4px;
 `;
 
+//포스트 이미지
 const AspectOutter = styled.div`
   width: auto;
   min-width: 250px;

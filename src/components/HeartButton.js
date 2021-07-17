@@ -1,18 +1,17 @@
 import React from "react";
 import styled from "styled-components";
 
-// 분홍 하트, 회색 하트 이미지 가져오기
-import heart_pink from "../shared/heart_pink.png";
-import heart_gray from "../shared/heart_gray.png";
+import { FcLikePlaceholder } from "react-icons/fc";
+import { FcLike } from "react-icons/fc";
 
 // 하트 버튼은 일단 모양새만 잡아줄거예요!
 const HeartButton = (props) => {
 
-  const icon_url = props.is_like? heart_pink : heart_gray;
+  const heartIcon = props.is_like? <FcLike size="22px"/> : <FcLikePlaceholder size="22px"/>;
 
   return (
     <React.Fragment>
-      <Heart onClick={props._onClick} icon_url={icon_url}></Heart>
+      <Heart onClick={props._onClick} heartIcon={heartIcon}></Heart>
     </React.Fragment>
   );
 };
