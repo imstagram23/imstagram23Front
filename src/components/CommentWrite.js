@@ -29,74 +29,6 @@ const CommentWrite = (props) => {
     );
 }
 
-const ButtonComment = styled.button`
-    border: 0;
-    color: #0095f6;
-    color: rgba(var(--d69,0,149,246),1);
-    display: inline;
-    padding: 0;
-    position: relative;
-    display:flex;
-    background-color: transparent;
-    margin-left: 25px;
-`;
-
-const InputComment = styled.input`
--webkit-writing-mode: horizontal-tb !important;
-    text-rendering: auto;
-    letter-spacing: normal;
-    word-spacing: normal;
-    text-transform: none;
-    text-indent: 0px;
-    text-shadow: none;
-    text-align: start;
-    appearance: auto;
-    -webkit-rtl-ordering: logical;
-    flex-direction: column;
-    cursor: text;
-    white-space: pre-wrap;
-    overflow-wrap: break-word;
-    column-count: initial !important;
-    margin: 0em;
-    font: 400 13.3333px Arial;
-    border-width: 1px;
-    border-style: solid;
-    display:flex;
-    width: 160px;
-    border: none;
-    margin-left: 10px;
-`;
-
-
-const ImageBox = styled.span`
-width: 32px;
-height: 32px;
-    background-color: rgba(var(--b3f,250,250,250),1);
-    border-radius: 50%;
-    box-sizing: border-box;
-    display: block;
-    -webkit-box-flex: 0;
-    flex: 0 0 auto;
-    overflow: hidden;
-    position: relative;
-    margin: 0px 0px 0px 25px;
-    display: flex;
-`;
-
-const Outter = styled.div`
-align-items: center;
-background-color: rgba(var(--bb2,239,239,239),1);
-border-bottom: 1px solid rgba(var(--b6a,219,219,219),1);
-flex-flow: row wrap;
--webkit-box-orient: horizontal;
--webkit-box-direction: normal;
--webkit-box-pack: start;
-justify-content: flex-start;
-padding: 8px 0;
-display:flex;
-width: 100%;
-`;
-
 const Section = styled.section`
     border: 0;
     padding: 0;
@@ -129,6 +61,74 @@ const Form = styled.form`
     position: relative;
     margin-left: 25px;
     width: 60px;
+`;
+
+const Outter = styled.div`
+align-items: center;
+background-color: rgba(var(--bb2,239,239,239),1);
+border-bottom: 1px solid rgba(var(--b6a,219,219,219),1);
+flex-flow: row wrap;
+-webkit-box-orient: horizontal;
+-webkit-box-direction: normal;
+-webkit-box-pack: start;
+justify-content: flex-start;
+padding: 8px 0;
+display:flex;
+width: 100%;
+`;
+
+const ImageBox = styled.span`
+width: 32px;
+height: 32px;
+    background-color: rgba(var(--b3f,250,250,250),1);
+    border-radius: 50%;
+    box-sizing: border-box;
+    display: block;
+    -webkit-box-flex: 0;
+    flex: 0 0 auto;
+    overflow: hidden;
+    position: relative;
+    margin: 0px 0px 0px 25px;
+    display: flex;
+`;
+
+
+const InputComment = styled.input`
+-webkit-writing-mode: horizontal-tb !important;
+    text-rendering: auto;
+    letter-spacing: normal;
+    word-spacing: normal;
+    text-transform: none;
+    text-indent: 0px;
+    text-shadow: none;
+    text-align: start;
+    appearance: auto;
+    -webkit-rtl-ordering: logical;
+    flex-direction: column;
+    cursor: text;
+    white-space: pre-wrap;
+    overflow-wrap: break-word;
+    column-count: initial !important;
+    margin: 0em;
+    font: 400 13.3333px Arial;
+    border-width: 1px;
+    border-style: solid;
+    display:flex;
+    width: 160px;
+    border: none;
+    margin-left: 10px;
+`;
+
+const ButtonComment = styled.button`
+    border: 0;
+    color: #0095f6;
+    color: rgba(var(--d69,0,149,246),1);
+    display: inline;
+    padding: 0;
+    position: relative;
+    display:flex;
+    background-color: transparent;
+    margin-left: 25px;
 `;
 
 CommentWrite.defaultProps = {
