@@ -16,7 +16,7 @@ const Button = (props) => {
      is_upload,
      bg,
      color,
-     radius,
+     borderRadius,
      border,
     } = props;
   
@@ -27,7 +27,7 @@ const Button = (props) => {
     padding: padding,
     backgroundColor: bg,
     color: color,
-    borderRadius: radius,
+    borderRadius: borderRadius,
     border: border,
   }
   if (is_float) {

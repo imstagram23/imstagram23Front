@@ -22,12 +22,14 @@ const Input = (props) => {
     color,
     radius,
     height,
+    bg,
 
   } = props;
 
   if (is_comment) {
     return (
         <CommentInput 
+        backgroundColor={bg}
         borderRadius={radius}
         margin={margin} 
         type={type} 
@@ -97,6 +99,7 @@ Input.defaultProps = {
   color: false,
   borderRadius: false,
   height: false,
+  bg: false,
 };
 
 //작성페이지 멀티라인 수정

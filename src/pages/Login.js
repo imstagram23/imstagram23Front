@@ -7,74 +7,89 @@ import Signup from "./Signup"
 import { history } from "../redux/configureStore";
 
 const Login = () => {
+  
+  // const dispatch = useDispatch();
 
-    return (
-        <React.Fragment>           
-          <Grid bg_color='white' flex_column padding="0 10%" max_height="380px">
+  // const [email, setEmail] = React.useState("");
+  // const [password, setPassword] = React.useState("");
+
+  // const login = () => {
+  //   if (email === "" || password === "") {
+  //     window.alert("아이디 혹은 비밀번호가 공란입니다! 입력해주세요!");
+  //     return;
+  //   }
+
+
+  return (
+      <React.Fragment>           
+        <Grid bg_color='white' flex_column padding="0 10%" max_height="380px">
+        
+        <LoginBox>
+        <BannerBox>
+          <Banner/>       
+          </BannerBox>
+          <Line/>
+          {/* 회원가입 박스 */}
+          <InputBox>
+            {/* input 값의 변화를 state에 저장 */}
+            <SignupInput  _onChange={(e) => {
           
-          <LoginBox>
-          <BannerBox>
-            <Banner/>       
-            </BannerBox>
-            <Line/>
-            <InputBox>
-              {/* input 값의 변화를 state에 저장 */}
-              <SignupInput  _onChange={(e) => {
+              }} placeholder="아이디를 입력하세요" margin='5px'/>
+            <SignupInput _onChange={(e) => {
+                
+              }}
+              type='password'
+              placeholder="비밀번호를 입력하세요" margin='5px'/>
+          <TextBox>
+          <Text color="#0095f6">비밀번호를 잊으셨나요?</Text>
+          </TextBox>
+          <Button borderRadius="5px" border="none" text="로그인" width="260px" margin="10px auto" bg="#0095f6"
+            _onClick={() => {console.log("로그인"); Login();}}></Button>
+          </InputBox>
+          </LoginBox>
             
-                }} placeholder="아이디를 입력하세요" margin='5px'/>
-              <SignupInput _onChange={(e) => {
-                  
-                }}
-                type='password'
-                placeholder="비밀번호를 입력하세요" margin='5px'/>
-            <TextBox>
-            <Text color="#0095f6">비밀번호를 잊으셨나요?</Text>
-            </TextBox>
-            <Button width="260px" margin="10px auto" > 로그인 </Button>
-            </InputBox>
-            </LoginBox>
-              
-              {/* <ImageBox>
-              <Image onClick={()=>{window.alert('아직 준비중입니다.')}}/>
-              </ImageBox> */}
-           
-            <Grid>
-              <SignUpBox>계정이 없으신가요? <SignSpan onClick={()=>{history.push('/signup')}}>가입하기</SignSpan></SignUpBox>
-            </Grid>
+            {/* <ImageBox>
+            <Image onClick={()=>{window.alert('아직 준비중입니다.')}}/>
+            </ImageBox> */}
+          
+          <Grid>
+            <SignUpBox>계정이 없으신가요? <SignSpan onClick={()=>{history.push('/signup')}}>가입하기</SignSpan></SignUpBox>
           </Grid>
-        </React.Fragment>
-      );
-    };
+        </Grid>
+      </React.Fragment>
+    );
+  };
     
-    const BannerBox = styled.div`
-      width:100%;
-      min-height:100px;
-      padding: 0px 20%;
-      margin: 10px auto;
+  const BannerBox = styled.div`
+    width:100%;
+    min-height:100px;
+    padding: 0px 20%;
+    margin: 10px auto;
     `;
     
-    const Banner = styled.div`
-        background-image:url('https://firebasestorage.googleapis.com/v0/b/dab-react.appspot.com/o/instagram.png?alt=media&token=a53527c4-07df-4c3f-ae18-ca30c3e0aa2b');
-        width:100%;
-        margin: auto;
-        min-height:100px;
-        background-size:contain;
-        background-repeat:no-repeat;
+  const Banner = styled.div`
+    background-image:url('https://firebasestorage.googleapis.com/v0/b/dab-react.appspot.com/o/instagram.png?alt=media&token=a53527c4-07df-4c3f-ae18-ca30c3e0aa2b');
+    width:100%;
+    margin: auto;
+    min-height:100px;
+    background-size:contain;
+    background-repeat:no-repeat;
     `;
     
 
-    const Line = styled.hr`
-      margin: auto auto 25px auto;
-      border: 1px dotted #ddd;
+  const Line = styled.hr`
+    margin: auto auto 25px auto;
+    border: 1px dotted #ddd;
     `;
 
-    const LoginBox = styled.div`
-  width: 300px;
-  align-items: center;
-  margin: 70px auto 10px auto;
-  border: none;
-  display: block;
-  justify-content: center;
+  const LoginBox = styled.div`
+    width: 300px;
+    align-items: center;
+    margin: 70px auto 10px auto;
+    border: none;
+    display: block;
+    justify-content: center;
+    
 `;
 
 const InputBox = styled.div`
@@ -82,6 +97,7 @@ const InputBox = styled.div`
     margin: auto 20px;
     vertical-align: middle;
     inline-block;
+    
 `;
 
 const TextBox = styled.div`

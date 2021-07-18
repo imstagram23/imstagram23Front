@@ -54,14 +54,17 @@ const Signup = (props) => {
                 width="260px"
                 height="40px"
                 margin="10px auto"
+                bg="#0095f6"
+                border="none"
+                borderRadius="5px"
               />
             </Grid>
           </LoginBox>
           <SingUpBox>
             <SingUpText>
-              계정이 있으신가요?
+              계정이 있으신가요?   
               <span
-                style={{ color: "#0095f6", fontWeight: "bold" }}
+                style={{ color: "#0095f6", fontWeight: "bold", border: "none"}}
                 onClick={() => {
                   history.push("/login");
                 }}
@@ -129,17 +132,19 @@ const LoginBtn = styled.button`
 `;
 
 const SingUpBox = styled.div`
-  border: 1px solid lightgray;
+  border: none;
   width: 300px;
   height: 80px;
   margin: 10px auto;
   text-align: center;
   cursor: pointer;
+   border: none;
 `;
 
 const SingUpText = styled.div`
   margin-top: 27px;
   align-items: center;
+ 
   
 `;
 
@@ -148,8 +153,6 @@ const Bg = styled.div`
   height: 100%;
   background-color: #fafafa;
 `;
-
-
 
 const SignupInput = styled.input`
 border: 1px solid #DCDBDC;
