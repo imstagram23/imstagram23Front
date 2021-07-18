@@ -8,7 +8,7 @@ import User from "./modules/user";
 import Post from "./modules/post";
 import Image from "./modules/image";
 
-// 브라우저 히스토리를 만듭니다.
+// history객체 만들기 
 export const history = createBrowserHistory();
 
 // 가져온 리듀서를 루트 리듀서로 묶어줍니다.
@@ -16,11 +16,12 @@ const rootReducer = combineReducers({
   user: User,
   post: Post,
   image: Image,
+  // 내가 만든 history랑 라우터 연결
   router: connectRouter(history),
 });
 
-// 사용할 미들웨어를 여기에 넣어줍니다.
-// thunk에는 history를 넣어줄거예요. (중간 다리 역할을 하는 미들웨어에서도 페이지 이동을 할 수 있게 하려고!)
+// 사용할 미들웨어 넣기
+// thunk에는 history를 넣rl (중간 다리 역할을 하는 미들웨어에서도 페이지 이동을 할 수 있게 하려고!)
 const middlewares = [thunk.withExtraArgument({ history: history })];
 
 // 지금이 어느 환경인 지 알려줘요. (개발환경, 프로덕션(배포)환경 ...)

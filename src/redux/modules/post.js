@@ -2,7 +2,7 @@ import { createAction, handleActions } from "redux-actions";
 import { produce } from "immer";
 import axios from "axios";
 import moment from "moment";
-
+// 업로드 후 프리뷰 이미지 없애주기 위해
 import { actionCreators as imageActions } from "./image";
 
 // actions
@@ -24,8 +24,8 @@ const initialPost = {
     // 아래 두개는 user 리덕스에서 가져올 것임
     // writer: "user_name",
     // user_profile: "https://img.insight.co.kr/static/2018/06/08/700/oaytfz0m123a56r373eh.jpg",
-    image_url: "https://cdn.vox-cdn.com/thumbor/M2rjDALxvNDv3yqeYuIdL3spabo=/0x0:2000x1333/1200x675/filters:focal(840x507:1160x827)/cdn.vox-cdn.com/uploads/chorus_image/image/65939918/171109_08_11_37_5DS_0545__1_.0.jpg",
-    contents: "NewYork NewYork",
+    image: "https://cdn.vox-cdn.com/thumbor/M2rjDALxvNDv3yqeYuIdL3spabo=/0x0:2000x1333/1200x675/filters:focal(840x507:1160x827)/cdn.vox-cdn.com/uploads/chorus_image/image/65939918/171109_08_11_37_5DS_0545__1_.0.jpg",
+    content: "NewYork NewYork",
     comment_cnt: 10,
     insert_dt: moment().format("YYYY년 MM월 DD일 hh:mm:ss"),
 };
@@ -53,34 +53,64 @@ const getPostDB = () => {
         })
     };
 }
+// 아나바다 참고 코드
+// const getPostDB = () => {
+//     return function (dispatch, getState, { history }) {
+//       axios
+//         .get('http://3.36.50.96/api/post')
+//         // .get('http://localhost:4000/product')
+//         .then((res) => {
+//           console.log(res);
+//           console.log(res.data);
+//           dispatch(setPost(res.data.result));
+  
+//         }).catch(err => {
+//           // 요청이 정상적으로 끝나지 않았을 때(오류 났을 때) 수행할 작업!
+//           console.log("에러 났어!");
+//         })
+//     };
+//   };
+
 
 // 서버에 새 포스트 저장하는 함수
 // 추가할 데이터 모양새를 먼저 파악. 모양새대로 추가 할것임
 // 유저정보는 이미 리덕스에 있음 
 // 카드를 하나 추가할 때, 들어가야할(필요한) 데이터를 파라미터로 넣어주기
 // 이 값들은 카드를 추가하는 곳인 PostWrite에도 동일하게 들어가야함
-const addPostDB = (contents, image_url) => {
+const addPostDB = (contents, image) => {
     return function (dispatch, getState, {history}){
 
-        const formdata = new FormData();
-        formdata.apppend('contents', contents);
-        formdata.apppend('image_url', image_url);
+        // VALIDATION 
+        // 이미지 모듈에서 이미지 가져오기
+        const _image = getState().image.preview;
+        // 만약 이미지가 없으면 경고를 띄워주고 업로드 막기
+        if (!_image) {
+        window.alert("이미지가 필요해요!");
+        return;
+        }
+
+        // FormData형식으로 데이터 넘겨주기
+        const formData = new FormData();
+        // formData.append(name, value);
+        // name은 value에 포함되는 데이터 필드 이름, value는 필드값
+        formData.append('content', contents);
+        formData.append('image', image);
         // formadata 내용 확인(그냥 콘솔로그론 안보임)
-        for (let key of formdata.keys()) { console.log(key); }
-        for (var value of formdata.values()) { console.log(value); }
+        for (let key of formData.keys()) { console.log(key); }
+        for (var value of formData.values()) { console.log(value); }  
 
         axios({
             method: 'post',
             url: 'http://3.36.50.96/api/post',  //??똑같음?? 메소드가 달라서!
-            data: formdata,
-            headers: { "Content-Type": "multipart/form-data" },
+            data: formData,
+            headers: { "contents-Type": "multipart/form-data" },
         }).then((res) => {
             console.log(res);
             console.log(res.data);
             // 서버에서 데이터 전체 내려주면 res.data.~하면 되지만
             // 전체 데이터를 내려주지 않으면 파라미터값을 그대로 가져온다.
             // 이미지를 http://도메인주소+res.data.~로 넣어줘야 한다.
-            console.log(res.data.result.image);
+            console.log(res.data.result.image_url);
 
             const new_post = {
                 id: res.data.result.postId,
@@ -90,33 +120,36 @@ const addPostDB = (contents, image_url) => {
                 // 이미지 'http://wanos.shop/' + 
                 // 전체 데이터 내려받을때에 한가지(e.g.이미지)만 빼내기 위해선 위의내용 제하기
                 createdAt: moment().format("YYYY년 MM월 DD일 hh:mm"),
-              }
+            }
 
-            //서버에 데이터 잘 들어갔는지 확인 후 리덕스에 추가
+            // 서버에 데이터 잘 들어갔는지 확인 후 리덕스에 추가
             dispatch(addPost(new_post));
-            dispatch(imageActions.setPreview(""));
+            // 다음에 글 작성할 떄 이전 이미지 안보이게 하려고
+            dispatch(imageActions.setPreview(null));
             history.replace("/");
 
-        }).catch(err => {
-            window.alert("포스트 작성에 실패했어요!")
-            console.log("에러? 아니져~ 연봉 올라가는 소리~");
-        })  
+        }).catch((err) => {
+            window.alert("포스트 작성에 문제가 있어요!", err);
+            console.log("에러? 아니져~ 연봉 올라가는 소리~", err);
+        }).catch((err) => {
+            window.alert("이미지 업로드에 문제가 있어요!", err);
+            console.log("에러? 아니져~ 연봉 올라가는 소리~", err);
+        })
     }
 } 
 
 // reducer
-export default handleActions(
-    {
-        [SET_POST]: (state, action) => produce(state, (draft) => {
-            draft.list.push(...action.payload.post_list);
-        }),
-  
-        [ADD_POST]: (state, action) => produce(state, (draft) => {
-            // 배열 제일 앞으로 붙이기
-            draft.list.unshift(...action.payload.post)
-        })
-    }, initialState
-  );
+export default handleActions({
+    [SET_POST]: (state, action) => produce(state, (draft) => {
+        draft.list.push(...action.payload.post_list);
+    }),
+
+    [ADD_POST]: (state, action) => produce(state, (draft) => {
+        // 배열 제일 앞으로 붙이기
+        draft.list.unshift(...action.payload.post)
+    })
+}, initialState
+);
 
 // action creator export 묶어서 내보내자
 const actionCreators = {

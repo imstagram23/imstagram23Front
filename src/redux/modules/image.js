@@ -42,8 +42,7 @@ export default handleActions({
   [SET_PREVIEW]: (state, action) => produce(state, (draft) => {
     draft.preview = action.payload.preview;
   }),
-  },initialState
-);
+  },initialState);
 
 const actionCreators = {
   uploadImage,
