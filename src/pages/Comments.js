@@ -1,33 +1,40 @@
 import React from "react";
 import styled from "styled-components";
-import { Grid, Text, Image, Button } from "../elements/index";
+import {Grid, Image, Text, Button, Input} from "../elements";
 import { history } from "../redux/configureStore";
 
 import CommentList from "../components/CommentList";
 import CommentWrite from "../components/CommentWrite";
 import Post from "../components/Post";
+import Header from "../components/Header";
 
 
 const Comments = (props) => {
 
     return (
         <React.Fragment>
-            <div style={{ border: "1px solid #E5E5E5" }}>
+            <Header/>
+            
+            <Grid margin="20px 0px 0px 0px">
+            <CommentList />
+            {/* <CommentDetail>
             <Text margin="0px">{props.contents}</Text>
-            </div>
+            </CommentDetail> */}
+            <hr style={{ width:"90%"}}/>
             <CommentList/>
             <CommentWrite/>
+            </Grid>
         </React.Fragment>
     )
 }
 
-const CommentDetail = styled.div`
-    border: 1px solid black;
-    height: 20px;
-`;
+// const CommentDetail = styled.div`
+//     border: 1px solid black;
+//     height: auto;
+// `;
 
 Comments.defaultProps = {
-    contents: "어쩌고 저쩌고",
+    contents: "어쩌고 저쩌고"
   };
 
 export default Comments;

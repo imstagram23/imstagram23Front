@@ -17,12 +17,18 @@ const Input = (props) => {
     is_Submit, 
     onSubmit , 
     margin, 
-    is_comment
+    is_comment,
+    border,
+    color,
+    radius,
+    height,
+
   } = props;
 
   if (is_comment) {
     return (
         <CommentInput 
+        borderRadius={radius}
         margin={margin} 
         type={type} 
         placeholder={placeholder} 
@@ -52,11 +58,15 @@ const Input = (props) => {
         {/* 다른 인풋에 value값이 없기때문에 코멘트 작성 인풋에 isSubmit을 줘서 코멘트 작성 인풋만 value라는 props를 넣어주기 위함 */}
         {is_Submit ? (
           <ElInput
+            height={height}
+            color={color}
             margin={margin}
             value={value}
             type={type}
             placeholder={placeholder}
             onChange={_onChange}
+            border={border}
+            borderRadius={radius}
             onKeyPress={(e) => {
               if(e.key === 'Enter'){
                 onSubmit(e);
@@ -83,6 +93,10 @@ Input.defaultProps = {
   margin:false,
   is_comment: false,
   width: false,
+  border: false,
+  color: false,
+  borderRadius: false,
+  height: false,
 };
 
 //작성페이지 멀티라인 수정
@@ -96,17 +110,18 @@ const ElTextArea = styled.textarea`
 
 const ElInput = styled.input`
 ${(props) => props.margin? `margin:${props.margin}` : ''};
-  border: 1px solid #212121;
-  border-radius: 5px;
   width: 100%
+  ${(props) => props.border? `border:${props.border}` : ''};
   padding: 12px 4px;
   box-sizing: border-box;
+  ${(props) => props.height? `height:${props.height}` : ''};
 `;
 
 const CommentInput = styled.input`
 ${(props) => props.margin? `margin:${props.margin}` : ''};
   border-style:none;
 ${(props) => props.width? `width:${props.width}` : ''};
+${(props) => props.borderRadius? `border-radius:${props.borderRadius}` : ''};
   padding: 12px 4px;
   box-sizing: border-box;
 `;

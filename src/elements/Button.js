@@ -13,7 +13,11 @@ const Button = (props) => {
      is_alert, 
      _disabled,
      height,
-     is_upload
+     is_upload,
+     bg,
+     color,
+     radius,
+     border,
     } = props;
   
   const styles = {
@@ -21,6 +25,10 @@ const Button = (props) => {
     width: width,
     height: height,
     padding: padding,
+    backgroundColor: bg,
+    color: color,
+    borderRadius: radius,
+    border: border,
   }
   if (is_float) {
     return (
@@ -63,19 +71,23 @@ Button.defaultProps = {
   _disabled:false,
   height: '100%',
   is_upload: false,
+  backgroundColor: false,
+  color: false,
+  borderRadius: false,
+  border: false,
 };
 
 const ElButton = styled.button`
   width: ${(props) => props.width};
   color: white;
-  background-color: #0095f6;
+  background-color: ${(props) => props.bg};
   font-weight: 800;
   padding: ${(props) => props.padding};
-  border-radius: 5px;
   box-sizing: border-box;
-  border: none;
   cursor:pointer;
+  ${(props) => (props.border? `border: ${props.border};` : ``)};
   ${(props) => (props.margin? `margin: ${props.margin};` : ``)};
+  ${(props) => (props.borderRadius? `border-radius: ${props.borderRadius};` : ``)};
 `;
 //작성페이지 업로드 버튼 추가
 const UploadBT = styled.button`
