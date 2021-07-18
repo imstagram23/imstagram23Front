@@ -21,7 +21,7 @@ const rootReducer = combineReducers({
 });
 
 // 사용할 미들웨어 넣기
-// thunk에는 history를 넣rl (중간 다리 역할을 하는 미들웨어에서도 페이지 이동을 할 수 있게 하려고!)
+// thunk에는 history를 넣기 (중간 다리 역할을 하는 미들웨어에서도 페이지 이동을 할 수 있게 하려고!)
 const middlewares = [thunk.withExtraArgument({ history: history })];
 
 // 지금이 어느 환경인 지 알려줘요. (개발환경, 프로덕션(배포)환경 ...)
