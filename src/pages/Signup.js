@@ -1,14 +1,79 @@
-import React from "react";
-
-
+import React, {useCallback, useState} from "react";
 import {Text, Input, Grid, Button} from "../elements/index";
 import styled from 'styled-components';
 
-const Signup = (props) => {
+import { history } from "../redux/configureStore";
+import {useDispatch} from "react-redux";
+import { actionCreators as userActions } from "../redux/modules/user";
+import Login from "./Login";
 
-    const { history } = props;
+const Signup = () => {
+  const dispatch = useDispatch();
+  const [email, setEmail] = useState('')
+  const [password, setPwd] = useState('')
+  const [passwordConfirm, setConfirmedPwd] = useState('') 
+  const [nickname, setName] = useState('')
+  const ok_submit = nickname && password && passwordConfirm ? true : false
+  
+  const data = {
+    email: email,
+    nickname: nickname,
+    password: password,
+    passwordConfirm: passwordConfirm,
 
-    console.log(props);
+  }
+
+  const signUp = () => {
+
+    dispatch(userActions.SignUPApi(data))
+  }
+
+  const submitEmail = (e) => {
+    setEmail(e.target.value)
+  }
+
+  const submitName = (e) => {
+    setName(e.target.value)
+  }
+  const submitPwd = (e) => {
+    setPwd(e.target.value)
+  }
+  const submitConfirmedPwd = (e) => {
+    setConfirmedPwd(e.target.value)
+  }
+
+
+//   const siteSignup = () => {
+
+//     // if( nickname === "" || password === "" || passwordConfirm === "" || email=== "") {
+//     //     window.alert("모두 입력해주세요!");
+//     //     return;
+//     // }
+//     // if(password !== passwordConfirm){
+//     //     window.alert("비밀번호가 일치하지 않습니다!");
+//     //     return;
+//     // }
+//     dispatch(userActions.SignUPApi(nickname,password));
+// }
+
+  // const signup = () => {
+  //   // if (!id || !pwd || !user_name || !pwdConfirm) {
+  //   //   window.alert("아이디, 패스워드, 닉네임을 모두 입력해주세요!");
+  //   //   return;
+  //   // }
+  //   // 사전 정의된 정규표현식으로 이메일 형식 체크
+  //   if(!emailCheck(id)){
+  //     window.alert('이메일 형식이 맞지 않습니다!');
+  //     return;
+  //   }
+  //   if (pwd !== pwdConfirm){
+  //     window.alert("패스워드와 패스워드 확인이 일치하지 않습니다!");
+  //     return;
+  //   }
+    
+  //   dispatch(userActions.signupFB(id, user_name, pwd))
+
+  // }
 
     return (
         <React.Fragment>
@@ -23,32 +88,26 @@ const Signup = (props) => {
               친구들의 사진과 동영상을 보려면 가입하세요.
             </TopText>
             <Grid padding="16px 0px">
-              <SignupInput
+              <SignupInput 
                 placeholder="이메일 주소"
-                _onChange={(e) => {
-                 
-                }}
+                onChange={submitEmail}
               />
-              <SignupInput
+              <SignupInput 
                 placeholder="사용자 이름"
-                _onChange={(e) => {
+                onChange={submitName}
                  
-                }}
               />
-              <SignupInput
+              <SignupInput 
                 placeholder="비밀번호"
                 type="password"
-                _onChange={(e) => {
-                  
-                }}
+                onChange={submitPwd}
               />
-              <SignupInput
+              <SignupInput 
                 placeholder="비밀번호 확인"
                 type="password"
-                _onChange={(e) => {
-                 
-                }}
+                onChange={submitConfirmedPwd}
               />
+              
               <Button
                 text="가입"
                 width="260px"
@@ -57,6 +116,8 @@ const Signup = (props) => {
                 bg="#0095f6"
                 border="none"
                 borderRadius="5px"
+                _onClick={()=> {signUp()
+                }}
               />
             </Grid>
           </LoginBox>

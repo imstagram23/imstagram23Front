@@ -67,31 +67,34 @@ const initialState = {
 
 // }
 
-// //회원가입api
-// const SignUPApi = (username,pwd) => {
-//     return function (dispatch, getState, { history }){
-//         axios({
-//             method: "POST",
-//             url: "http://15.165.158.39/join",
-//             headers: {
-//                 "Accept": "application/json", //클라이언트가 서버한테 요청하는(원하는) 타입
-//                 "Content-Type":"application/json;charset=UTF-8", //현재 서버한테 보내는 데이터 타입
-//                 'Access-Control-Allow-Origin' : '*'
-//             },
-//             data: {
-//                 "username":username,
-//                 "password": pwd,
-//             }
-//         }).then((res)=>{
-//             console.log(res);
-//             history.push("/login");
-//             window.alert("축하합니다! 회원가입 되었습니다!")
-//         }).catch(error=>{
-//             console.log(error);
-//             window.alert("회원가입 실패!");
-//         });
-//     }
-// };
+//회원가입api
+const SignUPApi = (data) => {
+    return function (dispatch, getState, { history }){
+        axios({
+            method: "POST",
+            url: "http://3.36.50.96/api/signup",
+            // headers: {
+            //     "Accept": "application/json", //클라이언트가 서버한테 요청하는(원하는) 타입
+            //     "Content-Type":"application/json;charset=UTF-8", //현재 서버한테 보내는 데이터 타입
+            //     'Access-Control-Allow-Origin' : '*'
+            // },
+            data: {
+                "email": data.email,
+                "nickname": data.nickname,
+                "password": data.password,
+                "passwordConfirm": data.passwordConfirm
+
+            },
+        }).then((res)=>{
+            console.log(res);
+            history.push("/login");
+            window.alert("축하합니다! 회원가입 되었습니다!")
+        }).catch(error=>{
+            console.log(error);
+            window.alert("회원가입 실패!");
+        });
+    }
+};
 
 
 
@@ -121,9 +124,10 @@ const actionCreators = {
     logIn,
     logOut,
     getUser,
+    SignUPApi,
     // loginAPI,
     // logOutApi,
-    // SignUPApi,
+    
 
 };
 

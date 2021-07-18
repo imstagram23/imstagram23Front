@@ -1,24 +1,31 @@
-import React from "react";
-
-import {Text, Input, Grid, Button} from "../elements/index";
-import styled from 'styled-components';
-import Signup from "./Signup"
-
+import React, {useCallback} from "react";
 import { history } from "../redux/configureStore";
 
+import styled from 'styled-components';
+import {Text, Input, Grid, Button} from "../elements/index";
+
+import Signup from "./Signup"
+import {useDispatch, useSelector} from "react-redux";
+import { actionCreators as userActions } from "../redux/modules/user";
+
+
 const Login = () => {
-  
   // const dispatch = useDispatch();
+  // const [username, setUsername] = React.useState("");
+  // const [pwd, setPwd] = React.useState("");
+  // const onChangeUsername = useCallback((e) => setUsername(e.target.value),[])
+  // const onChangePwd = useCallback((e) => setPwd(e.target.value),[])
 
-  // const [email, setEmail] = React.useState("");
-  // const [password, setPassword] = React.useState("");
+  // const LogIn = () => {
 
-  // const login = () => {
-  //   if (email === "" || password === "") {
-  //     window.alert("아이디 혹은 비밀번호가 공란입니다! 입력해주세요!");
-  //     return;
-  //   }
+  //     if( username ==="" || pwd === ""){
+  //         window.alert("모두 입력해주세요")
+  //         return;
+  //     }
+  //     dispatch(userActions.loginAPI(username,pwd));
+  //     history.push("/");
 
+  // }
 
   return (
       <React.Fragment>           
