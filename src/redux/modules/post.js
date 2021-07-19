@@ -64,23 +64,23 @@ const getPostDB = () => {
         }
 
         // 원본(새로고침해야 피드가 보임)
-        // axios({
-        //     method: 'get',
-        //     url: 'http://3.36.50.96/api/post',
-        //     // data: {},
-        //     headers: { 
-        //         "Content-Type": "multipart/form-data",
-        //         "Access-Control-Allow-Origin": "*",
-        //         "Authorization": `Bearer ${sessionStorage.getItem("token")};`,
-        //     },
-        // }).then((response) => {
-        //     console.log(response);
-        //     console.log(response.data);
-        //     dispatch(setPost(response.data));
+        axios({
+            method: 'get',
+            url: 'http://3.36.50.96/api/post',
+            // data: {},
+            headers: { 
+                "Content-Type": "multipart/form-data",
+                "Access-Control-Allow-Origin": "*",
+                "Authorization": `Bearer ${sessionStorage.getItem("token")};`,
+            },
+        }).then((response) => {
+            console.log(response);
+            console.log(response.data);
+            dispatch(setPost(response.data));
 
-        // }).catch(err => {
-        //     console.log("에러? 아니져~ 연봉 올라가는 소리~");
-        // })
+        }).catch(err => {
+            console.log("에러? 아니져~ 연봉 올라가는 소리~");
+        })
     };
 };
 
@@ -131,14 +131,17 @@ const addPostDB = (contents, image) => {
             console.log(response.data.imageUrl);
 
             const new_post = {
-                id: response.data.postId,
-                contents: response.data.content,
-                // 이미지 주소 넣는 방법
-                image_url: response.data.imageUrl,
+                // 키값은 logger에서 next state에서 post의 list의 키값(필드값?)으로 맞춰 줘야함
+                // 안그러면 defaultProps값 들어감
+                postId: response.data.postId,
+                writer: response.data.writer,
+                content: response.data.content,
+                imageUrl: response.data.imageUrl,
                 // 이미지 'http://wanos.shop/' + 
                 // 전체 데이터 내려받을때에 한가지(e.g.이미지)만 빼내기 위해선 위의내용 제하기
                 createdAt: moment().format("YYYY년 MM월 DD일 hh:mm"),
             }
+            console.log(new_post);
 
             // 서버에 데이터 잘 들어갔는지 확인 후 리덕스에 추가
             dispatch(addPost(new_post));
@@ -193,7 +196,7 @@ export default handleActions({
         draft.list.unshift(action.payload.post)
     }),
     [DELETE_POST]: (state, action) => produce(state, (draft) => {
-        let idx = draft.list.findIndex((p) => p.id === action.payload.post_id);
+        let idx = draft.list.findIndex((p) => p.postId === action.payload.post_id);
         console.log(idx);
 
         // 인덱스가 있을때만 삭제
