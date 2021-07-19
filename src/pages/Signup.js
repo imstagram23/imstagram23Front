@@ -13,7 +13,6 @@ const Signup = () => {
   const [password, setPwd] = useState('')
   const [passwordConfirm, setConfirmedPwd] = useState('') 
   const [nickname, setName] = useState('')
-  const ok_submit = nickname && password && passwordConfirm ? true : false
   
   const data = {
     email: email,
