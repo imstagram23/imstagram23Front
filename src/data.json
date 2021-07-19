@@ -1,0 +1,40 @@
+{
+    "post": [
+      {
+        "postId": 1,
+        "writer": "111",
+        "content": 1111111,
+        "createdAt" : "2021-07-09T17:35:00",
+        "modifiedAt" : "2021-07-09T17:35:00",
+        "imageUrl": "https://~~~~"
+      },
+      {
+        "postId": 2,
+        "writer": "222",
+        "content": 2222222,
+        "createdAt" : "2021-07-09T17:35:00",
+        "modifiedAt" : "2021-07-09T17:35:00",
+        "imageUrl": "https://~~~~"
+      },
+      {
+        "postId": 3,
+        "writer": "333",
+        "content": 3333333,
+        "createdAt" : "2021-07-09T17:35:00",
+        "modifiedAt" : "2021-07-09T17:35:00",
+        "imageUrl": "https://~~~~"
+      }
+    ],
+    "users": [
+      {
+        "id": 1,
+        "name": "Lee",
+        "role": "developer"
+      },
+      {
+        "id": 2,
+        "name": "Kim",
+        "role": "designer"
+      }
+    ]
+  }

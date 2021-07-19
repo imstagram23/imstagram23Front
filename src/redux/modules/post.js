@@ -38,15 +38,16 @@ const getPostDB = () => {
         axios({
             method: 'get',
             url: 'http://3.36.50.96/api/post',
+            // url: 'http://localhost:4000/posts',  //일단 로컬에서 제이슨서버 만들어서 돌려보기
             // data: {},
-            headers: { 
-                "Content-Type": "multipart/form-data",
-                // "Access-Control-Allow-Origin": "*",
-            },
+            // headers: { 
+            //     "Content-Type": "multipart/form-data",
+            //     "Access-Control-Allow-Origin": "*",
+            // },
         }).then((response) => {
             console.log(response);
             console.log(response.data);
-            dispatch(setPost(response.data.result));
+            dispatch(setPost(response.data));
 
         }).catch(err => {
             console.log("에러? 아니져~ 연봉 올라가는 소리~");
@@ -102,21 +103,25 @@ const addPostDB = (contents, image) => {
         axios({
             method: 'post',
             url: 'http://3.36.50.96/api/post',  //??똑같음?? 메소드가 달라서!
+            // url: 'http://localhost:3001/posts',  //일단 로컬에서 제이슨서버 만들어서 돌려보기
             data: formData,
-            headers: { "contents-Type": "multipart/form-data" },
-        }).then((res) => {
-            console.log(res);
-            console.log(res.data);
+            headers: { 
+                "Content-Type": "multipart/form-data",
+                "Access-Control-Allow-Origin": "*",
+            },
+        }).then((response) => {
+            console.log(response);
+            console.log(response.data);
             // 서버에서 데이터 전체 내려주면 res.data.~하면 되지만
             // 전체 데이터를 내려주지 않으면 파라미터값을 그대로 가져온다.
             // 이미지를 http://도메인주소+res.data.~로 넣어줘야 한다.
-            console.log(res.data.result.image_url);
+            console.log(response.data.result.image_url);
 
             const new_post = {
-                id: res.data.result.postId,
+                id: response.data.result.postId,
                 contents,
                 // 이미지 주소 넣는 방법
-                image_url: res.data.result.image,
+                image_url: response.data.result.image,
                 // 이미지 'http://wanos.shop/' + 
                 // 전체 데이터 내려받을때에 한가지(e.g.이미지)만 빼내기 위해선 위의내용 제하기
                 createdAt: moment().format("YYYY년 MM월 DD일 hh:mm"),
