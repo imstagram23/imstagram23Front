@@ -22,7 +22,6 @@ const initialState = {
 
 // const mockUserAPl = 'https://run.mocky.io/v3/ce3bcb61-6cb3-471d-bc40-e3243360b529'
 
-
 //로그인api
 const loginAPI = (data) => {
     return function (dispatch, getState, { history }) {
@@ -127,7 +126,6 @@ const actionCreators = {
     SignUPApi,
     loginAPI,
     // logOutApi,
-    
 
 };
 
