@@ -30,57 +30,58 @@ const Post = (props) => {
 
   return (
     <React.Fragment>
+      <Grid padding="0 0 30px 0">
       
-      <Grid is_flex >
-        <Grid is_flex padding="0px 10px" width="auto">
-          <Image 
-          shape="circle" 
-          margin="4px" 
-          src={props.user_profile}/>
-          <Text bold _onClick={() => {history.push('/profile')}}>{props.writer}</Text>
-        </Grid >
-        <Grid is_flex width="auto" padding="0 14px" >
-          <Grid padding="0 5px">
-            <MdDelete 
-            size="20px"
-            cursor='pointer'                
-            onClick={()=>{console.log("삭제!")}}/>
-            {/* <Text padding="0 5px" _onClick={()=>{console.log("삭제!")}}>{props.deleteButton}</Text> */}
-          </Grid>
+        <Grid is_flex >
+          <Grid is_flex padding="0px 10px" width="auto">
+            <Image 
+            shape="circle" 
+            margin="4px" 
+            src={props.user_profile}/>
+            <Text bold _onClick={() => {history.push('/profile')}}>{props.writer}</Text>
+          </Grid >
+          <Grid is_flex width="auto" padding="0 14px" >
+            <Grid padding="0 5px">
+              <MdDelete 
+              size="20px"
+              cursor='pointer'                
+              onClick={()=>{console.log("삭제!")}}/>
+              {/* <Text padding="0 5px" _onClick={()=>{console.log("삭제!")}}>{props.deleteButton}</Text> */}
+            </Grid>
 
-          <Grid>
-          <RiEdit2Line 
-            size="20px"
-            cursor='pointer'
-            onClick={()=>{history.push('/edit')}}/>
-            {/* <Text padding="0 13px" _onClick={()=>{history.push('/edit')}}>{props.editButton}</Text> */}
+            <Grid>
+            <RiEdit2Line 
+              size="20px"
+              cursor='pointer'
+              onClick={()=>{history.push('/edit')}}/>
+              {/* <Text padding="0 13px" _onClick={()=>{history.push('/edit')}}>{props.editButton}</Text> */}
+            </Grid>
           </Grid>
         </Grid>
-      </Grid>
 
-      <Grid>
-          <Image 
-          shape="rectangle" 
-          margin="5px 0" 
-          src={props.image_url}/>
-      </Grid>
+        <Grid>
+            <Image 
+            shape="rectangle" 
+            margin="5px 0" 
+            src={props.image_url}/>
+        </Grid>
 
-      <Grid padding="4px 14px 0 14px">
-        {/* <HeartButton/> */}
-        {/* is_me들어가면 위에걸로 */}
-        <FcLikePlaceholder size="22px"/>
-      </Grid>
-
+        <Grid padding="4px 14px 0 14px">
+          {/* <HeartButton/> */}
+          {/* is_me들어가면 위에걸로 */}
+          <FcLikePlaceholder size="22px"/>
+        </Grid>
 
         <Grid flex_row padding="0 14px 4px 14px">
         <Text margin="0px" bold padding="0 5px 0 0">{props.writer}</Text>
         <Text margin="0px">{props.contents}</Text>
       </Grid>
 
-      <Grid padding="4px 14px">
-        <Text margin="0px" size="12px">댓글 {props.comment_cnt}개</Text>
+        <Grid padding="4px 14px">
+          <Text margin="0px" size="12px">댓글 {props.comment_cnt}개</Text>
+        </Grid>
+      
       </Grid>
-
           <Grid is_flex padding=" 7px 13px 7px 13px">
           <Text _onClick={()=>{history.push('/comment')}} margin="0px" bold color="rgba(var(--f52,142,142,142),1)">
             댓글 10개 모두 보기
@@ -110,7 +111,6 @@ const Post = (props) => {
 
       </React.Fragment>
     );
-
 };
  
 

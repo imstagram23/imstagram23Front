@@ -14,20 +14,30 @@ const PostWrite = (props) => {
     // 넣을때 길어지면 함수로 만들어서 함수명만 {}안에 넣기
     const dispatch = useDispatch();
     // const is_login = useSelector((state) => state.user.is_login);
+    const preview =useSelector((state) => state.image.preview);
+
     const {history} = props;
 
     // useState사용해서 인풋의 텍스트 내용 저장
     const [contents, setContents] = React.useState();
+    const [image, setImage] = React.useState();
 
     const changeContents = (e) => {
         setContents(e.target.value);
         // 인풋의 onChange에 넣어주고 콘솔 찍어보기
         // 바뀌는 내용이 바로 바로 오게 만든것!
     }
-    // console.log(contents)
+    // console.log(contents);
 
+    const changeImage = (file) => {
+        setImage(file);
+        console.log(file);
+    }
+    // console.log(image);
+
+    // 게시글 추가 함수(post모듈에서 addPostDB부분의 필드이름으로 동일하게 넣어줌)
     const addPost = () => {
-        dispatch(postActions.addPostDB(contents));
+        dispatch(postActions.addPostDB(contents, image));
     }
 
     // 로그인 했을때만 작성할 수 있도록
@@ -47,14 +57,14 @@ const PostWrite = (props) => {
 
             <Grid padding="75px 0px">
                 <Grid padding="20px 14px">
-                    <Upload />
+                    <Upload changeImage={changeImage}/>
                 </Grid>
 
                 <Grid>
                     <Image 
                     shape="rectangle" 
                     margin="5px 0 10px 0" 
-                    src={props.image_url}/>
+                    src={preview ? preview : "https://media.istockphoto.com/photos/round-podium-or-pedestal-with-blue-background-picture-id1226478932?k=6&m=1226478932&s=170667a&w=0&h=NOFRuuS4sWeCA1LK6lro51uZXfpzPRBHh54ckqCEWw8="}/>
                 </Grid>
 
                 <Grid flex_row padding="4px 14px">

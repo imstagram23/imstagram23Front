@@ -14,12 +14,12 @@ const setPreview = createAction(SET_PREVIEW, (preview) => ({ preview }));
 
 // 리듀서가 사용할 initialState
 const initialState = {
-  image_url: "http://via.placeholder.com/400x300",
+  image_url: "",
   uploading: false,
   preview: null,
 };
 
-//DB
+// DB   ????DB에 업로드 어떻게?
 const uploadImageDB = (image) => {
   return function (dispatch, getState, {history}) {
 
@@ -42,8 +42,7 @@ export default handleActions({
   [SET_PREVIEW]: (state, action) => produce(state, (draft) => {
     draft.preview = action.payload.preview;
   }),
-  },initialState
-);
+  },initialState);
 
 const actionCreators = {
   uploadImage,

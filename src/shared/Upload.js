@@ -9,11 +9,15 @@ import { actionCreators as imageActions } from "../redux/modules/image";
 
 const Upload = (props) => {
   const dispatch = useDispatch();
+  // 사진 업로딩 시, 버튼 안눌리게 하려고
+  const is_uploading = useSelector((state) => state.image.uploading);
   const fileInput = React.useRef();
 
   const selectFile = (e) => {
     // e.target은 input. input이 가진 files 객체 확인
-    console.log(e.target.files);
+    // console.log(e);
+    // console.log(e.target);
+    // console.log(e.target.files);
     console.log(e.target.files[0]);
     // 파일을 한 개만 입력받는 경우이기 때문에 files[0]으로 접근
     console.log(fileInput.current.files[0]);
@@ -21,6 +25,11 @@ const Upload = (props) => {
     // 파일 리더 객체를 사용해서 미리보기 넣어주기
     const reader = new FileReader();
     const file = fileInput.current.files[0];
+
+    // const uploadDB = () => {
+    //   let image = fileInput.current.files[0];
+    //   const _upload = 
+    // }
 
     // 파일객체 넘겨주기
     console.log(file)
@@ -31,6 +40,7 @@ const Upload = (props) => {
 
     // 읽기가 끝나면 발생하는 이벤트 핸들러
     reader.onloadend = () => {
+      console.log(reader.result)
       dispatch(imageActions.setPreview(reader.result));
     };
   };
@@ -42,6 +52,7 @@ const Upload = (props) => {
         type="file"
         onChange={selectFile}
         ref={fileInput}
+        disabled={is_uploading}
       />
     </React.Fragment>
   )
