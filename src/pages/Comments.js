@@ -8,21 +8,21 @@ import CommentWrite from "../components/CommentWrite";
 import Post from "../components/Post";
 import Header from "../components/Header";
 
-
 const Comments = (props) => {
 
     return (
         <React.Fragment>
             <Header/>
             
-            <Grid margin="20px 0px 0px 0px">
+            <Grid padding="57px 0px">
+            <CommentWrite/>
             <CommentList />
             {/* <CommentDetail>
             <Text margin="0px">{props.contents}</Text>
             </CommentDetail> */}
             <hr style={{ width:"90%"}}/>
             <CommentList/>
-            <CommentWrite/>
+            
             </Grid>
         </React.Fragment>
     )
