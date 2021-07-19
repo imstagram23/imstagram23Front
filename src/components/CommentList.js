@@ -26,7 +26,7 @@ const CommentItem = (props) => {
         <Grid is_flex>
           
             <Grid is_flex width="auto">
-                <Image shape="circle"/>
+                <Image shape="circle" src={props.image}/>
                 <Text bold>{user_name}</Text>
             </Grid>
             <Grid is_flex margin="0px 4px">
