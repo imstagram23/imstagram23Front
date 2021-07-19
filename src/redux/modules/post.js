@@ -8,13 +8,17 @@ import { actionCreators as imageActions } from "./image";
 // actions
 const SET_POST = "SET_POST";
 const ADD_POST = "ADD_POST";
+const DELETE_POST = "DELETE_POST";
 
 //action creator
 const setPost = createAction(SET_POST, (post_list) => ({post_list}));
 const addPost = createAction(ADD_POST, (post) => ({post}));
+const deletePost = createAction(DELETE_POST, (post_id) => ({ post_id }));
 
 const initialState = {
     list: [],
+    is_loading: false,
+    preview: null,
 }
 
 // 게시글 하나의 정보(Post의 defaultProps)
@@ -38,7 +42,6 @@ const getPostDB = () => {
         axios({
             method: 'get',
             url: 'http://3.36.50.96/api/post',
-            // url: 'http://localhost:4000/posts',  //일단 로컬에서 제이슨서버 만들어서 돌려보기
             // data: {},
             // headers: { 
             //     "Content-Type": "multipart/form-data",
@@ -54,23 +57,6 @@ const getPostDB = () => {
         })
     };
 }
-// 아나바다 참고 코드
-// const getPostDB = () => {
-//     return function (dispatch, getState, { history }) {
-//       axios
-//         .get('http://3.36.50.96/api/post')
-//         // .get('http://localhost:4000/product')
-//         .then((res) => {
-//           console.log(res);
-//           console.log(res.data);
-//           dispatch(setPost(res.data.result));
-  
-//         }).catch(err => {
-//           // 요청이 정상적으로 끝나지 않았을 때(오류 났을 때) 수행할 작업!
-//           console.log("에러 났어!");
-//         })
-//     };
-//   };
 
 
 // 서버에 새 포스트 저장하는 함수
@@ -115,13 +101,13 @@ const addPostDB = (contents, image) => {
             // 서버에서 데이터 전체 내려주면 res.data.~하면 되지만
             // 전체 데이터를 내려주지 않으면 파라미터값을 그대로 가져온다.
             // 이미지를 http://도메인주소+res.data.~로 넣어줘야 한다.
-            console.log(response.data.result.image_url);
+            console.log(response.data.imageUrl);
 
             const new_post = {
-                id: response.data.result.postId,
-                contents,
+                id: response.data.postId,
+                contents: response.data.content,
                 // 이미지 주소 넣는 방법
-                image_url: response.data.result.image,
+                image_url: response.data.imageUrl,
                 // 이미지 'http://wanos.shop/' + 
                 // 전체 데이터 내려받을때에 한가지(e.g.이미지)만 빼내기 위해선 위의내용 제하기
                 createdAt: moment().format("YYYY년 MM월 DD일 hh:mm"),
@@ -129,7 +115,7 @@ const addPostDB = (contents, image) => {
 
             // 서버에 데이터 잘 들어갔는지 확인 후 리덕스에 추가
             dispatch(addPost(new_post));
-            // 다음에 글 작성할 떄 이전 이미지 안보이게 하려고
+            // 다음에 글 작성할 떄 이전 이미지 안보이게 하려고 근데 왜 보이지?????
             dispatch(imageActions.setPreview(null));
             history.replace("/");
 
@@ -143,6 +129,29 @@ const addPostDB = (contents, image) => {
     }
 } 
 
+const deletePostDB = (id) => {
+    return function (dispatch, getState, {history}){
+
+        axios({
+            method: 'delete',
+            url: `http://3.36.50.96/api/post/${id}`,
+            // data: formData,
+            // headers: { 
+            //     "Content-Type": "multipart/form-data",
+            //     "Access-Control-Allow-Origin": "*",
+            // },
+        }).then((response) => {
+            console.log(response);
+            console.log(response.data);
+            dispatch(deletePost(response.data.postId));
+            // 새로고침 해야만 삭제 반영됨. 오류다오류
+        }).catch((err) => {
+            window.alert("포스트 삭제에 문제가 있어요!", err);
+            console.log("에러? 아니져~ 연봉 올라가는 소리~", err);
+        })
+    }
+}
+
 // reducer
 export default handleActions({
     [SET_POST]: (state, action) => produce(state, (draft) => {
@@ -152,6 +161,10 @@ export default handleActions({
     [ADD_POST]: (state, action) => produce(state, (draft) => {
         // 배열 제일 앞으로 붙이기
         draft.list.unshift(...action.payload.post)
+    }),
+    [DELETE_POST]: (state, action) => produce(state, (draft) => {
+        let idx = draft.list.findIndex((p) => p.id === action.payload.post_id);
+        console.log(idx);
     })
 }, initialState
 );
@@ -162,6 +175,7 @@ const actionCreators = {
     addPost,
     getPostDB,
     addPostDB,
-  };
+    deletePostDB,
+};
   
   export { actionCreators };

@@ -44,7 +44,7 @@ const Header = (props) => {
                       size="30"
                       shape="circle" 
                       margin="0px"
-                      src={props.user_info.user_profile}
+                      src={props.user_profile}
                       _onClick={()=>{history.push('/profile')}}/>
                   </IconContainer>
                 </HeaderContents>
@@ -54,10 +54,8 @@ const Header = (props) => {
 }
 
 Header.defaultProps = {
-  user_info: {
-    // user_name: "user_name",
-    user_profile: "https://img.insight.co.kr/static/2018/06/08/700/oaytfz0m123a56r373eh.jpg",
-  },
+  writer: "Robert Downey Jr.",
+  user_profile: "https://img.insight.co.kr/static/2018/06/08/700/oaytfz0m123a56r373eh.jpg",
 };
 
 const Wrapper = styled.div`
@@ -66,7 +64,8 @@ const Wrapper = styled.div`
   width: 100vw;
   height: 55px;
   position: fixed;
-  /* z-index: 1; */
+  /* 헤더가 게시물사진에 가려져 안보이기 때문에 인덱스 제일 앞으로 */
+  z-index: 1;
   background-color: white;
   display: flex;
   flex-direction: row;

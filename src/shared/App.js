@@ -23,8 +23,8 @@ function App() {
 
   return (
     <React.Fragment>        
-          <ConnectedRouter history={history}>
-          <Switch>
+      <ConnectedRouter history={history}>
+        <Switch>
           <Route exact path="/" component={PostList} />
           <Route exact path="/write" component={PostWrite} />
           <Route exact path="/edit" component={PostEdit} />
@@ -33,9 +33,8 @@ function App() {
           <Route exact path="/profile" component={Mypost} />
           <Route exact path="/comment" component={Comments} />
           <Route render={(props) => (<NotFound history={props.history}/>)} />
-
-          </Switch>
-          </ConnectedRouter>
+        </Switch>
+      </ConnectedRouter>
     </React.Fragment>
   );
 }

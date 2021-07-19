@@ -1,6 +1,8 @@
 import React from "react";
 import styled from "styled-components";
 
+import {Text} from "../elements"; 
+
 import { FcLikePlaceholder } from "react-icons/fc";
 import { FcLike } from "react-icons/fc";
 

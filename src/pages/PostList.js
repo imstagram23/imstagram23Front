@@ -36,11 +36,12 @@ const PostList = (props) => {
             </Grid> */}
             {/* Post에 게시글 정보 넘겨주는 것까지 끝 */}
             {/* 아무것도 안나오는 이유는 데이터가 없으니까~ 서버랑 연결해야함*/}
+            {/* p에는 게시글에 대한 모든 정보 들어감 */}
             <Grid padding="75px 0px">
                 {post_list.map((p, idx) => {
-                    return <Post key={p.id} {...p}/>
+                    // console.log(p);
+                    return <Post key={idx} {...p} image={p.imageUrl}/>
                 })}
-
             </Grid>
 
         </React.Fragment>
