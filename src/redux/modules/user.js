@@ -31,7 +31,8 @@ const loginAPI = (data) => {
             headers: {
                 "Accept": "application/json", //클라이언트가 서버한테 요청하는(원하는) 타입
                 "Content-Type":"application/json;charset=UTF-8", //현재 서버한테 보내는 데이터 타입
-                'Access-Control-Allow-Origin' : '*'
+                'Access-Control-Allow-Origin' : '*',
+                "Authorization": `Bearer ${sessionStorage.getItem("token")};`,
             },
             data: {
                 "email": data.email,
@@ -39,7 +40,9 @@ const loginAPI = (data) => {
             }
         }).then((res)=>{
             localStorage.setItem("email", JSON.stringify(`${data.email}`)); //localStorage의 텍스트형이므로 객체 json.stringfy로 변환
-            sessionStorage.setItem("token", res.data);
+            sessionStorage.setItem("token", res.data.Authorization);
+            
+
             dispatch(logIn({
                 email: data.email,
                 password: data.password,
@@ -81,6 +84,7 @@ const SignUPApi = (data) => {
                 "Accept": "application/json", //클라이언트가 서버한테 요청하는(원하는) 타입
                 "Content-Type":"application/json;charset=UTF-8", //현재 서버한테 보내는 데이터 타입
                 'Access-Control-Allow-Origin' : '*'
+                
             },
             data: {
                 "email": data.email,
@@ -96,6 +100,7 @@ const SignUPApi = (data) => {
         }).catch(error=>{
             console.log(error);
             window.alert("회원가입 실패!");
+            history.replace("/login");
         });
     }
 };

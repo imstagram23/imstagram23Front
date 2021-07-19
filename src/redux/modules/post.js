@@ -42,15 +42,18 @@ const getPostDB = () => {
         axios({
             method: 'get',
             url: 'http://3.36.50.96/api/post',
-            // data: {},
-            // headers: { 
-            //     "Content-Type": "multipart/form-data",
-            //     "Access-Control-Allow-Origin": "*",
-            // },
+            data: {},
+            headers: { 
+                "Content-Type": "multipart/form-data",
+                "Access-Control-Allow-Origin": "*",
+                "Authorization": `Bearer ${sessionStorage.getItem("token")};`,
+            },
+            
         }).then((response) => {
             console.log(response);
             console.log(response.data);
             dispatch(setPost(response.data));
+            
 
         }).catch(err => {
             console.log("에러? 아니져~ 연봉 올라가는 소리~");
