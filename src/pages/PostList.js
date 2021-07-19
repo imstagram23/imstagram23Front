@@ -40,7 +40,7 @@ const PostList = (props) => {
             <Grid padding="75px 0px">
                 {post_list.map((p, idx) => {
                     // console.log(p);
-                    return <Post key={idx} {...p} image={p.imageUrl}/>
+                    return <Post key={idx} {...p} image_url={p.imageUrl}/>
                 })}
             </Grid>
 

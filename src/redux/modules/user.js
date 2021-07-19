@@ -31,7 +31,8 @@ const loginAPI = (data) => {
             headers: {
                 "Accept": "application/json", //클라이언트가 서버한테 요청하는(원하는) 타입
                 "Content-Type":"application/json;charset=UTF-8", //현재 서버한테 보내는 데이터 타입
-                'Access-Control-Allow-Origin' : '*'
+                'Access-Control-Allow-Origin' : '*',
+                "Authorization": `Bearer ${sessionStorage.getItem("token")};`,
             },
             data: {
                 "email": data.email,
@@ -40,7 +41,10 @@ const loginAPI = (data) => {
         }).then((res)=>{
             console.log(res);
             localStorage.setItem("email", JSON.stringify(`${data.email}`)); //localStorage의 텍스트형이므로 객체 json.stringfy로 변환
-            sessionStorage.setItem("token", res.data);
+            // res.data.accessToken를 해줘야 application value에 담김
+            sessionStorage.setItem("token", res.data.accessToken);
+            // sessionStorage.setItem("token", res.data.accessToken);
+            console.log(res.data)
             dispatch(logIn({
                 email: data.email,
                 password: data.password,
@@ -75,7 +79,8 @@ const SignUPApi = (data) => {
             headers: {
                 "Accept": "application/json", //클라이언트가 서버한테 요청하는(원하는) 타입
                 "Content-Type":"application/json;charset=UTF-8", //현재 서버한테 보내는 데이터 타입
-                'Access-Control-Allow-Origin' : '*'
+                'Access-Control-Allow-Origin' : '*',
+                "Authorization": `Bearer ${sessionStorage.getItem("token")};`,
             },
             data: {
                 "email": data.email,

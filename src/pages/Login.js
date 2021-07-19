@@ -114,7 +114,7 @@ const InputBox = styled.div`
     display: block;
     margin: auto 20px;
     vertical-align: middle;
-    inline-block;
+    /* inline-block; */
     
 `;
 

@@ -39,24 +39,50 @@ const initialPost = {
 // 왜? 키 값만 뽑아서 배열로 만들어 주려고. 왜 배열로? reduce쓰려고 
 const getPostDB = () => {
     return function (dispatch, getState, {history}){
-        axios({
-            method: 'get',
-            url: 'http://3.36.50.96/api/post',
-            // data: {},
-            // headers: { 
-            //     "Content-Type": "multipart/form-data",
-            //     "Access-Control-Allow-Origin": "*",
-            // },
-        }).then((response) => {
-            console.log(response);
-            console.log(response.data);
-            dispatch(setPost(response.data));
 
-        }).catch(err => {
-            console.log("에러? 아니져~ 연봉 올라가는 소리~");
-        })
+        const _is_login = getState().user.is_login;
+
+        if(_is_login){
+            
+            axios({
+                method: 'get',
+                url: 'http://3.36.50.96/api/post',
+                // data: {},
+                headers: { 
+                    "Content-Type": "multipart/form-data",
+                    "Access-Control-Allow-Origin": "*",
+                    "Authorization": `Bearer ${sessionStorage.getItem("token")};`,
+                },
+            }).then((response) => {
+                console.log(response);
+                console.log(response.data);
+                dispatch(setPost(response.data));
+
+            }).catch((err) => {
+                console.log("에러? 아니져~ 연봉 올라가는 소리~");
+            })
+        }
+
+        // 원본(새로고침해야 피드가 보임)
+        // axios({
+        //     method: 'get',
+        //     url: 'http://3.36.50.96/api/post',
+        //     // data: {},
+        //     headers: { 
+        //         "Content-Type": "multipart/form-data",
+        //         "Access-Control-Allow-Origin": "*",
+        //         "Authorization": `Bearer ${sessionStorage.getItem("token")};`,
+        //     },
+        // }).then((response) => {
+        //     console.log(response);
+        //     console.log(response.data);
+        //     dispatch(setPost(response.data));
+
+        // }).catch(err => {
+        //     console.log("에러? 아니져~ 연봉 올라가는 소리~");
+        // })
     };
-}
+};
 
 
 // 서버에 새 포스트 저장하는 함수
@@ -84,7 +110,7 @@ const addPostDB = (contents, image) => {
         formData.append('image', image);
         // formadata 내용 확인(그냥 콘솔로그론 안보임)
         for (let key of formData.keys()) { console.log(key); }
-        for (var value of formData.values()) { console.log(value); }  
+        for (var value of formData.values()) { console.log(value); }
 
         axios({
             method: 'post',
@@ -94,6 +120,7 @@ const addPostDB = (contents, image) => {
             headers: { 
                 "Content-Type": "multipart/form-data",
                 "Access-Control-Allow-Origin": "*",
+                "Authorization": `Bearer ${sessionStorage.getItem("token")};`,
             },
         }).then((response) => {
             console.log(response);
@@ -115,10 +142,12 @@ const addPostDB = (contents, image) => {
 
             // 서버에 데이터 잘 들어갔는지 확인 후 리덕스에 추가
             dispatch(addPost(new_post));
-            // 다음에 글 작성할 떄 이전 이미지 안보이게 하려고 근데 왜 보이지?????
-            dispatch(imageActions.setPreview(null));
-            history.replace("/");
+            history.replace('/');
+            // history.replace('/')와 window.location.replace('/')의 차이?
+            // 리렌더링이 되고 안되고의 차이?
 
+            // 다음에 글 작성할 떄 이전 이미지 안보이게 하려고 근데 왜 보이지????? 다시 안보임???
+            dispatch(imageActions.setPreview(null));
         }).catch((err) => {
             window.alert("포스트 작성에 문제가 있어요!", err);
             console.log("에러? 아니져~ 연봉 올라가는 소리~", err);
@@ -136,10 +165,11 @@ const deletePostDB = (id) => {
             method: 'delete',
             url: `http://3.36.50.96/api/post/${id}`,
             // data: formData,
-            // headers: { 
-            //     "Content-Type": "multipart/form-data",
-            //     "Access-Control-Allow-Origin": "*",
-            // },
+            headers: { 
+                "Content-Type": "multipart/form-data",
+                "Access-Control-Allow-Origin": "*",
+                "Authorization": `Bearer ${sessionStorage.getItem("token")};`,
+            },
         }).then((response) => {
             console.log(response);
             console.log(response.data);
@@ -160,11 +190,16 @@ export default handleActions({
 
     [ADD_POST]: (state, action) => produce(state, (draft) => {
         // 배열 제일 앞으로 붙이기
-        draft.list.unshift(...action.payload.post)
+        draft.list.unshift(action.payload.post)
     }),
     [DELETE_POST]: (state, action) => produce(state, (draft) => {
         let idx = draft.list.findIndex((p) => p.id === action.payload.post_id);
         console.log(idx);
+
+        // 인덱스가 있을때만 삭제
+        if (idx !== -1){
+            draft.list.splice(idx, 1);
+        }
     })
 }, initialState
 );

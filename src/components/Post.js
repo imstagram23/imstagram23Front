@@ -72,7 +72,7 @@ const Post = (props) => {
             <Image 
             shape="rectangle" 
             margin="5px 0" 
-            src={props.image}/>
+            src={props.image_url}/>
         </Grid>
 
         <Grid padding="4px 14px 0 14px">
@@ -119,29 +119,6 @@ const Post = (props) => {
           {/* <CommentList post_id={props.user_info.user_name}/> */}
         </Grid>
 
-        <Grid is_flex padding="0px 10px 0px 10px" margin="0px">
-          <Image
-              width="20%"
-              shape="circle" 
-              margin="4px" 
-              src={props.user_profile}
-            />
-          <Input width="70%"
-              value={comment}
-              _onChange={(e) => {
-                setComment(e.target.value);
-              }}
-              is_comment
-            />
-          <Grid width="40px" is_flex margin="auto 10px">
-            <Text 
-              color='#0095f6' 
-              _onClick={commentWrite} 
-              cursor="Pointer"
-              >게시
-            </Text>
-          </Grid>
-        </Grid>
       </Grid>
     </React.Fragment>
   );

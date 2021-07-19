@@ -14,7 +14,7 @@ const PostWrite = (props) => {
     // 넣을때 길어지면 함수로 만들어서 함수명만 {}안에 넣기
     const dispatch = useDispatch();
     // const is_login = useSelector((state) => state.user.is_login);
-    const preview =useSelector((state) => state.image.preview);
+    const preview = useSelector((state) => state.image.preview);
 
     const {history} = props;
 
