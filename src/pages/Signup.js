@@ -13,7 +13,19 @@ const Signup = () => {
   const [password, setPwd] = useState('')
   const [passwordConfirm, setConfirmedPwd] = useState('') 
   const [nickname, setName] = useState('')
-  
+
+  // const [idDup, setIdDup] = React.useState(false);
+  // const [emailDup, setEmailDup] = React.useState(false);
+  // const idInfoOne = useRef(),
+  //       idInfoTwo = useRef(),
+  //       pwInfoLen = useRef(),
+  //       pwInfoMatch = useRef(),
+  //       pwInfoContinuos = useRef(),
+  //       idInfoUl = useRef(),
+  //       pwInfoUl = useRef(),
+  //       pwReInfoUl = useRef(),
+  //       pwInfoLi = useRef();
+
   const data = {
     email: email,
     nickname: nickname,

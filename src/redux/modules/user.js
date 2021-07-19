@@ -10,7 +10,7 @@ const GET_USER = "GET_USER"; //유저정보 가져오기
 
 //actionCreators
 const logIn = createAction(LOG_IN, (user) => ({user}));
-const logOut = createAction(LOG_OUT, (user) => ({user}));
+// const logOut = createAction(LOG_OUT, (user) => ({user}));
 const loginCheck = createAction(LOGIN_CHECK, (session) => ({session}));
 const getUser = createAction(GET_USER, (user) => ({user}));
 
@@ -38,13 +38,15 @@ const loginAPI = (data) => {
                 "password": data.password,
             }
         }).then((res)=>{
-            console.log(res);
             localStorage.setItem("email", JSON.stringify(`${data.email}`)); //localStorage의 텍스트형이므로 객체 json.stringfy로 변환
             sessionStorage.setItem("token", res.data);
             dispatch(logIn({
                 email: data.email,
                 password: data.password,
             }));
+            //token 확인
+            console.log(res.data)
+
             history.push("/");
             window.alert("정상적으로 로그인 되었습니다!")
         }).catch(error=>{
@@ -54,6 +56,9 @@ const loginAPI = (data) => {
 
     };
 };
+
+console.log(localStorage);
+console.log(sessionStorage);
 
 // //로그아웃
 // const logOutApi = () =>{
@@ -121,7 +126,7 @@ export default handleActions({
 const actionCreators = {
     loginCheck,
     logIn,
-    logOut,
+    // logOut,
     getUser,
     SignUPApi,
     loginAPI,

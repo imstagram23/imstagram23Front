@@ -19,8 +19,6 @@ const Login = () => {
     password: password,
   }
 
-  console.log(data)
-
   const submitEmail = (e) => {
     setEmail(e.target.value)
   }
@@ -62,7 +60,7 @@ const Login = () => {
           <Text color="#0095f6">비밀번호를 잊으셨나요?</Text>
           </TextBox>
           <Button borderRadius="5px" border="none" text="로그인" width="260px" margin="10px auto" bg="#0095f6"
-            _onClick={() => {console.log("로그인"); LogIn();}}></Button>
+            _onClick={() => {console.log("로그인 성공!"); LogIn();}}></Button>
           </InputBox>
           </LoginBox>
             
