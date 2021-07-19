@@ -6,6 +6,7 @@ import { history } from "../redux/configureStore";
 import {useDispatch} from "react-redux";
 import { actionCreators as userActions } from "../redux/modules/user";
 import Login from "./Login";
+import {emailCheck} from "../shared/common";
 
 const Signup = () => {
   const dispatch = useDispatch();
@@ -22,11 +23,6 @@ const Signup = () => {
 
   }
 
-  // const signUp = () => {
-
-  //   dispatch(userActions.SignUPApi(data))
-  // }
-
   const submitEmail = (e) => {
     setEmail(e.target.value)
   }
@@ -41,48 +37,30 @@ const Signup = () => {
     setConfirmedPwd(e.target.value)
   }
 
-
   const siteSignup = () => {
-
-    if( nickname === "" || password === "" || passwordConfirm === "" || email=== "") {
-        window.alert("모두 입력해주세요!");
-        return;
+    if (!email || !password || !nickname || !passwordConfirm) {
+      window.alert("아이디, 패스워드, 닉네임을 모두 입력해주세요!");
+      return;
     }
-    if(password !== passwordConfirm){
-        window.alert("비밀번호가 일치하지 않습니다!");
-        return;
+    // 사전 정의된 정규표현식으로 이메일 형식 체크
+    if(!emailCheck(email)){
+      window.alert('이메일 형식이 맞지 않습니다!');
+      return;
     }
-    dispatch(userActions.SignUPApi(data));
-}
-
-  // const signup = () => {
-  //   // if (!id || !pwd || !user_name || !pwdConfirm) {
-  //   //   window.alert("아이디, 패스워드, 닉네임을 모두 입력해주세요!");
-  //   //   return;
-  //   // }
-  //   // 사전 정의된 정규표현식으로 이메일 형식 체크
-  //   if(!emailCheck(id)){
-  //     window.alert('이메일 형식이 맞지 않습니다!');
-  //     return;
-  //   }
-  //   if (pwd !== pwdConfirm){
-  //     window.alert("패스워드와 패스워드 확인이 일치하지 않습니다!");
-  //     return;
-  //   }
+    if (password !== passwordConfirm){
+      window.alert("패스워드와 패스워드 확인이 일치하지 않습니다!");
+      return;
+    }
     
-  //   dispatch(userActions.signupFB(id, user_name, pwd))
-
-  // }
+    dispatch(userActions.SignUPApi(data))
+  
+  }
 
     return (
         <React.Fragment>
             <Grid center padding="10px"> 
         <InnerBox>
           <LoginBox>
-            {/* <div style={{ fontSize: "50px", margin: "20px 0px 10px 0px " }}>
-            LOGO
-          </div> */}
-            <Logo></Logo>
             <TopText>
               친구들의 사진과 동영상을 보려면 가입하세요.
             </TopText>
@@ -138,6 +116,7 @@ const Signup = () => {
             </Grid>
         </React.Fragment>
     )
+    
 }
 
 const OutBox = styled.div`
@@ -159,15 +138,6 @@ const InnerBox = styled.div`
   padding: 0;
   margin: auto;
 `;
-
-const Logo = styled.div`
-  margin: 20px auto;
-  width: 180px;
-  height: 60px;
-  background-image: url("https://firebasestorage.googleapis.com/v0/b/image-community-9d16c.appspot.com/o/images%2Finsta_logo.png?alt=media&token=297d0664-3af3-49d8-b47c-0fccecdc9d0d");
-  background-size: cover;
-`;
-
 
 const LoginBox = styled.div`
   width: 300px;
