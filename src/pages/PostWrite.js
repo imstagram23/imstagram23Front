@@ -3,6 +3,7 @@ import { Grid, Text, Image, Button, Input } from "../elements";
 
 import Header from "../components/Header";
 import Upload from "../shared/Upload";
+import CommentWrite from "../components/CommentWrite";
 
 import { useSelector, useDispatch } from "react-redux";
 import { actionCreators as postActions } from "../redux/modules/post";
@@ -84,7 +85,7 @@ const PostWrite = (props) => {
                     _onClick={addPost}
                     >작성완료</Button>
                 </Grid>
-
+            
             </Grid>
         </React.Fragment>
     )

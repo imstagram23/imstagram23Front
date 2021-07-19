@@ -2,8 +2,11 @@ import React from "react";
 import styled from "styled-components";
 import { Text, Grid } from "./index";
 
+import { history } from "../redux/configureStore";
+
 
 const Input = (props) => {
+
   const { 
     label, 
     placeholder, 
@@ -79,6 +82,7 @@ Input.defaultProps = {
   onSubmit: () => {},
   margin:false,
   is_comment: false,
+  width: false,
 };
 
 //작성페이지 멀티라인 수정
@@ -94,7 +98,7 @@ const ElInput = styled.input`
 ${(props) => props.margin? `margin:${props.margin}` : ''};
   border: 1px solid #212121;
   border-radius: 5px;
-  width: 100%;
+  width: 100%
   padding: 12px 4px;
   box-sizing: border-box;
 `;
@@ -102,7 +106,7 @@ ${(props) => props.margin? `margin:${props.margin}` : ''};
 const CommentInput = styled.input`
 ${(props) => props.margin? `margin:${props.margin}` : ''};
   border-style:none;
-  width: 100%;
+${(props) => props.width? `width:${props.width}` : ''};
   padding: 12px 4px;
   box-sizing: border-box;
 `;

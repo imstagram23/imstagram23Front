@@ -1,16 +1,33 @@
 import React from "react";
 import { history } from "../redux/configureStore";
 
-import { Grid, Image, Text } from "../elements";
+import {Grid, Image, Text, Button, Input} from "../elements";
+
 import HeartButton from "./HeartButton";
 
 import { MdDelete } from "react-icons/md";
 import { RiEdit2Line } from "react-icons/ri";
 import { FcLikePlaceholder } from "react-icons/fc";
-
+import CommentList from "./CommentList";
+import Comments from "../pages/Comments";
+import CommentWrite from "../pages/Comments";
 
 const Post = (props) => {
+
+  const [comment, setComment] = React.useState();
+
+
+  const commentWrite = () => {
+   // comment 작성후에는 input창을 비워주기 위함
+    setComment("");
+    if (!comment) {
+      window.alert("댓글 내용을 입력하세요");
+      return;
+    }
+    console.log(comment)
+  };
   
+
   return (
     <React.Fragment>
       <Grid padding="0 0 30px 0">
@@ -56,18 +73,46 @@ const Post = (props) => {
         </Grid>
 
         <Grid flex_row padding="0 14px 4px 14px">
-          <Text margin="0px" bold padding="0 5px 0 0">{props.writer}</Text>
-          <Text margin="0px">{props.contents}</Text>
-        </Grid>
+        <Text margin="0px" bold padding="0 5px 0 0">{props.writer}</Text>
+        <Text margin="0px">{props.contents}</Text>
+      </Grid>
 
         <Grid padding="4px 14px">
           <Text margin="0px" size="12px">댓글 {props.comment_cnt}개</Text>
         </Grid>
       
       </Grid>
-    </React.Fragment>
-  );
-}
+          <Grid is_flex padding=" 7px 13px 7px 13px">
+          <Text _onClick={()=>{history.push('/comment')}} margin="0px" bold color="rgba(var(--f52,142,142,142),1)">
+            댓글 10개 모두 보기
+          </Text>
+          {/* <CommentWrite post_id={props.user_info.user_name}/> */}
+          {/* <CommentList post_id={props.user_info.user_name}/> */}
+          </Grid>
+            <Grid is_flex padding="0px 10px 0px 10px" margin="0px">
+            <Image
+                width="20%"
+                shape="circle" 
+                margin="4px" 
+                src={props.user_info.user_profile}/>
+            <Input width="70%"
+                value={comment}
+                _onChange={(e) => {
+                  setComment(e.target.value);
+                }}
+                is_comment
+              />
+            <Grid width="40px" is_flex margin="auto 10px">
+                <Text color='#0095f6' _onClick={commentWrite} cursor="Pointer">
+                  게시
+                </Text>
+                </Grid>
+            </Grid>
+
+      </React.Fragment>
+    );
+};
+ 
 
 Post.defaultProps = {
   writer: "Robert Downey Jr.",
@@ -76,5 +121,6 @@ Post.defaultProps = {
   contents: "NewYork NewYork",
   comment_cnt: 10,
 };
+
 
 export default Post;
