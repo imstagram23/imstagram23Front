@@ -13,12 +13,13 @@ const Mypost = () => {
     return (
         <React.Fragment>
           <Header/>
-          <Grid  is_flex width="auto" bg_color='white' flex_column padding="0 10%" max_height="380px">
+          <Grid  padding="57px 0px" is_flex width="auto" bg_color='white' flex_column padding="0 10%" max_height="380px">
             {/* <Container> */}
             <ProfileHeader />
             {/* <PostContainer> */}
             <PostBox>
             <Post/>
+            
             {/* </PostContainer> */}
             {/* </Container> */}
             </PostBox>

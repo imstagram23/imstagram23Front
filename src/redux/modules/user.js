@@ -4,7 +4,7 @@ import axios from 'axios';
 
 //actions
 const LOG_IN = "LOG_IN"; //로그인
-const LOG_OUT = "LOG_OUT"; //로그아웃
+// const LOG_OUT = "LOG_OUT"; //로그아웃
 const LOGIN_CHECK = 'LOGIN_CHECK';
 const GET_USER = "GET_USER"; //유저정보 가져오기
 
@@ -39,6 +39,7 @@ const loginAPI = (data) => {
                 "password": data.password,
             }
         }).then((res)=>{
+            console.log(res);
             localStorage.setItem("email", JSON.stringify(`${data.email}`)); //localStorage의 텍스트형이므로 객체 json.stringfy로 변환
             // res.data.accessToken를 해줘야 application value에 담김
             sessionStorage.setItem("token", res.data.accessToken);
@@ -53,12 +54,13 @@ const loginAPI = (data) => {
             //token 확인
             console.log(res.data)
 
-            history.push("/");
             window.alert("정상적으로 로그인 되었습니다!")
+            history.push("/");
         }).catch(error=>{
             console.log(error);
             window.alert("로그인 실패!");
-        });
+            }   
+        );
 
     };
 };
@@ -88,15 +90,14 @@ const SignUPApi = (data) => {
                 "Content-Type":"application/json;charset=UTF-8", //현재 서버한테 보내는 데이터 타입
                 'Access-Control-Allow-Origin' : '*',
                 "Authorization": `Bearer ${sessionStorage.getItem("token")};`,
-
             },
             data: {
                 "email": data.email,
                 "nickname": data.nickname,
                 "password": data.password,
                 "passwordConfirm": data.passwordConfirm
-
             },
+
         }).then((res)=>{
             console.log(res);
             history.push("/login");
@@ -109,8 +110,6 @@ const SignUPApi = (data) => {
     }
 };
 
-
-
 //Reducer
 export default handleActions({
     [LOGIN_CHECK]: (state,action) => produce(state,(draft) => {
@@ -120,10 +119,10 @@ export default handleActions({
         draft.user = action.payload.user;
         draft.is_login = true;
     }),
-    [LOG_OUT]: (state,action) => produce(state,(draft) => {
-        draft.user = null;
-        draft.is_login = false;
-    }),
+    // [LOG_OUT]: (state,action) => produce(state,(draft) => {
+    //     draft.user = null;
+    //     draft.is_login = false;
+    // }),
     [GET_USER]: (state, action) => produce(state, (draft) => {
         
     }),

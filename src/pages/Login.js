@@ -7,7 +7,7 @@ import {Text, Input, Grid, Button} from "../elements/index";
 import Signup from "./Signup"
 import {useDispatch, useSelector} from "react-redux";
 import { actionCreators as userActions } from "../redux/modules/user";
-
+import {emailCheck} from "../shared/common";
 
 const Login = () => {
   const dispatch = useDispatch();
@@ -26,17 +26,24 @@ const Login = () => {
   const submitPwd = (e) => {
     setPassword(e.target.value)
   }
+  const LogIn = (response) => {
 
-  const LogIn = () => {
+    if (email === "" || password === "") {
+      window.alert("아이디 혹은 비밀번호가 공란입니다! 입력해주세요!");
+      return;
+    }
 
-      if( email ==="" || password === ""){
-          window.alert("모두 입력해주세요")
-          return;
-      }
+    // id가 이메일 형식이 맞나 확인!
+    if (!emailCheck(email)) {
+      window.alert("이메일 형식이 맞지 않습니다!");
+      return;
+    }
       dispatch(userActions.loginAPI(data));
-      history.push("/");
 
+    
   }
+
+  
 
   
 
@@ -60,7 +67,7 @@ const Login = () => {
           <Text color="#0095f6">비밀번호를 잊으셨나요?</Text>
           </TextBox>
           <Button borderRadius="5px" border="none" text="로그인" width="260px" margin="10px auto" bg="#0095f6"
-            _onClick={() => {console.log("로그인 성공!"); LogIn();}}></Button>
+            _onClick={() => {LogIn();}}></Button>
           </InputBox>
           </LoginBox>
             

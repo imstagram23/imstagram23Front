@@ -5,14 +5,19 @@ import styled from 'styled-components';
 
 const ProfileHeader = (props) => {
 
-  // 그리드(헤더(이미지,유저이름),
-  // 상태메세지, 게시물표시(각박스, 텍스트(스펜), 게시물)
-
     // if (post_data.user) {
     return (
         <React.Fragment>
-          <Grid is_flex align-items="center">
+          <Grid is_flex align-items="center" padding="50px 0px 10px 0px">
             <Container>
+              
+              <UserName>
+                <Select type="select" value="">
+                  <Option value="">{props.user_info.user_name}</Option>
+                  <Option>로그아웃</Option>
+              </Select>
+              </UserName>
+              
             <Profile>
               <ImageBox>
               <Image
@@ -28,16 +33,16 @@ const ProfileHeader = (props) => {
               />
               </ImageBox>
               <Ui>
-                <Li1><List>게시물</List><List>77</List></Li1>
-                <Li2><List>팔로워</List><List>99</List></Li2>
-                <Li3><List>팔로우</List><List>88</List></Li3>
+                <Li1><List>77</List><List>게시물</List></Li1>
+                <Li2><List>88</List><List>팔로워</List></Li2>
+                <Li3><List>99</List><List>팔로우</List></Li3>
               </Ui>
               
             </Profile>
             <TextContainer>
-                <ProfileName>{props.user_info.user_name}</ProfileName>
-                <Status>상태메세지</Status>
+                <Status> (ﾉ◕ヮ◕)ﾉ*:･ﾟ✧)</Status>
             </TextContainer>
+            
             </Container>
           </Grid>
           
@@ -83,21 +88,43 @@ const ProfileHeader = (props) => {
     // const user_info = useSelector((state) => state.post.list);
     // console.log(user_info);
 };
+
   const Container = styled.div`
     width: 300px;
     flex-direction: row;
-    border: 1px solid black;
     padding: 5px;
     align-items: center;
-    margin: 20px auto;
+    margin: 5px auto;
+    
+  `;
+
+  const UserName = styled.div`
+  font-size: 30px;
+  `;
+
+  const Select = styled.select`
+  width: 150px;
+  height: 40px;
+  font-size: 20px;
+  font-weight: bold;
+  border: none;
+  background: transparent;
+  margin: 0px 0px 0px 7px;
+  cursor: pointer;
+ 
+  `;
+
+  const Option = styled.option`
+  font-size: 15px;
+  border: none;
+  
   `;
 
   const Profile = styled.div`
+    
     width: 100%;
     height: 40%;
-    margin: 20px auto;
     display: flex;
-    border: 1px solid purple;
   `;
   
   const TextContainer = styled.div`
@@ -105,27 +132,26 @@ const ProfileHeader = (props) => {
     flex-direction: column;
     margin: auto;
     width: 100%;
-    border: 1px solid orange;
+    font-weight: bold;
     
   `;
 
   const ImageBox = styled.div`
-  border:1px solid black;
   display:flex;
   margin: 10px;
   width: 30%;
   `;
 
   const Ui = styled.div`
-  border: 1px solid red;
   width: 70%;
   box-sizing: border-box;
   hegiht: 50px;
   margin: 20px auto;
+  
+  
   `;
 
   const Li1 = styled.div`
-  border: 1px solid red;
   float: left;
   width: 30%;
   hegiht: 10px;
@@ -133,7 +159,6 @@ const ProfileHeader = (props) => {
   `;
   
   const Li2 = styled.div`
-  border: 1px solid green;
   float: left;
   margin-left: 5%;
   width:30%;
@@ -141,7 +166,6 @@ const ProfileHeader = (props) => {
   `;
   
   const Li3 = styled.div`
-  border: 1px solid blue;
     float: right;
     width:30%;
     box-sizing: border-box;
@@ -159,8 +183,9 @@ const ProfileHeader = (props) => {
   `;
 
   const Status = styled.div`
-  margin: 10px 10px;
+  margin: 0px 10px 5px 10px;
   font-size: 15px;
+  padding: 0px 15px 0px 15px;
   `;
 
   ProfileHeader.defaultProps = {
