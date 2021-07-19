@@ -59,7 +59,7 @@ const loginAPI = (data) => {
 // //로그아웃
 // const logOutApi = () =>{
 //     return function (dispatch, getState, { history }){
-//         localStorage.removeItem("name");
+//         localStorage.removeItem("email");
 //         sessionStorage.removeItem("token");
 //         dispatch(logOut());
 //         history.replace("/");
