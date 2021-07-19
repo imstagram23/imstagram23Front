@@ -23,10 +23,10 @@ const Signup = () => {
 
   }
 
-  const signUp = () => {
+  // const signUp = () => {
 
-    dispatch(userActions.SignUPApi(data))
-  }
+  //   dispatch(userActions.SignUPApi(data))
+  // }
 
   const submitEmail = (e) => {
     setEmail(e.target.value)
@@ -43,18 +43,18 @@ const Signup = () => {
   }
 
 
-//   const siteSignup = () => {
+  const siteSignup = () => {
 
-//     // if( nickname === "" || password === "" || passwordConfirm === "" || email=== "") {
-//     //     window.alert("모두 입력해주세요!");
-//     //     return;
-//     // }
-//     // if(password !== passwordConfirm){
-//     //     window.alert("비밀번호가 일치하지 않습니다!");
-//     //     return;
-//     // }
-//     dispatch(userActions.SignUPApi(nickname,password));
-// }
+    if( nickname === "" || password === "" || passwordConfirm === "" || email=== "") {
+        window.alert("모두 입력해주세요!");
+        return;
+    }
+    if(password !== passwordConfirm){
+        window.alert("비밀번호가 일치하지 않습니다!");
+        return;
+    }
+    dispatch(userActions.SignUPApi(data));
+}
 
   // const signup = () => {
   //   // if (!id || !pwd || !user_name || !pwdConfirm) {
@@ -90,6 +90,7 @@ const Signup = () => {
             <Grid padding="16px 0px">
               <SignupInput 
                 placeholder="이메일 주소"
+                type="email"
                 onChange={submitEmail}
               />
               <SignupInput 
@@ -116,7 +117,7 @@ const Signup = () => {
                 bg="#0095f6"
                 border="none"
                 borderRadius="5px"
-                _onClick={()=> {signUp()
+                _onClick={()=> {siteSignup()
                 }}
               />
             </Grid>

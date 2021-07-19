@@ -94,7 +94,7 @@ const Post = (props) => {
                 width="20%"
                 shape="circle" 
                 margin="4px" 
-                src={props.user_info.user_profile}/>
+                src={props.user_profile}/>
             <Input width="70%"
                 value={comment}
                 _onChange={(e) => {
