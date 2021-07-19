@@ -10,22 +10,38 @@ import { actionCreators as userActions } from "../redux/modules/user";
 
 
 const Login = () => {
-  // const dispatch = useDispatch();
-  // const [username, setUsername] = React.useState("");
-  // const [pwd, setPwd] = React.useState("");
-  // const onChangeUsername = useCallback((e) => setUsername(e.target.value),[])
-  // const onChangePwd = useCallback((e) => setPwd(e.target.value),[])
+  const dispatch = useDispatch();
+  const [email, setEmail] = React.useState("");
+  const [password, setPassword] = React.useState("");
 
-  // const LogIn = () => {
+  const data = {
+    email: email,
+    password: password,
+  }
 
-  //     if( username ==="" || pwd === ""){
-  //         window.alert("모두 입력해주세요")
-  //         return;
-  //     }
-  //     dispatch(userActions.loginAPI(username,pwd));
-  //     history.push("/");
+  console.log(data)
 
-  // }
+  const submitEmail = (e) => {
+    setEmail(e.target.value)
+  }
+
+  const submitPwd = (e) => {
+    setPassword(e.target.value)
+  }
+
+  const LogIn = () => {
+
+      if( email ==="" || password === ""){
+          window.alert("모두 입력해주세요")
+          return;
+      }
+      dispatch(userActions.loginAPI(data));
+      history.push("/");
+
+  }
+
+  
+
 
   return (
       <React.Fragment>           
@@ -39,19 +55,14 @@ const Login = () => {
           {/* 회원가입 박스 */}
           <InputBox>
             {/* input 값의 변화를 state에 저장 */}
-            <SignupInput  _onChange={(e) => {
-          
-              }} placeholder="아이디를 입력하세요" margin='5px'/>
-            <SignupInput _onChange={(e) => {
-                
-              }}
-              type='password'
+            <SignupInput  type='email' onChange={submitEmail} placeholder="아이디를 입력하세요" margin='5px'/>
+            <SignupInput type='password' onChange={submitPwd}
               placeholder="비밀번호를 입력하세요" margin='5px'/>
           <TextBox>
           <Text color="#0095f6">비밀번호를 잊으셨나요?</Text>
           </TextBox>
           <Button borderRadius="5px" border="none" text="로그인" width="260px" margin="10px auto" bg="#0095f6"
-            _onClick={() => {console.log("로그인"); Login();}}></Button>
+            _onClick={() => {console.log("로그인"); LogIn();}}></Button>
           </InputBox>
           </LoginBox>
             

@@ -22,44 +22,43 @@ const initialState = {
 
 // const mockUserAPl = 'https://run.mocky.io/v3/ce3bcb61-6cb3-471d-bc40-e3243360b529'
 
+//로그인api
+const loginAPI = (data) => {
+    return function (dispatch, getState, { history }) {
+        axios({
+            method: "POST",
+            url: "http://3.36.50.96/api/login",
+            headers: {
+                "Accept": "application/json", //클라이언트가 서버한테 요청하는(원하는) 타입
+                "Content-Type":"application/json;charset=UTF-8", //현재 서버한테 보내는 데이터 타입
+                'Access-Control-Allow-Origin' : '*'
+            },
+            data: {
+                "email": data.email,
+                "password": data.password,
+            }
+        }).then((res)=>{
+            console.log(res);
+            localStorage.setItem("email", JSON.stringify(`${data.email}`)); //localStorage의 텍스트형이므로 객체 json.stringfy로 변환
+            sessionStorage.setItem("token", res.data);
+            dispatch(logIn({
+                email: data.email,
+                password: data.password,
+            }));
+            history.push("/");
+            window.alert("정상적으로 로그인 되었습니다!")
+        }).catch(error=>{
+            console.log(error);
+            window.alert("로그인 실패!");
+        });
 
-// //로그인api
-// const loginAPI = (username,pwd) => {
-//     return function (dispatch, getState, { history }) {
-//         axios({
-//             method: "POST",
-//             url: "http://15.165.158.39/login",
-//             headers: {
-//                 "Accept": "application/json", //클라이언트가 서버한테 요청하는(원하는) 타입
-//                 "Content-Type":"application/json;charset=UTF-8", //현재 서버한테 보내는 데이터 타입
-//                 'Access-Control-Allow-Origin' : '*'
-//             },
-//             data: {
-//                 "username":username,
-//                 "password": pwd,
-//             }
-//         }).then((res)=>{
-//             console.log(res);
-//             localStorage.setItem("name", JSON.stringify(`${username}`)); //localStorage의 텍스트형이므로 객체 json.stringfy로 변환
-//             sessionStorage.setItem("token", res.data);
-//             dispatch(logIn({
-//                 username:username,
-//                 password:pwd,
-//             }));
-//             history.push("/");
-//             window.alert("정상적으로 로그인 되었습니다!")
-//         }).catch(error=>{
-//             console.log(error);
-//             window.alert("로그인 실패!");
-//         });
-
-//     };
-// };
+    };
+};
 
 // //로그아웃
 // const logOutApi = () =>{
 //     return function (dispatch, getState, { history }){
-//         localStorage.removeItem("name");
+//         localStorage.removeItem("email");
 //         sessionStorage.removeItem("token");
 //         dispatch(logOut());
 //         history.replace("/");
@@ -73,11 +72,11 @@ const SignUPApi = (data) => {
         axios({
             method: "POST",
             url: "http://3.36.50.96/api/signup",
-            // headers: {
-            //     "Accept": "application/json", //클라이언트가 서버한테 요청하는(원하는) 타입
-            //     "Content-Type":"application/json;charset=UTF-8", //현재 서버한테 보내는 데이터 타입
-            //     'Access-Control-Allow-Origin' : '*'
-            // },
+            headers: {
+                "Accept": "application/json", //클라이언트가 서버한테 요청하는(원하는) 타입
+                "Content-Type":"application/json;charset=UTF-8", //현재 서버한테 보내는 데이터 타입
+                'Access-Control-Allow-Origin' : '*'
+            },
             data: {
                 "email": data.email,
                 "nickname": data.nickname,
@@ -125,9 +124,8 @@ const actionCreators = {
     logOut,
     getUser,
     SignUPApi,
-    // loginAPI,
+    loginAPI,
     // logOutApi,
-    
 
 };
 

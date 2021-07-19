@@ -142,7 +142,6 @@ const Post = (props) => {
             </Text>
           </Grid>
         </Grid>
-
       </Grid>
     </React.Fragment>
   );
