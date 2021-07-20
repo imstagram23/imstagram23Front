@@ -9,16 +9,19 @@ import { actionCreators as imageActions } from "./image";
 const SET_POST = "SET_POST";
 const ADD_POST = "ADD_POST";
 const DELETE_POST = "DELETE_POST";
+const LOADING = "LOADING";
 
 //action creator
-const setPost = createAction(SET_POST, (post_list) => ({post_list}));
+const setPost = createAction(SET_POST, (post_list, paging) => ({post_list, paging}));
 const addPost = createAction(ADD_POST, (post) => ({post}));
 const deletePost = createAction(DELETE_POST, (post_id) => ({ post_id }));
+const loading = createAction(LOADING, (is_loading) => ({ is_loading }));
 
 const initialState = {
     list: [],
-    is_loading: false,
     preview: null,
+    paging: { start: null, next: null, size: 3 },
+    is_loading: false,
 }
 
 // 게시글 하나의 정보(Post의 defaultProps)
@@ -37,8 +40,24 @@ const initialPost = {
 // 다 가지고 올거니까 조건 걸게 없으니 일단 공란(심화3-3 12:~)
 // 데이터 형식 맞추기는 Object.keys()사용(심화3-3 15:~)
 // 왜? 키 값만 뽑아서 배열로 만들어 주려고. 왜 배열로? reduce쓰려고 
-const getPostDB = () => {
+const getPostDB = (start = null, size = 3) => {
     return function (dispatch, getState, {history}){
+
+        let _paging = getState().post.paging;
+        // start값은 있지만 next값이 없으면 다음목록 없으므로 아래 로직 실행할 필요 없음
+        if(_paging.start && !_paging.next){
+            return;
+        }
+
+        dispatch(loading(true));
+
+        const postDB = getState().post.list;
+        
+        if(start){
+            postDB = postDB(start).limit(size + 1);
+        }
+
+        // let query = postDB.sort("insert_dt", "desc").limit(size + 1);
 
         // const _is_login = getState().user.is_login;
 
@@ -62,7 +81,8 @@ const getPostDB = () => {
         //         console.log("에러? 아니져~ 연봉 올라가는 소리~");
         //     })
         // }
-       // 원본(새로고침해야 피드가 보임)
+
+       // 원본(새로고침해야 피드가 보임? 왜 또 잘 보임???)
         axios({
             method: 'get',
             url: 'http://3.36.50.96/api/post',
@@ -75,7 +95,15 @@ const getPostDB = () => {
         }).then((response) => {
             console.log(response);
             console.log(response.data);
-            dispatch(setPost(response.data));
+
+            let paging = {
+                start: response.data[0],
+                next: response.data.length === size + 1 ? response.data[response.data.length - 1] : null,
+                size: size,
+            }
+            response.data.pop();
+
+            dispatch(setPost(response.data, paging));
 
         }).catch(err => {
             console.log("에러? 아니져~ 연봉 올라가는 소리~");
@@ -131,7 +159,7 @@ const addPostDB = (contents, image) => {
 
             const new_post = {
                 // 키값은 logger에서 next state에서 post의 list의 키값(필드값?)으로 맞춰 줘야함
-                // 안그러면 defaultProps값 들어감
+                // 안그러면 defaultProps값 들어가고 새로고침 해야만 제값 들어감
                 postId: response.data.postId,
                 writer: response.data.writer,
                 content: response.data.content,
@@ -166,7 +194,7 @@ const deletePostDB = (id) => {
         axios({
             method: 'delete',
             url: `http://3.36.50.96/api/post/${id}`,
-            // data: formData,
+            // data: { postId: id },
             headers: { 
                 "Content-Type": "multipart/form-data",
                 "Access-Control-Allow-Origin": "*",
@@ -176,9 +204,9 @@ const deletePostDB = (id) => {
             console.log(response);
             console.log(response.data);
             dispatch(deletePost(response.data.postId));
-            // 새로고침 해야만 삭제 반영됨. 오류다오류
+
         }).catch((err) => {
-            window.alert("포스트 삭제에 문제가 있어요!", err);
+            window.alert("내 게시글만 지울 수 있어요!", err);
             console.log("에러? 아니져~ 연봉 올라가는 소리~", err);
         })
     }
@@ -188,20 +216,27 @@ const deletePostDB = (id) => {
 export default handleActions({
     [SET_POST]: (state, action) => produce(state, (draft) => {
         draft.list.push(...action.payload.post_list);
+        draft.paging = action.payload.paging;
+        draft.is_loading = false;
     }),
 
     [ADD_POST]: (state, action) => produce(state, (draft) => {
         // 배열 제일 앞으로 붙이기
         draft.list.unshift(action.payload.post)
     }),
+
     [DELETE_POST]: (state, action) => produce(state, (draft) => {
         let idx = draft.list.findIndex((p) => p.postId === action.payload.post_id);
         console.log(idx);
 
         // 인덱스가 있을때만 삭제
-        if (idx !== -1){
+        if (idx !== action.payload.post_id){
             draft.list.splice(idx, 1);
         }
+    }),
+    [LOADING]: (state, action) => produce(state, (draft) => {
+        draft.is_loading = action.payload.is_loading;
+        // export해 줄 필요 없음. 게시글 가져오기 시작할떄 true, false
     })
 }, initialState
 );
