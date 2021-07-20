@@ -13,7 +13,7 @@ const ProfileHeader = (props) => {
               
               <UserName>
                 <Select type="select" value="">
-                  <Option value="">{props.user_info.user_name}</Option>
+                  <Option value="">{props.writer}</Option>
                   <Option>로그아웃</Option>
               </Select>
               </UserName>
@@ -28,7 +28,7 @@ const ProfileHeader = (props) => {
                 width="30%"
                 border="1px solid blue"
                 flex="1"
-                src={props.user_info.user_profile}
+                src={props.user_profile}
 
               />
               </ImageBox>
@@ -103,7 +103,7 @@ const ProfileHeader = (props) => {
   `;
 
   const Select = styled.select`
-  width: 150px;
+  width: auto;
   height: 40px;
   font-size: 20px;
   font-weight: bold;
@@ -186,14 +186,17 @@ const ProfileHeader = (props) => {
   margin: 0px 10px 5px 10px;
   font-size: 15px;
   padding: 0px 15px 0px 15px;
+  width: auto;
   `;
 
   ProfileHeader.defaultProps = {
-    user_info: {
-      user_name: "user_name",
-      user_profile: "https://image5jvqbd.fmkorea.com/files/attach/new/20200816/486616/657118072/3039288745/99b983892094b5c6d2fc3736e15da7d1.jpeg",
-    },
-  
+    writer: "Robert Downey Jr.",
+    user_profile: "https://img.insight.co.kr/static/2018/06/08/700/oaytfz0m123a56r373eh.jpg",
+    image_url: "https://cdn.vox-cdn.com/thumbor/M2rjDALxvNDv3yqeYuIdL3spabo=/0x0:2000x1333/1200x675/filters:focal(840x507:1160x827)/cdn.vox-cdn.com/uploads/chorus_image/image/65939918/171109_08_11_37_5DS_0545__1_.0.jpg",
+    content: "NewYork NewYork",
+    like: false,
+    like_cnt: 3,
+    comment_cnt: 10,
   };
 
 export default ProfileHeader;

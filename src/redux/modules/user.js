@@ -58,7 +58,7 @@ const loginAPI = (data) => {
             history.push("/");
         }).catch(error=>{
             console.log(error);
-            window.alert("로그인 실패!");
+            window.alert("가입정보를 다시 한번 확인해주세요.");
             }   
         );
 
