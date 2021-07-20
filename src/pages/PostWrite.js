@@ -13,7 +13,6 @@ const PostWrite = (props) => {
     // postActions라는 별칭 만들어서 actionCreators로 온클릭에 넣어주기
     // 넣을때 길어지면 함수로 만들어서 함수명만 {}안에 넣기
     const dispatch = useDispatch();
-    // const is_login = useSelector((state) => state.user.is_login);
     const preview = useSelector((state) => state.image.preview);
 
     const {history} = props;
@@ -40,7 +39,7 @@ const PostWrite = (props) => {
         dispatch(postActions.addPostDB(contents, image));
     }
 
-    // 로그인 했을때만 작성할 수 있도록
+    // 로그인 했을때만 작성할 수 있도록 -> 로그인해야만 메인페이지 진입가능해서 필요없음
     // if(!is_login){
     //     return (
     //         <Grid>

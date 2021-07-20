@@ -7,6 +7,7 @@ import { useSelector, useDispatch } from "react-redux";
 import { actionCreators as postActions } from "../redux/modules/post";
 import CommentWrite from "../components/CommentWrite";
 import InfinityScroll from "../shared/InfinityScroll";
+import user from "../redux/modules/user";
 
 
 const PostList = (props) => {
@@ -15,6 +16,7 @@ const PostList = (props) => {
     // 빈배열 잘 떴다
     // console.log(post_list);
     const is_loading = useSelector((state) => state.post.is_loading);
+    const user_info = useSelector((state) => state.user.user);
     const paging = useSelector((state) => state.post.paging);
     
     // 이 컴포넌트가 생겼을 때 한번만 가져오면 됨 (,뒤에 []빈배열 넣어주면 한번만 가져옴)

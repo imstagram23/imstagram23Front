@@ -8,32 +8,35 @@ import { actionCreators as imageActions } from "./image";
 // actions
 const SET_POST = "SET_POST";
 const ADD_POST = "ADD_POST";
+const EDIT_POST = "EDIT_POST";
 const DELETE_POST = "DELETE_POST";
 const LOADING = "LOADING";
 
 //action creator
 const setPost = createAction(SET_POST, (post_list, paging) => ({post_list, paging}));
 const addPost = createAction(ADD_POST, (post) => ({post}));
+const editPost = createAction(EDIT_POST, (post_id, post) => ({post_id, post}));
 const deletePost = createAction(DELETE_POST, (post_id) => ({ post_id }));
 const loading = createAction(LOADING, (is_loading) => ({ is_loading }));
 
 const initialState = {
     list: [],
     preview: null,
+    // 무한스크롤 위해
     paging: { start: null, next: null, size: 3 },
     is_loading: false,
 }
 
 // 게시글 하나의 정보(Post의 defaultProps)
 const initialPost = {
-    // id는 자동으로 생성되도록 해놨음(???어디서???)
-    // id: 0,
-    // 아래 두개는 user 리덕스에서 가져올 것임
-    // writer: "user_name",
-    // user_profile: "https://img.insight.co.kr/static/2018/06/08/700/oaytfz0m123a56r373eh.jpg",
+    writer: "Robert Downey Jr.",
+    user_profile: "https://img.insight.co.kr/static/2018/06/08/700/oaytfz0m123a56r373eh.jpg",
     image_url: "https://cdn.vox-cdn.com/thumbor/M2rjDALxvNDv3yqeYuIdL3spabo=/0x0:2000x1333/1200x675/filters:focal(840x507:1160x827)/cdn.vox-cdn.com/uploads/chorus_image/image/65939918/171109_08_11_37_5DS_0545__1_.0.jpg",
-    contents: "NewYork NewYork",
-    comment_cnt: 10,
+    content: "NewYork NewYork",
+    heartLike: false,
+    totalLike: 3,
+    totalComment: 10,
+    checkMember: false,
     insert_dt: moment().format("YYYY년 MM월 DD일 hh:mm:ss"),
 };
 
@@ -51,38 +54,14 @@ const getPostDB = (start = null, size = 3) => {
 
         dispatch(loading(true));
 
-        const postDB = getState().post.list;
-        
-        if(start){
-            postDB = postDB(start).limit(size + 1);
-        }
-
+        // const postDB = getState().post.list;
+        // if(start){
+        //     postDB = postDB(start).limit(size + 1);
+        // }
         // let query = postDB.sort("insert_dt", "desc").limit(size + 1);
 
-        // const _is_login = getState().user.is_login;
 
-        // if(_is_login){
-            
-        //     axios({
-        //         method: 'GET',
-        //         url: 'http://3.36.50.96/api/post',
-        //         // data: {},
-        //         headers: { 
-        //             "Content-Type": "multipart/form-data",
-        //             "Access-Control-Allow-Origin": "*",
-        //             "Authorization": `Bearer ${sessionStorage.getItem("token")};`,
-        //         },
-        //     }).then((response) => {
-        //         console.log(response);
-        //         console.log(response.data);
-        //         dispatch(setPost(response.data));
-
-        //     }).catch((err) => {
-        //         console.log("에러? 아니져~ 연봉 올라가는 소리~");
-        //     })
-        // }
-
-       // 원본(새로고침해야 피드가 보임? 왜 또 잘 보임???)
+       // 원본(새로고침해야 피드가 보임? 왜 또 잘 보임??? -> expire문제였음)
         axios({
             method: 'get',
             url: 'http://3.36.50.96/api/post',
@@ -98,7 +77,8 @@ const getPostDB = (start = null, size = 3) => {
 
             let paging = {
                 start: response.data[0],
-                next: response.data.length === size + 1 ? response.data[response.data.length - 1] : null,
+                next: response.data,
+                // next: response.data.length === size + 1 ? response.data[response.data.length - 1] : null,
                 size: size,
             }
             response.data.pop();
@@ -128,6 +108,8 @@ const addPostDB = (contents, image) => {
         window.alert("이미지가 필요해요!");
         return;
         }
+
+        // const imageUploading = getState().image.uploading;
 
         // FormData형식으로 데이터 넘겨주기
         const formData = new FormData();
@@ -168,13 +150,13 @@ const addPostDB = (contents, image) => {
                 // 전체 데이터 내려받을때에 한가지(e.g.이미지)만 빼내기 위해선 위의내용 제하기
                 createdAt: moment().format("YYYY년 MM월 DD일 hh:mm"),
             }
-            console.log(new_post);
+            console.log(new_post);            
 
             // 서버에 데이터 잘 들어갔는지 확인 후 리덕스에 추가
             dispatch(addPost(new_post));
             history.replace('/');
             // history.replace('/')와 window.location.replace('/')의 차이?
-            // 리렌더링이 되고 안되고의 차이?
+            // history는 주소가 바뀐것처럼 보여주는 렌더링, window는 사이트 자체가 재렌더링
 
             // 다음에 글 작성할 떄 이전 이미지 안보이게 하려고 근데 왜 보이지????? 다시 안보임???
             dispatch(imageActions.setPreview(null));
@@ -187,6 +169,53 @@ const addPostDB = (contents, image) => {
         })
     }
 } 
+
+const editPostDB = (id = null, post = {}) => {
+    return function (dispatch, getState, {history}){
+
+        // if(!post_id) {
+        //     console.log("게시물 정보가 없어요!");
+        //     return;
+        //   }
+
+        const _image = getState().image.preview;
+        // 게시글 하나의 정보 찾기
+        const _post_idx = getState().post.list.findIndex((p) => p.postId === id);
+        // 게시글을 위의 인덱스를 사용해서 가져오기
+        const _post = getState().post.list[_post_idx];
+        console.log(_post)
+
+        let _edit = {
+            post,
+          }
+        console.log(_edit);
+
+        axios({
+            method: 'put',
+            url: `http://3.36.50.96/api/post/${id}`,
+            data: { _edit },
+            headers: { 
+                "Content-Type": "multipart/form-data",
+                "Access-Control-Allow-Origin": "*",
+                "Authorization": `Bearer ${sessionStorage.getItem("token")};`,
+            },
+        }).then((response) => {
+            console.log(response);
+            console.log(response.data);
+            const edit_post = {
+                content: response.data.content,
+            };
+            console.log(edit_post);            
+
+            window.alert("게시물을 수정 하시겠습니까?");
+            dispatch(editPost(edit_post));
+            history.replace('/');
+        }).catch((err) => {
+            window.alert("포스트 수정에 문제가 있어요!", err);
+            console.log("에러? 아니져~ 연봉 올라가는 소리~", err);
+        })
+    }
+}
 
 const deletePostDB = (id) => {
     return function (dispatch, getState, {history}){
@@ -203,6 +232,7 @@ const deletePostDB = (id) => {
         }).then((response) => {
             console.log(response);
             console.log(response.data);
+            window.alert("게시물을 삭제 하시겠습니까?");
             dispatch(deletePost(response.data.postId));
 
         }).catch((err) => {
@@ -225,6 +255,12 @@ export default handleActions({
         draft.list.unshift(action.payload.post)
     }),
 
+    [EDIT_POST]: (state, action) => produce(state, (draft) => {
+        // findIndex는 배열을 뒤져서 조건을 주면, 그에 맞는 애의 인덱스 번호를 준다.
+        let idx = draft.list.findIndex((p) => p.postId === action.payload.post_id);
+        draft.list[idx] = {...draft.list[idx], ...action.payload.post}
+    }),
+
     [DELETE_POST]: (state, action) => produce(state, (draft) => {
         let idx = draft.list.findIndex((p) => p.postId === action.payload.post_id);
         console.log(idx);
@@ -245,8 +281,10 @@ export default handleActions({
 const actionCreators = {
     setPost,
     addPost,
+    editPost,
     getPostDB,
     addPostDB,
+    editPostDB,
     deletePostDB,
 };
   
