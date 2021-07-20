@@ -42,26 +42,26 @@ const getPostDB = () => {
 
         const _is_login = getState().user.is_login;
 
-        if(_is_login){
+        // if(_is_login){
             
-            axios({
-                method: 'get',
-                url: 'http://3.36.50.96/api/post',
-                // data: {},
-                headers: { 
-                    "Content-Type": "multipart/form-data",
-                    "Access-Control-Allow-Origin": "*",
-                    "Authorization": `Bearer ${sessionStorage.getItem("token")};`,
-                },
-            }).then((response) => {
-                console.log(response);
-                console.log(response.data);
-                dispatch(setPost(response.data));
+        //     axios({
+        //         method: 'get',
+        //         url: 'http://3.36.50.96/api/post',
+        //         // data: {},
+        //         headers: { 
+        //             "Content-Type": "multipart/form-data",
+        //             "Access-Control-Allow-Origin": "*",
+        //             "Authorization": `Bearer ${sessionStorage.getItem("token")};`,
+        //         },
+        //     }).then((response) => {
+        //         console.log(response);
+        //         console.log(response.data);
+        //         dispatch(setPost(response.data));
 
-            }).catch((err) => {
-                console.log("에러? 아니져~ 연봉 올라가는 소리~");
-            })
-        }
+        //     }).catch((err) => {
+        //         console.log("에러? 아니져~ 연봉 올라가는 소리~");
+        //     })
+        // }
 
         // 원본(새로고침해야 피드가 보임)
         axios({
