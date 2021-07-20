@@ -59,8 +59,12 @@ const Signup = () => {
     return (
         <React.Fragment>
             <Grid center padding="10px"> 
+            
         <InnerBox>
           <LoginBox>
+          <BannerBox>
+          <Banner/>
+          </BannerBox>
             <TopText>
               친구들의 사진과 동영상을 보려면 가입하세요.
             </TopText>
@@ -138,6 +142,23 @@ const InnerBox = styled.div`
   padding: 0;
   margin: auto;
 `;
+
+const BannerBox = styled.div`
+    width:100%;
+    min-height:100px;
+    padding: 0px 20%;
+    margin: 10px auto;
+    `;
+    
+  const Banner = styled.div`
+    background-image:url('https://firebasestorage.googleapis.com/v0/b/dab-react.appspot.com/o/instagram.png?alt=media&token=a53527c4-07df-4c3f-ae18-ca30c3e0aa2b');
+    width:100%;
+    margin: auto;
+    min-height:100px;
+    background-size:contain;
+    background-repeat:no-repeat;
+    `;
+
 
 const LoginBox = styled.div`
   width: 300px;

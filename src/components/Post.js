@@ -8,9 +8,6 @@ import HeartButton from "./HeartButton";
 import { MdDelete } from "react-icons/md";
 import { RiEdit2Line } from "react-icons/ri";
 import { FcLikePlaceholder } from "react-icons/fc";
-import CommentList from "./CommentList";
-import Comments from "../pages/Comments";
-import CommentWrite from "../pages/Comments";
 
 import { useDispatch } from "react-redux";
 import { actionCreators as postActions } from "../redux/modules/post";
@@ -21,15 +18,15 @@ const Post = (props) => {
   const [comment, setComment] = React.useState();
 
 
-  const commentWrite = () => {
-   // comment 작성후에는 input창을 비워주기 위함
-    setComment("");
-    if (!comment) {
-      window.alert("댓글 내용을 입력하세요");
-      return;
-    }
-    console.log(comment)
-  };
+  // const commentWrite = () => {
+  //  // comment 작성후에는 input창을 비워주기 위함
+  //   setComment("");
+  //   if (!comment) {
+  //     window.alert("댓글 내용을 입력하세요");
+  //     return;
+  //   }
+  //   console.log(comment)
+  // };
   
 
   return (

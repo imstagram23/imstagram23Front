@@ -10,7 +10,7 @@ import PostEdit from "../pages/PostEdit";
 import Login from "../pages/Login";
 import Signup from "../pages/Signup";
 import Mypost from "../pages/Mypost";
-import Comments from "../pages/Comments";
+import CommentList from "../pages/CommentList";
 
 // 리액트 페이지 옮겨 다닐땐 react-router-dom써서 history.push요런걸로 이동했음
 // 그런데 history객체는 Route로 엮어줘야 쓸 수 있었음. 즉 컴포넌트에만 있어서
@@ -31,7 +31,7 @@ function App() {
           <Route exact path="/login" component={Login} />
           <Route exact path="/signup" component={Signup} />
           <Route exact path="/profile" component={Mypost} />
-          <Route exact path="/comment" component={Comments} />
+          <Route exact path="/comment" component={CommentList} />
           <Route render={(props) => (<NotFound history={props.history}/>)} />
         </Switch>
       </ConnectedRouter>

@@ -1,11 +1,26 @@
 import React from "react";
-import styled from "styled-components";
 
+import styled from "styled-components";
 import {Grid, Input, Button, Image, Text} from "../elements";
 
-const CommentWrite = (props) => {
+import { actionCreators as commentActions} from "../redux/modules/comment";
+import {useDispatch, useSelector} from "react-redux";
 
-  const {user_profile, user_name, user_id, post_id, contents, insert_dt} = props;
+const CommentWrite = (props) => {
+  const dispatch = useDispatch();
+  const [content, setCommentText] = React.useState();
+
+    const onChange = (e) => {
+      setCommentText(e.target.value);
+    }
+    console.log(content)
+
+    const write = () => {
+      dispatch(commentActions.addCommentAPI(content));
+      setCommentText("");
+    }
+    console.log(content)
+  
 
     return (
       <React.Fragment>
@@ -18,8 +33,14 @@ const CommentWrite = (props) => {
         </ImageBox>
         
         <Form>
-          <InputComment placeholder="댓글 달기.." />
-          <ButtonComment>게시</ButtonComment>
+          <InputComment
+          placeholder="댓글 달기.."
+          onChange={onChange}
+          is_Submit
+           />
+          <ButtonComment
+          _onClick={write}
+          >게시</ButtonComment>
         </Form>
 
         </Outter>
@@ -116,6 +137,7 @@ const InputComment = styled.input`
     display:flex;
     width: 160px;
     border: none;
+    outline: none;
     margin-left: 10px;
 `;
 
@@ -147,7 +169,5 @@ CommentWrite.defaultProps = {
   contents: "NewYork NewYork",
   comment_cnt: 10,
 };
-
-
 
 export default CommentWrite;

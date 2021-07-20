@@ -7,6 +7,7 @@ import { connectRouter } from "connected-react-router";
 import User from "./modules/user";
 import Post from "./modules/post";
 import Image from "./modules/image";
+import Comment from "./modules/comment";
 
 // history객체 만들기 
 export const history = createBrowserHistory();
@@ -16,6 +17,7 @@ const rootReducer = combineReducers({
   user: User,
   post: Post,
   image: Image,
+  comment: Comment,
   // 내가 만든 history랑 라우터 연결
   router: connectRouter(history),
 });
