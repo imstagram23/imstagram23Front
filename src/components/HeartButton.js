@@ -6,10 +6,12 @@ import {Text} from "../elements";
 import { FcLikePlaceholder } from "react-icons/fc";
 import { FcLike } from "react-icons/fc";
 
-// 하트 버튼은 일단 모양새만 잡아줄거예요!
+
 const HeartButton = (props) => {
 
-  const heartIcon = props.is_like? <FcLike size="22px"/> : <FcLikePlaceholder size="22px"/>;
+  // const {checkMember} = props;
+
+  const heartIcon = props.heartLike? <FcLike size="22px"/> : <FcLikePlaceholder size="22px"/>;
 
   return (
     <React.Fragment>
@@ -17,6 +19,10 @@ const HeartButton = (props) => {
     </React.Fragment>
   );
 };
+
+HeartButton.defaultProps = {
+  checkMember: false,
+}
 
 const Heart = styled.div`
   width: 30px;

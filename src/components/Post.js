@@ -8,6 +8,7 @@ import HeartButton from "./HeartButton";
 import { MdDelete } from "react-icons/md";
 import { RiEdit2Line } from "react-icons/ri";
 import { FcLikePlaceholder } from "react-icons/fc";
+import { FcLike } from "react-icons/fc";
 
 import { useDispatch } from "react-redux";
 import { actionCreators as postActions } from "../redux/modules/post";
@@ -77,7 +78,6 @@ const Post = (props) => {
               size="20px"
               cursor="pointer"
               disabled=""
-              checkMember={props.checkMember}
               onClick={()=>{history.push(`/edit/${props.postId}`)}}
               // onClick={(e)=>{dispatch(postActions.editPostDB(props.postId))}}
               />}              
@@ -104,9 +104,12 @@ const Post = (props) => {
         </Grid>
 
         <Grid padding="4px 14px 0 14px">
-          {/* <HeartButton/> */}
+          <HeartButton 
+          heartLike
+          _onClick={() => {}}
+          >{props.checkMember}</HeartButton>
           {/* is_me들어가면 위에걸로 */}
-          <FcLikePlaceholder size="22px"/>
+          {/* <FcLikePlaceholder size="22px"/> */}
           <Text 
           margin="0 0 11px 0"
           >
