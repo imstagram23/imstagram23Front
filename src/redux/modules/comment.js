@@ -34,7 +34,7 @@ const initialComment = {
   insert_dt: moment().format("YYYY년 MM월 DD일 hh:mm:ss"),
 };
 
-const addCommentAPI = (content, id) => {
+const addCommentAPI = (content, postId) => {
     return function (dispatch, getState, {history}) {
       // formdata에 파일과 게시글 내용을 담아 서버로 전송
     //   const formData = new FormData();
@@ -45,15 +45,16 @@ const addCommentAPI = (content, id) => {
         
         axios({
         method: "POST",
-        url:  `http://3.36.50.96/api/comment/${id}`,
+        url:  `http://3.36.50.96/api/comment/${postId}`,
         data: {content: content},
         headers: {
-        "Content-Type": "multipart/form-data",
+        "Content-Type": "application/json;charset=UTF-8",
         "Access-Control-Allow-Origin": "*",
         "Authorization": `Bearer ${sessionStorage.getItem("token")};`,
         },
       }).then((response) => {
-          console.log(response);
+          console.log(response.data);
+          
         //   console.log(response.data);
          
            // 방금 업데이트 된 포스트 정보를 받아 정리한다.
@@ -66,7 +67,7 @@ const addCommentAPI = (content, id) => {
           dispatch(addComment(new_content));
 
           window.alert("댓글 작성이 완료되었습니다.");
-          history.replace("/comment");
+          history.replace(`/comment/${postId}`);
 
         })
         .catch((error) => {
@@ -82,7 +83,7 @@ const addCommentAPI = (content, id) => {
             url: `http://3.36.50.96/api/comment/${postId}`,
             // data: {},
             headers: { 
-                "Content-Type": "multipart/form-data",
+                "Content-Type": "application/json;charset=UTF-8",
                 "Access-Control-Allow-Origin": "*",
                 "Authorization": `Bearer ${sessionStorage.getItem("token")};`,
             },
@@ -102,7 +103,7 @@ const addCommentAPI = (content, id) => {
         url: `http://3.36.50.96/api/comment/${commentId}`,
         method: 'DELETE',
         headers: {
-          "Content-Type": "multipart/form-data",
+          "Content-Type": "application/json;charset=UTF-8",
           "Access-Control-Allow-Origin": "*",
           "Authorization": `Bearer ${sessionStorage.getItem("token")};`,
         },

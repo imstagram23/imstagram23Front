@@ -11,16 +11,15 @@ const CommentWrite = (props) => {
     const dispatch = useDispatch();
     const {history} = props;
     const [content, setContent] = React.useState('');
+    const {postId} = props;
 
     const addComment = () => {
-      dispatch(commentActions.addCommentAPI(content));
+      dispatch(commentActions.addCommentAPI(content, postId));
     }
 
     const changeContents = (e) => {
       setContent(e.target.value);
     }
-
-    console.log(content)
 
     return (
       <React.Fragment>

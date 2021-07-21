@@ -2,7 +2,7 @@ import React from "react";
 import styled from 'styled-components';
 import {Text, Input, Grid, Button} from "../elements/index";
 
-import Post from "../components/Post";
+import Card from "../components/Card";
 import Header from "../components/Header";
 import ProfileHeader from "../components/ProfileHeader";
 import ProfilePost from "../components/ProfilePost";
@@ -18,8 +18,9 @@ const Mypost = () => {
             <ProfileHeader />
             {/* <PostContainer> */}
             <PostBox>
-            <Post/>
-            
+              
+            <Card/>
+
             {/* </PostContainer> */}
             {/* </Container> */}
             </PostBox>

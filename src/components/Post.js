@@ -14,7 +14,8 @@ import { actionCreators as postActions } from "../redux/modules/post";
 
 const Post = (props) => {
   const dispatch = useDispatch();
-
+  console.log(props);
+  
   const [comment, setComment] = React.useState();
 
 
@@ -111,7 +112,7 @@ const Post = (props) => {
 
         <Grid is_flex padding=" 0px 14px">
           <Text 
-          _onClick={()=>{history.push('/comment/:postId')}} 
+          _onClick={()=>{history.push(`/comment/${props.postId}`)}} 
           margin="0px" 
           color="rgba(var(--f52,142,142,142),1)"
           >댓글 {props.totalComment}개 모두 보기

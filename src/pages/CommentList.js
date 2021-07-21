@@ -14,10 +14,10 @@ import Comment from "../components/Comment";
 const CommentList = (props) => {
     const dispatch = useDispatch();
     const content_list = useSelector((state) => state.comment.list);
-    console.log(props.match);
+    const postId = props.match.params.postId;
     
     React.useEffect(() => {
-        dispatch(commentActions.setCommentAPI());
+        dispatch(commentActions.setCommentAPI(postId));
     }, []);
 
     return (
@@ -26,11 +26,11 @@ const CommentList = (props) => {
             
             <Grid padding="57px 0px">
 
-            <CommentWrite/>
+            <CommentWrite postId={postId}/>
             <hr style={{ width:"90%"}}/>
-            {/* {content_list.map((p, idx) => {
+            {content_list.map((p, idx) => {
                 return <Comment key={idx} {...p}/>
-             })} */}
+             })}
 
             </Grid>
         </React.Fragment>

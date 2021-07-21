@@ -14,7 +14,7 @@ const PostList = (props) => {
     const dispatch = useDispatch();
     const post_list = useSelector((state) => state.post.list);
     // 빈배열 잘 떴다
-    // console.log(post_list);
+    console.log(post_list);
     const is_loading = useSelector((state) => state.post.is_loading);
     const user_info = useSelector((state) => state.user.user);
     const paging = useSelector((state) => state.post.paging);
