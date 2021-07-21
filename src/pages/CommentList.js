@@ -15,9 +15,13 @@ const CommentList = (props) => {
     const dispatch = useDispatch();
     const content_list = useSelector((state) => state.comment.list);
     const postId = props.match.params.postId;
-    
+
+    const commentId = props.match;
+    console.log(commentId)
+
     React.useEffect(() => {
         dispatch(commentActions.setCommentAPI(postId));
+        // dispatch(commentActions.deleteCommentAPI(commentId));
     }, []);
 
     return (
@@ -27,7 +31,7 @@ const CommentList = (props) => {
             <Grid padding="57px 0px">
 
             <CommentWrite postId={postId}/>
-            <hr style={{ width:"90%"}}/>
+            {/* <hr style={{ width:"90%"}}/> */}
             {content_list.map((p, idx) => {
                 return <Comment key={idx} {...p}/>
              })}

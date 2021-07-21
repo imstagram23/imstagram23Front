@@ -13,18 +13,18 @@ const deleteComment = createAction(DELETE_COMMENT, (content) => ({content}));
 
 const initialState = {
     list: [
-        {
-        content : "content 입니다1",
-        insert_dt: moment().format("YYYY년 MM월 DD일 hh:mm:ss"),
-      },
-      {
-        content : "content 입니다2",
-        insert_dt: moment().format("YYYY년 MM월 DD일 hh:mm:ss"),
-      },
-      {
-        content : "content 입니다3",
-        insert_dt: moment().format("YYYY년 MM월 DD일 hh:mm:ss"),
-      },
+      //   {
+      //   content : "content 입니다1",
+      //   insert_dt: moment().format("YYYY년 MM월 DD일 hh:mm:ss"),
+      // },
+      // {
+      //   content : "content 입니다2",
+      //   insert_dt: moment().format("YYYY년 MM월 DD일 hh:mm:ss"),
+      // },
+      // {
+      //   content : "content 입니다3",
+      //   insert_dt: moment().format("YYYY년 MM월 DD일 hh:mm:ss"),
+      // },
     ],
 }
 
@@ -65,8 +65,6 @@ const addCommentAPI = (content, postId) => {
           console.log(new_content)
           // 리덕스 상태 업데이트
           dispatch(addComment(new_content));
-
-          window.alert("댓글 작성이 완료되었습니다.");
           history.replace(`/comment/${postId}`);
 
         })
