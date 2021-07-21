@@ -1,4 +1,4 @@
-//작성페이지 프리뷰
+//작성페이지 프리뷰(따로 업로드 버튼 클릭하지 않아도 파일 선택만 하면 프리뷰 보여줄 수 있도록)
 import React from "react";
 import Button from "../elements/Button";
 import styled, { css } from "styled-components"
@@ -10,7 +10,7 @@ import { actionCreators as imageActions } from "../redux/modules/image";
 const Upload = (props) => {
   const dispatch = useDispatch();
   // 사진 업로딩 시, 버튼 안눌리게 하려고
-  const is_uploading = useSelector((state) => state.image.uploading);
+  const uploading = useSelector((state) => state.image.uploading);
   const fileInput = React.useRef();
 
   const selectFile = (e) => {
@@ -26,10 +26,14 @@ const Upload = (props) => {
     const reader = new FileReader();
     const file = fileInput.current.files[0];
 
+    // 이미지 업로드는 post모듈에서 addCardDB로 다른 데이터와 한꺼번에 보내므로 필요없음
     // const uploadDB = () => {
-    //   let image = fileInput.current.files[0];
-    //   const _upload = 
-    // }
+    //   if (!fileInput.current || fileInput.current.files.length === 0) {
+    //     window.alert("파일을 선택해주세요!");
+    //     return;
+    //   }
+    //   dispatch(imageActions.uploadImageDB(fileInput.current.files[0]));
+    // };
 
     // 파일객체 넘겨주기
     console.log(file)
@@ -52,7 +56,7 @@ const Upload = (props) => {
         type="file"
         onChange={selectFile}
         ref={fileInput}
-        disabled={is_uploading}
+        disabled={uploading}
       />
     </React.Fragment>
   )

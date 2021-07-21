@@ -47,22 +47,26 @@ const Post = (props) => {
             </Text>
           </Grid >
 
+          {/* 내 게시물만 수정 및 삭제 버튼 보일 수 있도록 */}
           <Grid is_flex width="auto" padding="0 14px" >
             <Grid padding="0 5px">
-              <MdDelete 
+              {props.checkMember && <MdDelete 
               size="20px"
               cursor='pointer'
               // onClick={()=>{console.log("삭제!")}}
               onClick={(e)=>{dispatch(postActions.deletePostDB(props.postId))}}
-              />
+              />}
             </Grid>
             <Grid>
-            <RiEdit2Line 
+              {props.checkMember && 
+              <RiEdit2Line 
               size="20px"
               cursor='pointer'
-              onClick={()=>{history.push('/edit')}}/>
+              onClick={()=>{history.push('/edit')}}
+              />}
             </Grid>
           </Grid>
+
         </Grid>
 
         <Grid>
@@ -79,7 +83,7 @@ const Post = (props) => {
           <Text 
           margin="0 0 11px 0"
           >
-            좋아요 <span style={{fontWeight: "bold"}}>{props.like_cnt}</span>개
+            좋아요 <span style={{fontWeight: "bold"}}>{props.totalLike}</span>개
           </Text>
         </Grid>
 
@@ -110,7 +114,7 @@ const Post = (props) => {
           _onClick={()=>{history.push('/comment/:postId')}} 
           margin="0px" 
           color="rgba(var(--f52,142,142,142),1)"
-          >댓글 {props.comment_cnt}개 모두 보기
+          >댓글 {props.totalComment}개 모두 보기
           </Text>
           {/* <CommentWrite post_id={props.user_info.user_name}/> */}
           {/* <CommentList post_id={props.user_info.user_name}/> */}
@@ -127,9 +131,10 @@ Post.defaultProps = {
   user_profile: "https://img.insight.co.kr/static/2018/06/08/700/oaytfz0m123a56r373eh.jpg",
   image_url: "https://cdn.vox-cdn.com/thumbor/M2rjDALxvNDv3yqeYuIdL3spabo=/0x0:2000x1333/1200x675/filters:focal(840x507:1160x827)/cdn.vox-cdn.com/uploads/chorus_image/image/65939918/171109_08_11_37_5DS_0545__1_.0.jpg",
   content: "NewYork NewYork",
-  like: false,
-  like_cnt: 3,
-  comment_cnt: 10,
+  heartLike: false,
+  totalLike: 3,
+  totalComment: 10,
+  checkMember: false,
 };
 
 
