@@ -27,7 +27,7 @@ const Post = (props) => {
   //   }
   //   console.log(comment)
   // };
-  
+
 
   return (
     <React.Fragment>
@@ -107,7 +107,7 @@ const Post = (props) => {
 
         <Grid is_flex padding=" 0px 14px">
           <Text 
-          _onClick={()=>{history.push('/comment')}} 
+          _onClick={()=>{history.push('/comment/:postId')}} 
           margin="0px" 
           color="rgba(var(--f52,142,142,142),1)"
           >댓글 {props.comment_cnt}개 모두 보기

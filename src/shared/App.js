@@ -31,7 +31,7 @@ function App() {
           <Route exact path="/login" component={Login} />
           <Route exact path="/signup" component={Signup} />
           <Route exact path="/profile" component={Mypost} />
-          <Route exact path="/comment" component={CommentList} />
+          <Route exact path="/comment/:postId" component={CommentList} />
           <Route render={(props) => (<NotFound history={props.history}/>)} />
         </Switch>
       </ConnectedRouter>

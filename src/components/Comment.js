@@ -1,53 +1,43 @@
 import React from "react";
 import {Grid, Image, Text} from "../elements";
+import { MdDelete } from "react-icons/md";
+import { FcLikePlaceholder } from "react-icons/fc";
+
 import {useSelector, useDispatch} from "react-redux";
 
-import CommentList from "../pages/CommentList";
 import {actionCreators as commentActions} from "../redux/modules/comment"
+import {actionCreators as postActions} from "../redux/modules/post"
+import {actionCreators as userActions} from "../redux/modules/user"
 
-const Comment = () => {
+
+
+const Comment = (props) => {
+
   const dispatch = useDispatch();
-  const comment_list = useSelector((state) => state.comment.list);
-  console.log(comment_list);
-  React.useEffect = () => {
-    dispatch(commentActions.getCommentsAPI());
-  }
+
+  const content_list = useSelector((state) => state.comment.list);
+  const user_list = useSelector((state) => state.user.list);
+  const post_list = useSelector((state) => state.post.list);
 
   return (
-    <React.Fragment>
-      <Grid padding="16px">
-      {comment_list.map((p, idx) => {
-                return <CommentItem key={p.post_id} {...p}/>
-            })}
+      <Grid is_flex width="auto">
+        
+      <Grid is_flex width="auto">
+              <Image shape="circle" src={props.imageUrl}/>
+              <Text bold>{props.writer}</Text>
+          </Grid>
+          <Grid is_flex margin="0px 4px" width="auto">
+              <Text margin="0px">{props.content}</Text>
+              <FcLikePlaceholder size="22px"/>
+              {/* <MdDelete 
+              onClick={(e)=>{dispatch(commentActions.deleteCommentAPI(props.commentId))}}
+              /> */}
+          </Grid>
       </Grid>
-    </React.Fragment>
-  );
-};
+  )
+}
+
+
 
 export default Comment;
 
-
-const CommentItem = (props) => {
-
-    return (
-        <Grid is_flex>
-          
-            <Grid is_flex width="auto">
-                <Image shape="circle" src={props.user_profile}/>
-                <Text bold>{props.user_name}</Text>
-            </Grid>
-            <Grid is_flex margin="0px 4px">
-                <Text margin="0px">{props.contents}</Text>
-                <Text margin="0px">{props.insert_dt}</Text>
-            </Grid>
-        </Grid>
-    )
-}
-
-// CommentItem.defaultProps = {
-//    user_profile: "https://mean0images.s3.ap-northeast-2.amazonaws.com/4.jpeg"
-// //     user_name: "mean0",
-// //     user_id: "",
-// //     post_id: 1,
-// //     contents: "귀여운 고양이네요!",
-// }

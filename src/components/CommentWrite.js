@@ -3,24 +3,24 @@ import React from "react";
 import styled from "styled-components";
 import {Grid, Input, Button, Image, Text} from "../elements";
 
+import {actionCreators as postActions} from "../redux/modules/post"
 import { actionCreators as commentActions} from "../redux/modules/comment";
 import {useDispatch, useSelector} from "react-redux";
 
 const CommentWrite = (props) => {
-  const dispatch = useDispatch();
-  const [content, setCommentText] = React.useState();
+    const dispatch = useDispatch();
+    const {history} = props;
+    const [content, setContent] = React.useState('');
 
-    const onChange = (e) => {
-      setCommentText(e.target.value);
-    }
-    console.log(content)
-
-    const write = () => {
+    const addComment = () => {
       dispatch(commentActions.addCommentAPI(content));
-      setCommentText("");
     }
+
+    const changeContents = (e) => {
+      setContent(e.target.value);
+    }
+
     console.log(content)
-  
 
     return (
       <React.Fragment>
@@ -28,18 +28,16 @@ const CommentWrite = (props) => {
         <Outter>
 
         <ImageBox>
-        {/* <img crossorigin="anonymous" data-testid="user-avatar" draggable="false" src="https://instagram.fada2-1.fna.fbcdn.net/v/t51.2885-19/44884218_345707102882519_2446069589734326272_n.jpg?_nc_ht=instagram.fada2-1.fna.fbcdn.net&amp;_nc_ohc=90m_yHaPIAkAX89z4BE&amp;edm=ABfd0MgBAAAA&amp;ccb=7-4&amp;oh=d87a7fe92609867269f78c4afe16eb24&amp;oe=60FA260F&amp;_nc_sid=7bff83&amp;ig_cache_key=YW5vbnltb3VzX3Byb2ZpbGVfcGlj.2-ccb7-4"/> */}
         <Image/>
         </ImageBox>
         
         <Form>
           <InputComment
           placeholder="댓글 달기.."
-          onChange={onChange}
-          is_Submit
+          onChange={changeContents}
            />
           <ButtonComment
-          _onClick={write}
+          onClick={addComment}
           >게시</ButtonComment>
         </Form>
 
@@ -152,22 +150,5 @@ const ButtonComment = styled.button`
     background-color: transparent;
     margin-left: 25px;
 `;
-
-CommentWrite.defaultProps = {
-  user_profile: "",
-  user_name: "mean0",
-  user_id: "",
-  post_id: 1,
-  contents: "귀여운 고양이네요!",
-  insert_dt: '2021-01-01 19:00:00'
-}
-
-CommentWrite.defaultProps = {
-  writer: "Robert Downey Jr.",
-  user_profile: "https://img.insight.co.kr/static/2018/06/08/700/oaytfz0m123a56r373eh.jpg",
-  image_url: "https://cdn.vox-cdn.com/thumbor/M2rjDALxvNDv3yqeYuIdL3spabo=/0x0:2000x1333/1200x675/filters:focal(840x507:1160x827)/cdn.vox-cdn.com/uploads/chorus_image/image/65939918/171109_08_11_37_5DS_0545__1_.0.jpg",
-  contents: "NewYork NewYork",
-  comment_cnt: 10,
-};
 
 export default CommentWrite;

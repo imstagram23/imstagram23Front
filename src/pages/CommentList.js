@@ -2,42 +2,38 @@ import React from "react";
 import styled from "styled-components";
 import {Grid, Image, Text, Button, Input} from "../elements";
 import { history } from "../redux/configureStore";
-import {useSelector} from "react-redux";
+import {useSelector, useDispatch} from "react-redux";
+import {actionCreators as commentActions} from "../redux/modules/comment";
 
 import CommentWrite from "../components/CommentWrite";
-import Post from "../components/Post";
+import comment from "../components/Comment";
 import Header from "../components/Header";
 import Comment from "../components/Comment";
 
+
 const CommentList = (props) => {
+    const dispatch = useDispatch();
+    const content_list = useSelector((state) => state.comment.list);
+    console.log(props.match);
     
-    const comment_list = useSelector((state) => state.comment.list);
+    React.useEffect(() => {
+        dispatch(commentActions.setCommentAPI());
+    }, []);
 
     return (
         <React.Fragment>
             <Header/>
             
             <Grid padding="57px 0px">
+
             <CommentWrite/>
-            <Comment />
-            {/* <CommentDetail>
-            <Text margin="0px">{props.contents}</Text>
-            </CommentDetail> */}
             <hr style={{ width:"90%"}}/>
-            <Comment/>
-            
+            {/* {content_list.map((p, idx) => {
+                return <Comment key={idx} {...p}/>
+             })} */}
+
             </Grid>
         </React.Fragment>
     )
 }
-
-// const CommentDetail = styled.div`
-//     border: 1px solid black;
-//     height: auto;
-// `;
-
-CommentList.defaultProps = {
-    contents: "어쩌고 저쩌고"
-  };
-
 export default CommentList;
