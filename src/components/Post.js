@@ -53,20 +53,47 @@ const Post = (props) => {
               size="20px"
               cursor='pointer'
               // onClick={()=>{console.log("삭제!")}}
-              onClick={(e)=>{dispatch(postActions.deletePostDB(props.postId))}}
+              
+              onClick={(e)=>{
+                // 이벤트 캡쳐링과 버블링 막기
+
+                e.preventDefault();
+                // 이벤트 버블링 막기
+                // 한 요소에 이벤트 발생하면 그 요소에 할당된 핸들러 동작 후, 이어서 부모 요소의 핸들러 동작
+                // 가장 최상단의 조상 요소를 만날때까지 이 과정 반복.
+                // 하지만 되도록이만 안막는게 좋음.
+                // 사람들이 페이지에서 어디를 클릭했는지 등의 행동 패턴을 분석하기 위해서
+                // window내에서 발생하는 클릭 이벤트 전부를 감지하기로 결정했다면,
+                // stopPropagation으로 막아놓은 영역에선 분석 시스템 코드 작동하지 않음.
+                // 따라서 버블링을 막아야 하는 경우라면 커스텀 이벤트 등으로 문제 해결할 것.
+                e.stopPropagation();
+                dispatch(postActions.deletePostDB(props.postId))}}
               />
             </Grid>
+
+            {/* 내 게시글에만 수정버튼 보일 수 있게 */}
             <Grid> 
-              <RiEdit2Line 
+              {props.checkMember && <RiEdit2Line 
               size="20px"
               cursor="pointer"
+              disabled=""
               checkMember={props.checkMember}
               onClick={()=>{history.push(`/edit/${props.postId}`)}}
               // onClick={(e)=>{dispatch(postActions.editPostDB(props.postId))}}
-              />
+              />}              
             </Grid>
-          </Grid>
 
+            {/* disabled 어떻게 먹이는거지? */}
+            {/* <Grid> 
+              <RiEdit2Line 
+              size="20px"
+              cursor="pointer"
+              disabled={props.checkMember}
+              onClick={()=>{history.push(`/edit/${props.postId}`)}}
+              />           
+            </Grid> */}
+
+          </Grid>
         </Grid>
 
         <Grid>
