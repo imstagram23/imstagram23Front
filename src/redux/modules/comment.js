@@ -65,7 +65,7 @@ const addCommentAPI = (content, postId) => {
           console.log(new_content)
           // 리덕스 상태 업데이트
           dispatch(addComment(new_content));
-          history.replace(`/comment/${postId}`);
+          history.push(`/comment/${postId}`);
 
         })
         .catch((error) => {

@@ -97,6 +97,7 @@ const AspectInner = styled.div`
   background-image: url("${(props) => props.src}");
   background-size: cover;
   ${(props) => (props.margin ? `margin: ${props.margin}` : "")};
+  ${(props) => (props.padding ? `padding: ${props.padding}` : "")};
 
 `;
 

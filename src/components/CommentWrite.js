@@ -26,9 +26,14 @@ const CommentWrite = (props) => {
         <Section>
         <Outter>
 
-        <ImageBox>
-        <Image/>
-        </ImageBox>
+        {/* <ImageBox> */}
+        <Grid is_flex width="auto" margin="0px 0px 0px 25px">
+              <Image size="36" shape="circle" src={props.user_profile}/>
+        {/* <Image size="40"
+               shape="circle" 
+               src={props.user_profile}/> */}
+        </Grid>
+        {/* </ImageBox> */}
         
         <Form>
           <InputComment
@@ -149,5 +154,10 @@ const ButtonComment = styled.button`
     background-color: transparent;
     margin-left: 25px;
 `;
+
+CommentWrite.defaultProps = {
+  writer: "Robert Downey Jr.",
+  user_profile: "https://thumbs.dreamstime.com/z/default-avatar-profile-icon-social-media-user-vector-default-avatar-profile-icon-social-media-user-vector-portrait-176194876.jpg",
+};
 
 export default CommentWrite;

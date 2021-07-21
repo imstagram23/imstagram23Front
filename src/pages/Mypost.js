@@ -5,6 +5,7 @@ import {Text, Input, Grid, Button} from "../elements/index";
 import Header from "../components/Header";
 import ProfileHeader from "../components/ProfileHeader";
 import ProfilePost from "../components/ProfilePost";
+import Post from "../components/Post"
 
 
 const Mypost = () => {
@@ -17,8 +18,7 @@ const Mypost = () => {
             <ProfileHeader />
             {/* <PostContainer> */}
             <PostBox>
-              
-
+            <Post/>
             {/* </PostContainer> */}
             {/* </Container> */}
             </PostBox>

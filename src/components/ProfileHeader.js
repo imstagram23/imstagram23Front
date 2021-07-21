@@ -48,45 +48,7 @@ const ProfileHeader = (props) => {
           
         </React.Fragment>
       );
-    // } else {
-    //   return (
-    //     <React.Fragment>
-    //       <Container>
-    //         <Grid width="291px" height="150px">
-    //           <Image
-    //             cursor="Pointer"
-    //             shape="circle"
-    //             size="150"
-    //             display="block"
-    //             margin-left="auto"
-    //             margin-right="auto"
-    //           />
-    //         </Grid>
-    //         <TextContainer>
-    //           <IdButton>
-    //             <Text size="60" bold>
-    //             </Text>
-    //             <Button
-    //               _onClick={() => {
-                   
-    //               }}
-    //               width="80px"
-    //             >
-    //               게시글 작성
-    //             </Button>
-    //           </IdButton>
-    //           <Text size="60" bold>
-              
-    //           </Text>
-    //           <Text bold>안녕!</Text>
-    //         </TextContainer>
-    //       </Container>
-    //     </React.Fragment>
-    //   );
-// }
-  
-    // const user_info = useSelector((state) => state.post.list);
-    // console.log(user_info);
+   
 };
 
   const Container = styled.div`
@@ -192,11 +154,6 @@ const ProfileHeader = (props) => {
   ProfileHeader.defaultProps = {
     writer: "Robert Downey Jr.",
     user_profile: "https://img.insight.co.kr/static/2018/06/08/700/oaytfz0m123a56r373eh.jpg",
-    image_url: "https://cdn.vox-cdn.com/thumbor/M2rjDALxvNDv3yqeYuIdL3spabo=/0x0:2000x1333/1200x675/filters:focal(840x507:1160x827)/cdn.vox-cdn.com/uploads/chorus_image/image/65939918/171109_08_11_37_5DS_0545__1_.0.jpg",
-    content: "NewYork NewYork",
-    like: false,
-    like_cnt: 3,
-    comment_cnt: 10,
   };
 
 export default ProfileHeader;
