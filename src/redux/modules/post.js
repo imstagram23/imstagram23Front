@@ -12,12 +12,14 @@ const EDIT_POST = "EDIT_POST";
 const DELETE_POST = "DELETE_POST";
 const LOADING = "LOADING";
 
+
 //action creator
 const setPost = createAction(SET_POST, (post_list, paging) => ({post_list, paging}));
 const addPost = createAction(ADD_POST, (post) => ({post}));
-const editPost = createAction(EDIT_POST, (post_id, post) => ({post_id, post}));
+const editPost = createAction(EDIT_POST, (post_id, content) => ({post_id, content}));
 const deletePost = createAction(DELETE_POST, (post_id) => ({ post_id }));
 const loading = createAction(LOADING, (is_loading) => ({ is_loading }));
+
 
 const initialState = {
     list: [],
@@ -42,7 +44,7 @@ const initialPost = {
 
 // 다 가지고 올거니까 조건 걸게 없으니 일단 공란(심화3-3 12:~)
 // 데이터 형식 맞추기는 Object.keys()사용(심화3-3 15:~)
-// 왜? 키 값만 뽑아서 배열로 만들어 주려고. 왜 배열로? reduce쓰려고 
+// 왜? 키 값만 뽑아서 배열로 만들어 주려고. 왜 배열로? reduce(누산)쓰려고 
 const getPostDB = (start = null, size = 3) => {
     return function (dispatch, getState, {history}){
 
@@ -53,13 +55,6 @@ const getPostDB = (start = null, size = 3) => {
         }
 
         dispatch(loading(true));
-
-        // const postDB = getState().post.list;
-        // if(start){
-        //     postDB = postDB(start).limit(size + 1);
-        // }
-        // let query = postDB.sort("insert_dt", "desc").limit(size + 1);
-
 
        // 원본(새로고침해야 피드가 보임? 왜 또 잘 보임??? -> expire문제였음)
         axios({
@@ -72,8 +67,8 @@ const getPostDB = (start = null, size = 3) => {
                 "Authorization": `Bearer ${sessionStorage.getItem("token")};`,
             },
         }).then((response) => {
-            console.log(response);
-            console.log(response.data);
+            // console.log(response);
+            // console.log(response.data);
 
             let paging = {
                 start: response.data[0],
@@ -132,8 +127,8 @@ const addPostDB = (contents, image) => {
                 "Authorization": `Bearer ${sessionStorage.getItem("token")};`,
             },
         }).then((response) => {
-            console.log(response);
-            console.log(response.data);
+            // console.log(response);
+            // console.log(response.data);
             // 서버에서 데이터 전체 내려주면 res.data.~하면 되지만
             // 전체 데이터를 내려주지 않으면 파라미터값을 그대로 가져온다.
             // 이미지를 http://도메인주소+res.data.~로 넣어줘야 한다.
@@ -145,9 +140,10 @@ const addPostDB = (contents, image) => {
                 postId: response.data.postId,
                 writer: response.data.writer,
                 content: response.data.content,
+                totalComment: response.data.totalComment,
+                heartLike: response.data.heartLike,
+                totalLike: response.data.totalLike,
                 imageUrl: response.data.imageUrl,
-                // 이미지 'http://wanos.shop/' + 
-                // 전체 데이터 내려받을때에 한가지(e.g.이미지)만 빼내기 위해선 위의내용 제하기
                 createdAt: moment().format("YYYY년 MM월 DD일 hh:mm"),
             }
             console.log(new_post);            
@@ -170,48 +166,47 @@ const addPostDB = (contents, image) => {
     }
 } 
 
-const editPostDB = (id = null, post = {}) => {
+const editPostDB = (id, content) => {
     return function (dispatch, getState, {history}){
 
-        // if(!post_id) {
-        //     console.log("게시물 정보가 없어요!");
-        //     return;
-        //   }
-
+        // 프리뷰 이미지 가져오기
         const _image = getState().image.preview;
-        // 게시글 하나의 정보 찾기
+        // 게시글 하나의 정보 찾기(수정하려는 게시글이 게시글 목록에서 몇 번째에 있나 확인)
         const _post_idx = getState().post.list.findIndex((p) => p.postId === id);
-        // 게시글을 위의 인덱스를 사용해서 가져오기
+        // 위의 인덱스로 수정하려는 게시글의 수정 전 정보를 가져오기
         const _post = getState().post.list[_post_idx];
         console.log(_post)
 
-        let _edit = {
-            post,
-          }
-        console.log(_edit);
+        let _edit = JSON.stringify(content);
+          
+        // console.log(_edit);
+        // // object
+        // console.log(typeof _edit)
 
         axios({
             method: 'put',
             url: `http://3.36.50.96/api/post/${id}`,
-            data: { _edit },
+            data: { content: _edit },
+            // data: { ..._edit },
             headers: { 
-                "Content-Type": "multipart/form-data",
+                // "Content-Type": "multipart/form-data",
+                "Content-Type": "application/json; charset=utf-8",
                 "Access-Control-Allow-Origin": "*",
                 "Authorization": `Bearer ${sessionStorage.getItem("token")};`,
             },
         }).then((response) => {
-            console.log(response);
-            console.log(response.data);
+            // console.log(response);
+            // console.log(response.data);
             const edit_post = {
-                content: response.data.content,
+                content: content,
             };
             console.log(edit_post);            
 
             window.alert("게시물을 수정 하시겠습니까?");
-            dispatch(editPost(edit_post));
+            dispatch(editPost(id, edit_post));
             history.replace('/');
         }).catch((err) => {
-            window.alert("포스트 수정에 문제가 있어요!", err);
+            window.alert("내 게시글만 수정할 수 있어요!", err);
             console.log("에러? 아니져~ 연봉 올라가는 소리~", err);
         })
     }
@@ -230,8 +225,8 @@ const deletePostDB = (id) => {
                 "Authorization": `Bearer ${sessionStorage.getItem("token")};`,
             },
         }).then((response) => {
-            console.log(response);
-            console.log(response.data);
+            // console.log(response);
+            // console.log(response.data);
             window.alert("게시물을 삭제 하시겠습니까?");
             dispatch(deletePost(response.data.postId));
 
@@ -240,7 +235,8 @@ const deletePostDB = (id) => {
             console.log("에러? 아니져~ 연봉 올라가는 소리~", err);
         })
     }
-}
+}      
+
 
 // reducer
 export default handleActions({
@@ -258,14 +254,14 @@ export default handleActions({
     [EDIT_POST]: (state, action) => produce(state, (draft) => {
         // findIndex는 배열을 뒤져서 조건을 주면, 그에 맞는 애의 인덱스 번호를 준다.
         let idx = draft.list.findIndex((p) => p.postId === action.payload.post_id);
-        draft.list[idx] = {...draft.list[idx], ...action.payload.post}
+        console.log(idx);
+        draft.list[idx].content = action.payload.content.content;
     }),
 
     [DELETE_POST]: (state, action) => produce(state, (draft) => {
         let idx = draft.list.findIndex((p) => p.postId === action.payload.post_id);
         console.log(idx);
 
-        // 인덱스가 있을때만 삭제
         if (idx !== action.payload.post_id){
             draft.list.splice(idx, 1);
         }
