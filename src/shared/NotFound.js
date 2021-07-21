@@ -21,6 +21,7 @@ const NotFound = (props) => {
 
                 <Button
                     width="10em"
+                    is_upload
                     _onClick={() => { props.history.goBack(); }}
                 >뒤로가기</Button>
             </Wrapper>
