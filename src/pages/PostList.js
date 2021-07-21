@@ -14,7 +14,7 @@ const PostList = (props) => {
     const dispatch = useDispatch();
     const post_list = useSelector((state) => state.post.list);
     // 빈배열 잘 떴다
-    console.log(post_list);
+    // console.log(post_list);
     const is_loading = useSelector((state) => state.post.is_loading);
     const user_info = useSelector((state) => state.user.user);
     const paging = useSelector((state) => state.post.paging);
@@ -22,7 +22,7 @@ const PostList = (props) => {
     // 이 컴포넌트가 생겼을 때 한번만 가져오면 됨 (,뒤에 []빈배열 넣어주면 한번만 가져옴)
     // 서버나 가짜서버(제이슨서버), 파이어베이스 연동 후 post모듈의 콘솔 확인
     React.useEffect(() => {
-        // 게시글이 2개 미만일 때는 getPostDB를 호출해서 목록을 불러옵니다.
+        // 게시글이 2개 미만일 때는 getPostDB를 호출해서 목록을 불러오기
         // 게시글이 있을때는 새로 리스트를 불러오지 않음
         // 이미 있던 리덕스에서 새 포스트를 제일 앞에 붙임
         // 최신순으로 정렬하면 되는거 아님? -> 무한스크롤
