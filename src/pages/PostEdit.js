@@ -10,29 +10,34 @@ import { actionCreators as postActions } from "../redux/modules/post";
 import { actionCreators as imageActions } from "../redux/modules/image"
 
 const PostEdit = (props) => {
-    // 작성완료 버튼에 온클릭 넣어주기 위해서 임포트
+    // 수정완료 버튼에 온클릭 넣어주기 위해서 임포트
     // postActions라는 별칭 만들어서 actionCreators로 온클릭에 넣어주기
     // 넣을때 길어지면 함수로 만들어서 함수명만 {}안에 넣기
     const dispatch = useDispatch();
     const preview = useSelector((state) => state.image.preview);
     const post_list = useSelector((state) => state.post.list);
+    console.log(post_list);
 
-    // match.params는 있는데 그 안에 id는 없다?
-    // console.log(props);
+    // match.params는 있는데 그 안에 id는 없다? -> 수정버튼에 `edit/${props.postId}` 적용해줘야함
+    console.log(props);
+    console.log(props.match.params.id);
 
-    const post_id = props.match.params.id;
+    // prams로 가져온 값은 string이므로 postId와 비교하기 위해선 숫자로 바꿔줘야함
+    const post_id = parseInt( props.match.params.id ) ;
 
     const {history} = props;
 
-    let _post = post_list.find((p) => p.id === post_id);
+    let _post = post_list.find((p) => p.postId === post_id);
 
     // 잘 나옴. 근데 새로고침 하면 리덕스 날아가서 undefined 뜸
+    // useEffect로 포스트 정보 없을때 goBack해주기
+    // id추가 해주니까 undefined 뜸
     console.log(_post);
 
     // useState사용해서 기존 데이터 가져오기
     const [contents, setContents] = React.useState(_post? _post.content : "");
     const [image, setImage] = React.useState(_post? _post.imageUrl : "");
-    console.log(image);
+    // console.log(image);
 
     React.useEffect(() => {
         if (!_post) {
@@ -60,7 +65,7 @@ const PostEdit = (props) => {
 
     // 게시글 수정 함수(post모듈에서 editPostDB부분의 필드이름으로 동일하게 넣어줌)
     const editPost = () => {
-        dispatch(postActions.editPostDB(post_id, {content: contents}));
+        dispatch(postActions.editPostDB(post_id, contents));
     }
 
     // 로그인 했을때만 작성할 수 있도록
@@ -83,7 +88,7 @@ const PostEdit = (props) => {
                     <Image 
                     shape="rectangle" 
                     margin="5px 0 10px 0" 
-                    src={props.image_url}/>
+                    src={preview}/>
                 </Grid>
 
                 <Grid flex_row padding="4px 14px">
@@ -100,7 +105,7 @@ const PostEdit = (props) => {
                 <Grid padding="4px 14px">
                     <Button 
                     is_upload 
-                    // _onClick={() => {console.log("업로드완료")}}
+                    // _onClick={() => {console.log("수정완료")}}
                     _onClick={editPost}
                     >수정완료</Button>
                 </Grid>

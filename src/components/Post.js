@@ -47,23 +47,23 @@ const Post = (props) => {
             </Text>
           </Grid >
 
-          {/* 내 게시물만 수정 및 삭제 버튼 보일 수 있도록 */}
           <Grid is_flex width="auto" padding="0 14px" >
             <Grid padding="0 5px">
-              {props.checkMember && <MdDelete 
+              <MdDelete 
               size="20px"
               cursor='pointer'
               // onClick={()=>{console.log("삭제!")}}
               onClick={(e)=>{dispatch(postActions.deletePostDB(props.postId))}}
-              />}
+              />
             </Grid>
-            <Grid>
-              {props.checkMember && 
+            <Grid> 
               <RiEdit2Line 
               size="20px"
-              cursor='pointer'
-              onClick={()=>{history.push('/edit')}}
-              />}
+              cursor="pointer"
+              checkMember={props.checkMember}
+              onClick={()=>{history.push(`/edit/${props.postId}`)}}
+              // onClick={(e)=>{dispatch(postActions.editPostDB(props.postId))}}
+              />
             </Grid>
           </Grid>
 

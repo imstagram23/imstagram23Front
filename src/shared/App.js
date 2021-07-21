@@ -27,7 +27,7 @@ function App() {
         <Switch>
           <Route exact path="/" component={PostList} />
           <Route exact path="/write" component={PostWrite} />
-          <Route exact path="/edit" component={PostEdit} />
+          <Route exact path="/edit/:id" component={PostEdit} />
           <Route exact path="/login" component={Login} />
           <Route exact path="/signup" component={Signup} />
           <Route exact path="/profile" component={Mypost} />

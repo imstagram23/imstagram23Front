@@ -99,7 +99,7 @@ PostWrite.defaultProps = {
     contents: "",
     // deleteButton: "delete",
     // editButton: "edit",
-    comment_cnt: 10,
+    // comment_cnt: 10,
   };
 
 export default PostWrite;
