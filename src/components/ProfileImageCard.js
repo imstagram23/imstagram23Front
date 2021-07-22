@@ -9,11 +9,12 @@ import {actionCreators as propfileActions} from "../redux/modules/comment"
 const ProfileImageCard = (props) => {
     const dispatch = useDispatch();
     const {history} = props;
-    const {nickname} = props;
+    const {writer} = props;
     const {imageUrl} = props;
-
+    console.log(props);
+    console.log(writer)
     const loading = () => {
-        dispatch(propfileActions.loadingAPI(nickname));
+        dispatch(propfileActions.profile_loadingAPI(writer));
       }
 
     return (

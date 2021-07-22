@@ -48,7 +48,7 @@ const Post = (props) => {
             />
             <Text 
               bold 
-              _onClick={() => {history.push(`/memberpage/${props.nickname}`)}}
+              _onClick={() => {history.push(`/memberpage/${props.writer}`)}}
               >{props.writer}
             </Text>
           </Grid >
@@ -139,7 +139,7 @@ const Post = (props) => {
         </Grid> */}
 
         <Grid flex_row padding="0 14px 4px 14px">
-          <Text 
+          <Text _onClick={() => {history.push(`/memberpage/${props.writer}`)}}
           margin="0px" 
           // bold 
           // padding="0 5px 0 0"

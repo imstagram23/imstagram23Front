@@ -14,16 +14,21 @@ import { actionCreators as profileActions } from "../redux/modules/profile";
 const Mypost = () => {
   const dispatch = useDispatch();
 
-  const profile_list = useSelector((state) => state.profile.list);
-  const nickname = useSelector((state) => state.profile.nickname);
+  const writer = useSelector((state) => state.profile.writer);
   const imageUrl = useSelector((state) => state.profile.imageUrl);
 
-  console.log(nickname)
+  console.log(writer)
+  console.log(imageUrl)
+
+  const profile_list = () => {
+    dispatch(profileActions.profile_loadingAPI(writer, imageUrl))
+  }
+
+  console.log(profile_list)
 
   React.useEffect(() => {
-    dispatch(profileActions.loadingAPI(nickname, imageUrl));
-    // dispatch(commentActions.deleteCommentAPI(commentId));
-}, []);
+    dispatch(profileActions.profile_loadingAPI(writer, imageUrl));
+  }, []);
 
     return (
         <React.Fragment>
@@ -33,6 +38,7 @@ const Mypost = () => {
             <ProfileHeader />
             {/* <PostContainer> */}
             <PostBox>
+              <profile_list/>
             {/* <Post/> */}
             {/* </PostContainer> */}
             {/* </Container> */}

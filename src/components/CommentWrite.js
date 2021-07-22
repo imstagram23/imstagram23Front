@@ -156,7 +156,6 @@ const ButtonComment = styled.button`
 `;
 
 CommentWrite.defaultProps = {
-  writer: "Robert Downey Jr.",
   user_profile: "https://thumbs.dreamstime.com/z/default-avatar-profile-icon-social-media-user-vector-default-avatar-profile-icon-social-media-user-vector-portrait-176194876.jpg",
 };
 

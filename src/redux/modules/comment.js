@@ -12,20 +12,7 @@ const addComment = createAction(ADD_COMMENT, (content) => ({content}));
 const deleteComment = createAction(DELETE_COMMENT, (content) => ({content}));
 
 const initialState = {
-    list: [
-      //   {
-      //   content : "content 입니다1",
-      //   insert_dt: moment().format("YYYY년 MM월 DD일 hh:mm:ss"),
-      // },
-      // {
-      //   content : "content 입니다2",
-      //   insert_dt: moment().format("YYYY년 MM월 DD일 hh:mm:ss"),
-      // },
-      // {
-      //   content : "content 입니다3",
-      //   insert_dt: moment().format("YYYY년 MM월 DD일 hh:mm:ss"),
-      // },
-    ],
+    list: [],
 }
 
 // 게시글 하나에는 어떤 정보가 있어야 하는 지 하나 만들어둡시다! :)

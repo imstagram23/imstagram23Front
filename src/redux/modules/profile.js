@@ -11,18 +11,17 @@ const profile_loading = createAction(PROFILE_LOADING, (profile_list) => ({ profi
 
 // initialState
 const initialState = {
-    list: [],
-    nickname: false,
     imageUrl: false,
+    writer: false,
 };
 
 
 // axios
-const loadingAPI = (nickname) => {
+const profile_loadingAPI = (writer) => {
     return function (dispatch, getState, {history}) {
         axios({
-            method: 'get',
-            url: `http://3.36.50.96/api/memberpage/${nickname}`,
+            method: 'GET',
+            url: `http://3.36.50.96/api/memberpage/${writer}`,
             // data: {},
             headers: { 
                 "Content-Type": "application/json;charset=UTF-8",
@@ -53,7 +52,7 @@ export default handleActions({
 // action creator export
 const actionCreators = {
     profile_loading,
-    loadingAPI,
+    profile_loadingAPI,
 };
   
 export { actionCreators };

@@ -21,7 +21,7 @@ const Comment = (props) => {
               <Image shape="circle" src={props.user_profile}/>
               
               <Text margin="auto auto auto 5px" bold
-              _onClick={()=>{history.push(`/memberpage/${props.nickname}`)}} 
+              _onClick={()=>{history.push(`/memberpage/${props.writer}`)}} 
               >{props.writer}</Text>
           </Grid>
           <Grid margin="0px 4px">
