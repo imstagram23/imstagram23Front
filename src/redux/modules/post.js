@@ -15,7 +15,7 @@ const LIKE_TOGGLE = "LIKE_TOGGLE";
 
 
 //action creator
-const setPost = createAction(SET_POST, (post_list, paging) => ({post_list, paging}));
+const setPost = createAction(SET_POST, (post_list, paging, pageNum) => ({post_list, paging, pageNum}));
 const addPost = createAction(ADD_POST, (post) => ({post}));
 const editPost = createAction(EDIT_POST, (post_id, content) => ({post_id, content}));
 const deletePost = createAction(DELETE_POST, (post_id) => ({ post_id }));
@@ -27,7 +27,7 @@ const initialState = {
     list: [],
     preview: null,
     // 무한스크롤 위해
-    paging: { start: null, next: null, size: 3 },
+    paging: { prePost: null, pageNum: false},
     is_loading: false,
     // 좋아요
     heartLike: false,
@@ -40,8 +40,8 @@ const initialPost = {
     image_url: "https://cdn.vox-cdn.com/thumbor/M2rjDALxvNDv3yqeYuIdL3spabo=/0x0:2000x1333/1200x675/filters:focal(840x507:1160x827)/cdn.vox-cdn.com/uploads/chorus_image/image/65939918/171109_08_11_37_5DS_0545__1_.0.jpg",
     content: "NewYork NewYork",
     heartLike: false,
-    totalLike: 3,
-    totalComment: 10,
+    totalLike: 0,
+    totalComment: 0,
     checkMember: false,
     insert_dt: moment().format("YYYY년 MM월 DD일 hh:mm:ss"),
 };
@@ -49,21 +49,22 @@ const initialPost = {
 // 다 가지고 올거니까 조건 걸게 없으니 일단 공란(심화3-3 12:~)
 // 데이터 형식 맞추기는 Object.keys()사용(심화3-3 15:~)
 // 왜? 키 값만 뽑아서 배열로 만들어 주려고. 왜 배열로? reduce(누산)쓰려고 
-const getPostDB = (start = null, size = 3) => {
+const getPostDB = (pageNum) => {
     return function (dispatch, getState, {history}){
 
         let _paging = getState().post.paging;
         // start값은 있지만 next값이 없으면 다음목록 없으므로 아래 로직 실행할 필요 없음
-        if(_paging.start && !_paging.next){
+        if(_paging.prePost && !_paging.pageNum){
             return;
         }
 
         dispatch(loading(true));
 
-       // 원본(새로고침해야 피드가 보임? 왜 또 잘 보임??? -> expire문제였음)
+       // 원본(새로고침해야 피드가 보임? 왜 또 잘 보임??? -> 토큰의 expire문제였음)
         axios({
             method: 'get',
-            url: 'http://3.36.50.96/api/post',
+            url: 'http://3.36.50.96/api/post/',
+            // url: `http://3.36.50.96/api/post/page/${pageNum}`,
             // data: {},
             headers: { 
                 "Content-Type": "multipart/form-data",
@@ -71,16 +72,17 @@ const getPostDB = (start = null, size = 3) => {
                 "Authorization": `Bearer ${sessionStorage.getItem("token")};`,
             },
         }).then((response) => {
-            // console.log(response);
-            // console.log(response.data);
+            console.log(response);
+            console.log(response.data);
 
             let paging = {
-                start: response.data[0],
-                next: response.data,
+                prePost: response.data.prePost,
+                next: response.data.length,
                 // next: response.data.length === size + 1 ? response.data[response.data.length - 1] : null,
-                size: size,
+                // size: size,
             }
-            response.data.pop();
+            // 서버가 is_next주면 필요없음
+            // response.data.pop();
 
             dispatch(setPost(response.data, paging));
 
@@ -131,8 +133,8 @@ const addPostDB = (contents, image) => {
                 "Authorization": `Bearer ${sessionStorage.getItem("token")};`,
             },
         }).then((response) => {
-            // console.log(response);
-            // console.log(response.data);
+            console.log(response);
+            console.log(response.data);
             // 서버에서 데이터 전체 내려주면 res.data.~하면 되지만
             // 전체 데이터를 내려주지 않으면 파라미터값을 그대로 가져온다.
             // 이미지를 http://도메인주소+res.data.~로 넣어줘야 한다.
@@ -144,9 +146,10 @@ const addPostDB = (contents, image) => {
                 postId: response.data.postId,
                 writer: response.data.writer,
                 content: response.data.content,
-                totalComment: response.data.totalComment,
-                heartLike: response.data.heartLike,
-                totalLike: response.data.totalLike,
+                totalComment: 0,
+                heartLike: false,
+                totalLike: 0,
+                checkMember: false,
                 imageUrl: response.data.imageUrl,
                 createdAt: moment().format("YYYY년 MM월 DD일 hh:mm"),
             }
@@ -199,8 +202,8 @@ const editPostDB = (id, content) => {
                 "Authorization": `Bearer ${sessionStorage.getItem("token")};`,
             },
         }).then((response) => {
-            // console.log(response);
-            // console.log(response.data);
+            console.log(response);
+            console.log(response.data);
             const edit_post = {
                 content: content,
             };
@@ -273,7 +276,7 @@ const likeToggleDB = (id, heartLike = false, totalLike) => {
                 }
                 dispatch(likeToggle(id, new_like));
             }else{
-                // 좋아요 해제 상태라면 좋아요 하기
+            // 좋아요 해제 상태라면 좋아요 하기
                 const new_like = {
                 heartLike: true,
                 totalLike: _post.totalLike + 1,

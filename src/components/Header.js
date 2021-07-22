@@ -55,7 +55,8 @@ const Header = (props) => {
 
 Header.defaultProps = {
   writer: "Robert Downey Jr.",
-  user_profile: "https://img.insight.co.kr/static/2018/06/08/700/oaytfz0m123a56r373eh.jpg",
+  user_profile: "https://thumbs.dreamstime.com/z/default-avatar-profile-icon-social-media-user-vector-default-avatar-profile-icon-social-media-user-vector-portrait-176194876.jpg",
+  // user_profile: "https://img.insight.co.kr/static/2018/06/08/700/oaytfz0m123a56r373eh.jpg",
 };
 
 const Wrapper = styled.div`

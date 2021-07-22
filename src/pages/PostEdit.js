@@ -36,7 +36,7 @@ const PostEdit = (props) => {
 
     // useState사용해서 기존 데이터 가져오기
     const [contents, setContents] = React.useState(_post? _post.content : "");
-    const [image, setImage] = React.useState(_post? _post.imageUrl : "");
+    // const [image, setImage] = React.useState(_post? _post.imageUrl : "");
     // console.log(image);
 
     React.useEffect(() => {
