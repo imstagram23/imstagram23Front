@@ -16,11 +16,11 @@ const PostEdit = (props) => {
     const dispatch = useDispatch();
     const preview = useSelector((state) => state.image.preview);
     const post_list = useSelector((state) => state.post.list);
-    console.log(post_list);
+    // console.log(post_list);
 
     // match.params는 있는데 그 안에 id는 없다? -> 수정버튼에 `edit/${props.postId}` 적용해줘야함
-    console.log(props);
-    console.log(props.match.params.id);
+    // console.log(props);
+    // console.log(props.match.params.id);
 
     // prams로 가져온 값은 string이므로 postId와 비교하기 위해선 숫자로 바꿔줘야함
     const post_id = parseInt( props.match.params.id ) ;
@@ -32,16 +32,16 @@ const PostEdit = (props) => {
     // 잘 나옴. 근데 새로고침 하면 리덕스 날아가서 undefined 뜸
     // useEffect로 포스트 정보 없을때 goBack해주기
     // id추가 해주니까 undefined 뜸
-    console.log(_post);
+    // console.log(_post);
 
     // useState사용해서 기존 데이터 가져오기
     const [contents, setContents] = React.useState(_post? _post.content : "");
-    const [image, setImage] = React.useState(_post? _post.imageUrl : "");
+    // const [image, setImage] = React.useState(_post? _post.imageUrl : "");
     // console.log(image);
 
     React.useEffect(() => {
         if (!_post) {
-            console.log("포스트 정보가 없어요!");
+            // console.log("포스트 정보가 없어요!");
             history.goBack();
       
             return;

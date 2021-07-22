@@ -3,7 +3,6 @@ import { history } from "../redux/configureStore";
 
 import {Grid, Image, Text, Button, Input} from "../elements";
 
-import HeartButton from "./HeartButton";
 import { FcLikePlaceholder } from "react-icons/fc";
 import { FcLike } from "react-icons/fc";
 
@@ -16,24 +15,10 @@ import { actionCreators as postActions } from "../redux/modules/post";
 const Post = (props) => {
   const dispatch = useDispatch();
   // console.log(props);
-  
-  // const [like, setLike] = React.useState(false);
-  // const [comment, setComment] = React.useState();
 
   const likeToggle = () => {
     dispatch(postActions.likeToggleDB(props.postId, props.heartLike))
   }
-
-  // const commentWrite = () => {
-  //  // comment 작성후에는 input창을 비워주기 위함
-  //   setComment("");
-  //   if (!comment) {
-  //     window.alert("댓글 내용을 입력하세요");
-  //     return;
-  //   }
-  //   console.log(comment)
-  // };
-
 
   return (
     <React.Fragment>
@@ -109,15 +94,20 @@ const Post = (props) => {
         </Grid>
 
         <Grid padding="0px 14px">
-          <HeartButton
+          {props.heartLike ?
+            <FcLike onClick={likeToggle} size="22px"/>
+            :
+            <FcLikePlaceholder onClick={likeToggle} size="22px"/>
+          }
+
+          {/* <HeartButton
           _onClick={likeToggle}
-          ></HeartButton>
+          ></HeartButton> */}
           
           {/* <HeartButton 
           // heartLike={props.heartLike}
           _onClick={likeToggle}
           ></HeartButton> */}
-          {/* is_me들어가면 위에걸로 */}
           {/* <FcLikePlaceholder size="22px"/> */}
 
           <Text 
@@ -168,7 +158,7 @@ const Post = (props) => {
 
 Post.defaultProps = {
   writer: "Robert Downey Jr.",
-  user_profile: "https://img.insight.co.kr/static/2018/06/08/700/oaytfz0m123a56r373eh.jpg",
+  user_profile: "https://thumbs.dreamstime.com/z/default-avatar-profile-icon-social-media-user-vector-default-avatar-profile-icon-social-media-user-vector-portrait-176194876.jpg",
   image_url: "https://cdn.vox-cdn.com/thumbor/M2rjDALxvNDv3yqeYuIdL3spabo=/0x0:2000x1333/1200x675/filters:focal(840x507:1160x827)/cdn.vox-cdn.com/uploads/chorus_image/image/65939918/171109_08_11_37_5DS_0545__1_.0.jpg",
   content: "NewYork NewYork",
   heartLike: false,

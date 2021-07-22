@@ -18,7 +18,7 @@ const PostList = (props) => {
     const is_loading = useSelector((state) => state.post.is_loading);
     const user_info = useSelector((state) => state.user.user);
     const paging = useSelector((state) => state.post.paging);
-    
+
     // 이 컴포넌트가 생겼을 때 한번만 가져오면 됨 (,뒤에 []빈배열 넣어주면 한번만 가져옴)
     // 서버나 가짜서버(제이슨서버), 파이어베이스 연동 후 post모듈의 콘솔 확인
     React.useEffect(() => {
@@ -42,7 +42,6 @@ const PostList = (props) => {
             {/* Post에 게시글 정보 넘겨주는 것까지 끝 */}
             {/* 아무것도 안나오는 이유는 데이터가 없으니까~ 서버랑 연결해야함*/}
             {/* p에는 게시글에 대한 모든 정보 들어감 */}
-
 
             <InfinityScroll
                 callNext={() => {
