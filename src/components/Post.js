@@ -3,7 +3,6 @@ import { history } from "../redux/configureStore";
 
 import {Grid, Image, Text, Button, Input} from "../elements";
 
-import HeartButton from "./HeartButton";
 import { FcLikePlaceholder } from "react-icons/fc";
 import { FcLike } from "react-icons/fc";
 
@@ -16,24 +15,10 @@ import { actionCreators as postActions } from "../redux/modules/post";
 const Post = (props) => {
   const dispatch = useDispatch();
   // console.log(props);
-  
-  // const [like, setLike] = React.useState(false);
-  // const [comment, setComment] = React.useState();
 
   const likeToggle = () => {
     dispatch(postActions.likeToggleDB(props.postId, props.heartLike))
   }
-
-  // const commentWrite = () => {
-  //  // comment 작성후에는 input창을 비워주기 위함
-  //   setComment("");
-  //   if (!comment) {
-  //     window.alert("댓글 내용을 입력하세요");
-  //     return;
-  //   }
-  //   console.log(comment)
-  // };
-
 
   return (
     <React.Fragment>
@@ -109,15 +94,20 @@ const Post = (props) => {
         </Grid>
 
         <Grid padding="0px 14px">
-          <HeartButton
+          {props.heartLike ?
+            <FcLike onClick={likeToggle} size="22px"/>
+            :
+            <FcLikePlaceholder onClick={likeToggle} size="22px"/>
+          }
+
+          {/* <HeartButton
           _onClick={likeToggle}
-          ></HeartButton>
+          ></HeartButton> */}
           
           {/* <HeartButton 
           // heartLike={props.heartLike}
           _onClick={likeToggle}
           ></HeartButton> */}
-          {/* is_me들어가면 위에걸로 */}
           {/* <FcLikePlaceholder size="22px"/> */}
 
           <Text 
