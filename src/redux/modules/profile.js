@@ -6,18 +6,18 @@ import axios from "axios";
 const PROFILE_LOADING = "PROFILE_LOADING";
 
 // createAction
-const profile_loading = createAction(PROFILE_LOADING, (profile_list) => ({ profile_list }));
+const profile_loading = createAction(PROFILE_LOADING, (url, name) => ({ url, name }));
 
 
 // initialState
 const initialState = {
-    imageUrl: false,
-    writer: false,
+    imageUrl: null,
+    writer: null,
 };
 
 
 // axios
-const profile_loadingAPI = (writer) => {
+const profile_loadingAPI = (writer, imageUrl) => {
     return function (dispatch, getState, {history}) {
         axios({
             method: 'GET',
@@ -29,8 +29,11 @@ const profile_loadingAPI = (writer) => {
                 "Authorization": `Bearer ${sessionStorage.getItem("token")};`,
             },
         }).then((response) => {
-          console.log(response.data);
-          dispatch(profile_loading(response.data));
+          console.log(response)
+          const imageUrl = response.data.imageUrl;
+          const writer = response.data.writer;
+          dispatch(profile_loading(imageUrl, writer));
+
         })
         .catch((error) => {
           console.log(error);
@@ -42,7 +45,8 @@ const profile_loadingAPI = (writer) => {
 // handleActions
 export default handleActions({
     [PROFILE_LOADING]: (state, action) => produce(state, (draft) => {
-      draft.list = action.payload.profile_list;
+      draft.imageUrl = action.payload.url;
+      draft.writer = action.payload.name;
     }),
   },
   initialState
