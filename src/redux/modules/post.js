@@ -11,6 +11,7 @@ const ADD_POST = "ADD_POST";
 const EDIT_POST = "EDIT_POST";
 const DELETE_POST = "DELETE_POST";
 const LOADING = "LOADING";
+const LIKE_TOGGLE = "LIKE_TOGGLE";
 
 
 //action creator
@@ -19,6 +20,7 @@ const addPost = createAction(ADD_POST, (post) => ({post}));
 const editPost = createAction(EDIT_POST, (post_id, content) => ({post_id, content}));
 const deletePost = createAction(DELETE_POST, (post_id) => ({ post_id }));
 const loading = createAction(LOADING, (is_loading) => ({ is_loading }));
+const likeToggle = createAction(LIKE_TOGGLE, (post_id, heartLike) => ({post_id, heartLike}));
 
 
 const initialState = {
@@ -27,6 +29,8 @@ const initialState = {
     // 무한스크롤 위해
     paging: { start: null, next: null, size: 3 },
     is_loading: false,
+    // 좋아요
+    heartLike: false,
 }
 
 // 게시글 하나의 정보(Post의 defaultProps)
@@ -237,6 +241,49 @@ const deletePostDB = (id) => {
     }
 }      
 
+const likeToggleDB = (id, heartLike = false, totalLike) => {
+    return function (dispatch, getState, { history }) {
+
+        // post를 찾기 위해, 배열의 몇 번째에 있나 확인
+        const _post_idx = getState().post.list.findIndex((p) => p.postId === id);    
+        // 확인한 인덱스로 수정하려는 게시글의 수정 전 정보를 가져오기
+        const _post = getState().post.list[_post_idx];
+        console.log(_post)
+        // user 정보 가져오기(nickname없어서 이메일로 확인)
+        // const user_id = getState().user.user.email;           
+        
+        axios({
+            method: 'post',
+            url: `http://3.36.50.96/api/like/${id}`,
+            // data: { postId: id },
+            headers: { 
+            "Content-Type": "multipart/form-data",
+            "Access-Control-Allow-Origin": "*",
+            "Authorization": `Bearer ${sessionStorage.getItem("token")};`,
+            },
+        }).then((response) => {
+            console.log(response);
+            console.log(response.data);
+
+            // 좋아요한 상태라면 해제
+            if (_post.heartLike){
+                const new_like = {
+                heartLike: false,
+                totalLike: _post.totalLike - 1,
+                }
+                dispatch(likeToggle(id, new_like));
+            }else{
+                // 좋아요 해제 상태라면 좋아요 하기
+                const new_like = {
+                heartLike: true,
+                totalLike: _post.totalLike + 1,
+                }
+                dispatch(likeToggle(id, new_like));
+            }
+        })
+    };
+};
+
 
 // reducer
 export default handleActions({
@@ -266,12 +313,22 @@ export default handleActions({
             draft.list.splice(idx, 1);
         }
     }),
+
     [LOADING]: (state, action) => produce(state, (draft) => {
         draft.is_loading = action.payload.is_loading;
         // export해 줄 필요 없음. 게시글 가져오기 시작할떄 true, false
-    })
+    }),
+
+    [LIKE_TOGGLE]: (state, action) => produce(state, (draft) => { 
+        // 배열에서 몇 번째에 있는 지 찾은 다음, heartLike action에서 가져온 값으로 바꾸기
+        let idx = draft.list.findIndex((p) => p.postId === action.payload.post_id);
+        draft.list[idx].heartLike = action.payload.heartLike.heartLike;
+        draft.list[idx].totalLike = action.payload.heartLike.totalLike;
+     }) 
 }, initialState
 );
+
+
 
 // action creator export 묶어서 내보내자
 const actionCreators = {
@@ -282,6 +339,7 @@ const actionCreators = {
     addPostDB,
     editPostDB,
     deletePostDB,
+    likeToggleDB,
 };
   
 export { actionCreators };

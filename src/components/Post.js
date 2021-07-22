@@ -12,17 +12,16 @@ import { RiEdit2Line } from "react-icons/ri";
 
 import { useDispatch } from "react-redux";
 import { actionCreators as postActions } from "../redux/modules/post";
-import { actionCreators as likeActions } from  "../redux/modules/like";
 
 const Post = (props) => {
   const dispatch = useDispatch();
-  console.log(props);
+  // console.log(props);
   
-  const [like, setLike] = React.useState(false);
-  const [comment, setComment] = React.useState();
+  // const [like, setLike] = React.useState(false);
+  // const [comment, setComment] = React.useState();
 
   const likeToggle = () => {
-    dispatch(likeActions.likeToggleDB(props.postId, props.heartLike))
+    dispatch(postActions.likeToggleDB(props.postId, props.heartLike))
   }
 
   // const commentWrite = () => {
@@ -109,11 +108,15 @@ const Post = (props) => {
             src={props.image_url}/>
         </Grid>
 
-        <Grid padding="4px 14px 0 14px">
-          <HeartButton 
-          // heartLike={props.heartLike}
+        <Grid padding="0px 14px">
+          <HeartButton
           _onClick={likeToggle}
           ></HeartButton>
+          
+          {/* <HeartButton 
+          // heartLike={props.heartLike}
+          _onClick={likeToggle}
+          ></HeartButton> */}
           {/* is_me들어가면 위에걸로 */}
           {/* <FcLikePlaceholder size="22px"/> */}
 

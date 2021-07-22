@@ -19,7 +19,6 @@ const rootReducer = combineReducers({
   post: Post,
   image: Image,
   comment: Comment,
-  like: like,
   // 내가 만든 history랑 라우터 연결
   router: connectRouter(history),
 });

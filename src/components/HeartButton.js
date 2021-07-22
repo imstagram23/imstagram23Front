@@ -7,14 +7,32 @@ import { FcLike } from "react-icons/fc";
 
 const HeartButton = (props) => {
 
-  const heartIcon = props.heartLike === true ? <FcLike size="22px"/> : <FcLikePlaceholder size="22px"/>;
+  // const heartIcon = props.heartLike === true ? <FcLike size="22px"/> : <FcLikePlaceholder size="22px"/>;
 
-  return (
-    <React.Fragment>
-      <Heart 
-      onClick={props._onClick} heartIcon={heartIcon}/>
-    </React.Fragment>
-  );
+  if (props.heartLike) {
+    return (
+      <React.Fragment>
+        <FcLike onClick={props._onClick} size="22px"/>
+      </React.Fragment>
+    );
+  }else{
+    return(
+        <React.Fragment>
+          <FcLikePlaceholder onClick={props._onClick} size="22px"/>
+        </React.Fragment>
+      )
+    }
+
+//   return (
+//     <React.Fragment>
+//       <Heart onClick={props._onClick} heartIcon={heartIcon}/>
+//     </React.Fragment>
+//   )
+};
+
+HeartButton.defaultProps = {
+  _onClick: () => {},
+  heartLike: false,
 };
 
 const Heart = styled.div`
