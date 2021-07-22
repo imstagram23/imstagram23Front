@@ -39,23 +39,23 @@ const loginAPI = (data) => {
                 "password": data.password,
             }
         }).then((res)=>{
-            console.log(res);
+            // console.log(res);
             localStorage.setItem("email", JSON.stringify(`${data.email}`)); //localStorage의 텍스트형이므로 객체 json.stringfy로 변환
             // res.data.accessToken를 해줘야 application value에 담김
             sessionStorage.setItem("token", res.data.accessToken);
             // sessionStorage.setItem("token", res.data.accessToken);
             // sessionStorage.setItem("token", res.data.Authorization);
-            console.log(res.data)
+            // console.log(res.data)
 
             dispatch(logIn({
                 email: data.email,
                 password: data.password,
             }));
             //token 확인
-            console.log(res.data)
+            // console.log(res.data)
             history.push("/");
         }).catch(error=>{
-            console.log(error);
+            // console.log(error);
             window.alert("가입정보를 다시 한번 확인해주세요.");
             }   
         );
@@ -94,11 +94,11 @@ const SignUPApi = (data) => {
             },
 
         }).then((res)=>{
-            console.log(res);
+            // console.log(res);
             history.push("/login");
             window.alert("축하합니다! 회원가입 되었습니다!")
         }).catch(error=>{
-            console.log(error);
+            // console.log(error);
             window.alert("회원가입 실패!");
             history.replace("/login");
         });

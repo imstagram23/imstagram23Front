@@ -299,8 +299,8 @@ export default handleActions({
 
     [ADD_POST]: (state, action) => produce(state, (draft) => {
         // 배열 제일 앞으로 붙이기
-        draft.list.unshift(action.payload.post)
-        draft.preview = null
+        draft.list.unshift(action.payload.post);
+        draft.preview = null;
     }),
 
     [EDIT_POST]: (state, action) => produce(state, (draft) => {

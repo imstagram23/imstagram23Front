@@ -30,7 +30,7 @@ const Comment = (props) => {
               </Grid>
 
               <Grid is_flex width="10%">
-              <FcLikePlaceholder margin="auto 5px" size="22px" />
+              {/* <FcLikePlaceholder margin="auto 5px" size="22px" /> */}
               {is_writer? <MdDelete onClick={(e)=>{dispatch(commentActions.deleteCommentAPI(props.commentId))}}/> : "" }
              
               
