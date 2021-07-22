@@ -14,10 +14,6 @@ const Comment = (props) => {
 
   const dispatch = useDispatch();
   const is_writer = props.checkMember
-// 
-// 
-// writer 배포 받으면, props로 받아서 조건걸어서 아이콘 쏘기
-
 
   return (
       <Grid is_flex width="auto" padding="3px 25px" margin="3px 0px 0px 0px">
@@ -25,7 +21,7 @@ const Comment = (props) => {
               <Image shape="circle" src={props.user_profile}/>
               
               <Text margin="auto auto auto 5px" bold
-              _onClick={()=>{history.push(`/profile`)}} 
+              _onClick={()=>{history.push(`/memberpage/${props.nickname}`)}} 
               >{props.writer}</Text>
           </Grid>
           <Grid margin="0px 4px">

@@ -45,7 +45,7 @@ const Header = (props) => {
                       shape="circle" 
                       margin="0px"
                       src={props.user_profile}
-                      _onClick={()=>{history.push('/profile')}}/>
+                      _onClick={()=>{history.push(`/memberpage/${props.nickname}`)}}/>
                   </IconContainer>
                 </HeaderContents>
             </Wrapper>

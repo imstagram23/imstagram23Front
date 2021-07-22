@@ -4,11 +4,26 @@ import {Text, Input, Grid, Button} from "../elements/index";
 
 import Header from "../components/Header";
 import ProfileHeader from "../components/ProfileHeader";
-import ProfilePost from "../components/ProfilePost";
-import Post from "../components/Post"
 
+import Post from "../components/Post"
+import ProfileImageCard from "../components/ProfileImageCard";
+
+import { useSelector, useDispatch } from "react-redux";
+import { actionCreators as profileActions } from "../redux/modules/profile";
 
 const Mypost = () => {
+  const dispatch = useDispatch();
+
+  const profile_list = useSelector((state) => state.profile.list);
+  const nickname = useSelector((state) => state.profile.nickname);
+  const imageUrl = useSelector((state) => state.profile.imageUrl);
+
+  console.log(nickname)
+
+  React.useEffect(() => {
+    dispatch(profileActions.loadingAPI(nickname, imageUrl));
+    // dispatch(commentActions.deleteCommentAPI(commentId));
+}, []);
 
     return (
         <React.Fragment>
@@ -18,10 +33,11 @@ const Mypost = () => {
             <ProfileHeader />
             {/* <PostContainer> */}
             <PostBox>
-            <Post/>
+            {/* <Post/> */}
             {/* </PostContainer> */}
             {/* </Container> */}
             </PostBox>
+            <ProfileImageCard/>
           </Grid>
         </React.Fragment>
       );

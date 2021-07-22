@@ -48,7 +48,7 @@ const Post = (props) => {
             />
             <Text 
               bold 
-              _onClick={() => {history.push('/profile')}}
+              _onClick={() => {history.push(`/memberpage/${props.nickname}`)}}
               >{props.writer}
             </Text>
           </Grid >

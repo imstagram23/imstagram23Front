@@ -9,6 +9,7 @@ import Post from "./modules/post";
 import Image from "./modules/image";
 import Comment from "./modules/comment";
 import like from "./modules/like";
+import Profile from "./modules/profile";
 
 // history객체 만들기 
 export const history = createBrowserHistory();
@@ -19,6 +20,7 @@ const rootReducer = combineReducers({
   post: Post,
   image: Image,
   comment: Comment,
+  profile: Profile,
   // 내가 만든 history랑 라우터 연결
   router: connectRouter(history),
 });
