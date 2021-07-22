@@ -30,7 +30,7 @@ const PostWrite = (props) => {
 
     const changeImage = (file) => {
         setImage(file);
-        console.log(file);
+        // console.log(file);
     }
     // console.log(image);
 

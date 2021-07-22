@@ -72,8 +72,8 @@ const getPostDB = (pageNum) => {
                 "Authorization": `Bearer ${sessionStorage.getItem("token")};`,
             },
         }).then((response) => {
-            console.log(response);
-            console.log(response.data);
+            // console.log(response);
+            // console.log(response.data);
 
             let paging = {
                 prePost: response.data.prePost,
@@ -87,7 +87,7 @@ const getPostDB = (pageNum) => {
             dispatch(setPost(response.data, paging));
 
         }).catch(err => {
-            console.log("에러? 아니져~ 연봉 올라가는 소리~");
+            // console.log("에러? 아니져~ 연봉 올라가는 소리~");
         })
     };
 };
@@ -119,8 +119,8 @@ const addPostDB = (contents, image) => {
         formData.append('content', contents);
         formData.append('image', image);
         // formadata 내용 확인(그냥 콘솔로그론 안보임)
-        for (let key of formData.keys()) { console.log(key); }
-        for (var value of formData.values()) { console.log(value); }
+        // for (let key of formData.keys()) { console.log(key); }
+        // for (var value of formData.values()) { console.log(value); }
 
         axios({
             method: 'post',
@@ -133,12 +133,12 @@ const addPostDB = (contents, image) => {
                 "Authorization": `Bearer ${sessionStorage.getItem("token")};`,
             },
         }).then((response) => {
-            console.log(response);
-            console.log(response.data);
+            // console.log(response);
+            // console.log(response.data);
             // 서버에서 데이터 전체 내려주면 res.data.~하면 되지만
             // 전체 데이터를 내려주지 않으면 파라미터값을 그대로 가져온다.
             // 이미지를 http://도메인주소+res.data.~로 넣어줘야 한다.
-            console.log(response.data.imageUrl);
+            // console.log(response.data.imageUrl);
 
             const new_post = {
                 // 키값은 logger에서 next state에서 post의 list의 키값(필드값?)으로 맞춰 줘야함
@@ -149,26 +149,27 @@ const addPostDB = (contents, image) => {
                 totalComment: 0,
                 heartLike: false,
                 totalLike: 0,
-                checkMember: false,
+                checkMember: true,
                 imageUrl: response.data.imageUrl,
                 createdAt: moment().format("YYYY년 MM월 DD일 hh:mm"),
             }
-            console.log(new_post);            
+            // console.log(new_post);            
 
             // 서버에 데이터 잘 들어갔는지 확인 후 리덕스에 추가
             dispatch(addPost(new_post));
+            // 다음에 글 작성할 떄 이전 이미지 안보이게 하려고 근데 왜 보이지????? 다시 안보임??? ???
+            dispatch(imageActions.setPreview(null));
             history.replace('/');
             // history.replace('/')와 window.location.replace('/')의 차이?
             // history는 주소가 바뀐것처럼 보여주는 렌더링, window는 사이트 자체가 재렌더링
 
-            // 다음에 글 작성할 떄 이전 이미지 안보이게 하려고 근데 왜 보이지????? 다시 안보임???
-            dispatch(imageActions.setPreview(null));
+            
         }).catch((err) => {
             window.alert("포스트 작성에 문제가 있어요!", err);
-            console.log("에러? 아니져~ 연봉 올라가는 소리~", err);
+            // console.log("에러? 아니져~ 연봉 올라가는 소리~", err);
         }).catch((err) => {
             window.alert("이미지 업로드에 문제가 있어요!", err);
-            console.log("에러? 아니져~ 연봉 올라가는 소리~", err);
+            // console.log("에러? 아니져~ 연봉 올라가는 소리~", err);
         })
     }
 } 
@@ -182,7 +183,7 @@ const editPostDB = (id, content) => {
         const _post_idx = getState().post.list.findIndex((p) => p.postId === id);
         // 위의 인덱스로 수정하려는 게시글의 수정 전 정보를 가져오기
         const _post = getState().post.list[_post_idx];
-        console.log(_post)
+        // console.log(_post)
 
         let _edit = JSON.stringify(content);
           
@@ -202,19 +203,19 @@ const editPostDB = (id, content) => {
                 "Authorization": `Bearer ${sessionStorage.getItem("token")};`,
             },
         }).then((response) => {
-            console.log(response);
-            console.log(response.data);
+            // console.log(response);
+            // console.log(response.data);
             const edit_post = {
                 content: content,
             };
-            console.log(edit_post);            
+            // console.log(edit_post);            
 
             window.alert("게시물을 수정 하시겠습니까?");
             dispatch(editPost(id, edit_post));
             history.replace('/');
         }).catch((err) => {
             window.alert("내 게시글만 수정할 수 있어요!", err);
-            console.log("에러? 아니져~ 연봉 올라가는 소리~", err);
+            // console.log("에러? 아니져~ 연봉 올라가는 소리~", err);
         })
     }
 }
@@ -239,7 +240,7 @@ const deletePostDB = (id) => {
 
         }).catch((err) => {
             window.alert("내 게시글만 지울 수 있어요!", err);
-            console.log("에러? 아니져~ 연봉 올라가는 소리~", err);
+            // console.log("에러? 아니져~ 연봉 올라가는 소리~", err);
         })
     }
 }      
@@ -251,7 +252,7 @@ const likeToggleDB = (id, heartLike = false, totalLike) => {
         const _post_idx = getState().post.list.findIndex((p) => p.postId === id);    
         // 확인한 인덱스로 수정하려는 게시글의 수정 전 정보를 가져오기
         const _post = getState().post.list[_post_idx];
-        console.log(_post)
+        // console.log(_post)
         // user 정보 가져오기(nickname없어서 이메일로 확인)
         // const user_id = getState().user.user.email;           
         
@@ -265,8 +266,8 @@ const likeToggleDB = (id, heartLike = false, totalLike) => {
             "Authorization": `Bearer ${sessionStorage.getItem("token")};`,
             },
         }).then((response) => {
-            console.log(response);
-            console.log(response.data);
+            // console.log(response);
+            // console.log(response.data);
 
             // 좋아요한 상태라면 해제
             if (_post.heartLike){
@@ -299,18 +300,19 @@ export default handleActions({
     [ADD_POST]: (state, action) => produce(state, (draft) => {
         // 배열 제일 앞으로 붙이기
         draft.list.unshift(action.payload.post)
+        draft.preview = null
     }),
 
     [EDIT_POST]: (state, action) => produce(state, (draft) => {
         // findIndex는 배열을 뒤져서 조건을 주면, 그에 맞는 애의 인덱스 번호를 준다.
         let idx = draft.list.findIndex((p) => p.postId === action.payload.post_id);
-        console.log(idx);
+        // console.log(idx);
         draft.list[idx].content = action.payload.content.content;
     }),
 
     [DELETE_POST]: (state, action) => produce(state, (draft) => {
         let idx = draft.list.findIndex((p) => p.postId === action.payload.post_id);
-        console.log(idx);
+        // console.log(idx);
 
         if (idx !== action.payload.post_id){
             draft.list.splice(idx, 1);
