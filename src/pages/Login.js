@@ -39,14 +39,7 @@ const Login = () => {
       return;
     }
       dispatch(userActions.loginAPI(data));
-
-    
   }
-
-  
-
-  
-
 
   return (
       <React.Fragment>           
@@ -71,10 +64,6 @@ const Login = () => {
           </InputBox>
           </LoginBox>
             
-            {/* <ImageBox>
-            <Image onClick={()=>{window.alert('아직 준비중입니다.')}}/>
-            </ImageBox> */}
-          
           <Grid>
             <SignUpBox>계정이 없으신가요? <SignSpan onClick={()=>{history.push('/signup')}}>가입하기</SignSpan></SignUpBox>
           </Grid>

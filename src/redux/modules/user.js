@@ -4,15 +4,14 @@ import axios from 'axios';
 
 //actions
 const LOG_IN = "LOG_IN"; //로그인
-
-// const LOG_OUT = "LOG_OUT"; //로그아웃
+const LOG_OUT = "LOG_OUT"; //로그아웃
 const LOGIN_CHECK = 'LOGIN_CHECK';
 const GET_USER = "GET_USER"; //유저정보 가져오기
 
 //actionCreators
 const logIn = createAction(LOG_IN, (user) => ({user}));
+const logOut = createAction(LOG_OUT, (user) => ({user}));
 
-// const logOut = createAction(LOG_OUT, (user) => ({user}));
 const loginCheck = createAction(LOGIN_CHECK, (session) => ({session}));
 const getUser = createAction(GET_USER, (user) => ({user}));
 
@@ -54,8 +53,6 @@ const loginAPI = (data) => {
             }));
             //token 확인
             console.log(res.data)
-
-            window.alert("정상적으로 로그인 되었습니다!")
             history.push("/");
         }).catch(error=>{
             console.log(error);
@@ -65,19 +62,17 @@ const loginAPI = (data) => {
 
     };
 };
-console.log(localStorage);
-console.log(sessionStorage);
 
-// //로그아웃
-// const logOutApi = () =>{
-//     return function (dispatch, getState, { history }){
-//         localStorage.removeItem("email");
-//         sessionStorage.removeItem("token");
-//         dispatch(logOut());
-//         history.replace("/");
-//     }
+//로그아웃
+const logOutApi = () =>{
+    return function (dispatch, getState, { history }){
+        localStorage.removeItem("email");
+        sessionStorage.removeItem("token");
+        dispatch(logOut());
+        history.replace("/login");
+    }
 
-// }
+}
 
 //회원가입api
 const SignUPApi = (data) => {
@@ -134,11 +129,11 @@ export default handleActions({
 const actionCreators = {
     loginCheck,
     logIn,
-    // logOut,
+    logOut,
     getUser,
     SignUPApi,
     loginAPI,
-    // logOutApi,
+    logOutApi,
 
 };
 

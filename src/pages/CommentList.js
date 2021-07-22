@@ -22,8 +22,8 @@ const CommentList = (props) => {
          const timeA = a.createdAt; const timeB = b.createdAt; 
          if (timeA < timeB) return 1; if (timeA > timeB) return -1; });
     
-    const commentId = props.match;
-    console.log(content_list)
+    // const commentId = props.match;
+    // console.log(content_list)
 
     React.useEffect(() => {
         dispatch(commentActions.setCommentAPI(postId));

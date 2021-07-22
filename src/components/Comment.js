@@ -13,9 +13,9 @@ import {actionCreators as commentActions} from "../redux/modules/comment"
 const Comment = (props) => {
 
   const dispatch = useDispatch();
-
-// const is_me = useSelector((state) => state.comment.writer);
-// console.log(is_me)
+  const is_writer = props.checkMember
+// 
+// 
 // writer 배포 받으면, props로 받아서 조건걸어서 아이콘 쏘기
 
 
@@ -35,9 +35,10 @@ const Comment = (props) => {
 
               <Grid is_flex width="10%">
               <FcLikePlaceholder margin="auto 5px" size="22px" />
-              {/* {is_me? <MdDelete onClick={(e)=>{dispatch(commentActions.deleteCommentAPI(props.commentId))}}/> : "" } */}
+              {is_writer? <MdDelete onClick={(e)=>{dispatch(commentActions.deleteCommentAPI(props.commentId))}}/> : "" }
+             
               
-              <MdDelete onClick={(e)=>{dispatch(commentActions.deleteCommentAPI(props.commentId))}}/>
+            
               
               </Grid>  
           </Grid>
@@ -52,7 +53,6 @@ text-align: left;
 `;
 
 Comment.defaultProps = {
-  writer: "Robert Downey Jr.",
   user_profile: "https://thumbs.dreamstime.com/z/default-avatar-profile-icon-social-media-user-vector-default-avatar-profile-icon-social-media-user-vector-portrait-176194876.jpg",
 };
 

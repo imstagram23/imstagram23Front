@@ -1,9 +1,24 @@
 import React from "react";
+import { history } from "../redux/configureStore";
+import { actionCreators as userActions } from "../redux/modules/user";
+import { useDispatch } from "react-redux";
 
 import {Text, Input, Grid, Button, Image} from "../elements/index";
 import styled from 'styled-components';
 
 const ProfileHeader = (props) => {
+
+  const dispatch = useDispatch();
+
+  
+
+  const logOut = () => {
+      if(window.confirm('로그아웃 하시겠어요?')){
+        dispatch(userActions.logOutApi(history))
+      } else{
+        return
+      }
+  };
 
     // if (post_data.user) {
     return (
@@ -12,9 +27,11 @@ const ProfileHeader = (props) => {
             <Container>
               
               <UserName>
-                <Select type="select" value="">
-                  <Option value="">{props.writer}</Option>
-                  <Option>로그아웃</Option>
+                <Select  type="select" value="">
+                  <Option >{props.writer}</Option>
+                  <Option 
+                  onClick={()=>{history.push('/login')}}
+                  >로그아웃</Option>
               </Select>
               </UserName>
               
