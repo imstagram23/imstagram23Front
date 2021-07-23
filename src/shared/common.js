@@ -12,7 +12,6 @@ export const pwMacth = (password) => {
   
   const _reg = /^(?=.*[a-zA-Z])((?=.*\d)|(?=.*\W)).{10,}$/;
   return  _reg.test(password) && password.search(/\s/) == -1 ?true:false;
-
 }
 
 export const pwContinuous = (password) => {
@@ -26,5 +25,4 @@ export const emailCheck = (email) => {
 
   let _reg = /^[0-9a-zA-Z]([-_\.]?[0-9a-zA-Z])*@[0-9a-zA-Z]([-_\.]?[0-9a-zA-Z])*\.[a-zA-Z]{2,3}$/i;
   return _reg.test(email);
-
 }
