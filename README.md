@@ -19,7 +19,7 @@ http://hyoni.shop/
     * React
     * Redux
     * react-router-dom
-    * styled-component
+    * styled-components
   
   * Back-end
     * Java 8
