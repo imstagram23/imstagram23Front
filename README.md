@@ -17,6 +17,7 @@ http://hyoni.shop/
 
   * Front-end
     * React
+    * Redux
     * react-router-dom
     * styled-component
   
